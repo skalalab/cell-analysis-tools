@@ -1,0 +1,9 @@
+
+flim_tools/flim_tools/io/__pycache__/*
+flim_tools/flim_tools/metrics/__pycache__/*
+flim_tools/flim_tools_econtreras.egg-info/*
+flim_tools/flim_tools/image_processing/__pycache__/*
+flim_tools/flim_tools/__pycache__/*
+flim_tools/flim_tools/image_processing/rgb2gray/.idea/*
+flim_tools/flim_tools/general_functions/__pycache__/*
+flim_tools/flim_tools/image_processing/rgb2gray/__pycache__/*
