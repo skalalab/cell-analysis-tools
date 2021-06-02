@@ -12,7 +12,7 @@ import matplotlib.pylab as plt
 import matplotlib as mpl
 mpl.rcParams["figure.dpi"] = 300
 
-def bin_sdt(im_sdt, bin_size, stride=1, pad_value=0, debug=True):
+def bin_sdt(im_sdt, bin_size, stride=1, pad_value=0, debug=False):
     """
     bins an SDT 3d array based on the kernel size.
 
