@@ -403,7 +403,9 @@ if __name__ == "__main__":
     plt.imshow(sdt_im.sum(axis=2))
     plt.show()
 
-
+    from flim_tools.image_processing import sdt_bin
+    
+    
 
     #threshold the image before calculating phasor.
     
