@@ -7,3 +7,6 @@ flim_tools/flim_tools/__pycache__/*
 flim_tools/flim_tools/image_processing/rgb2gray/.idea/*
 flim_tools/flim_tools/general_functions/__pycache__/*
 flim_tools/flim_tools/image_processing/rgb2gray/__pycache__/*
+*.pyc
+flim_tools/image_processing/__pycache__/*
+flim_tools/image_processing/rgb2gray/__pycache__/rgb2gray.cpython-38.pyc
