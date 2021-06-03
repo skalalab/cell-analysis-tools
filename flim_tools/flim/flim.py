@@ -373,7 +373,7 @@ if __name__ == "__main__":
     from flim_tools.io import load_sdt_file
     import matplotlib.pylab as plt
     import matplotlib as mpl
-    mpl.rcParams["figure.dpi"] = 300
+    mpl.rcParams["figure.dpi"] = 600
     import numpy as np
     
     # variables
@@ -391,51 +391,41 @@ if __name__ == "__main__":
     # plt.imshow(sdt_im.sum(axis=2))
     # plt.show()
     
+    
+    HERE = Path(__file__).resolve().parent
     ########### neutrohpils 
+    # working_dir = Path(r"C:\Users\Nabiki\Desktop\development\flim_tools\flim_tools\example_data\t_cell".replace('\\','/'))
+    # path_sdt = working_dir / "Tcells-001.sdt"
     path_sdt = Path("C:/Users/Nabiki/Desktop/data/Neutrophils_p.4_PMA/Neutrophils-021_NADH.sdt")
-    sdt_im = load_sdt_file(path_sdt).squeeze()
-    n_rows, n_cols, n_timebins = sdt_im.shape
+    im_sdt = load_sdt_file(path_sdt).squeeze()
+    n_rows, n_cols, n_timebins = im_sdt.shape
     integration_time = 1 / laser_angular_frequency
     timebins = np.linspace(0, integration_time, n_timebins, endpoint=False)
-    decay = np.sum(sdt_im, axis=(0,1))
+    decay = np.sum(im_sdt, axis=(0,1))
     plt.plot(decay)
     plt.show()
-    plt.imshow(sdt_im.sum(axis=2))
+    plt.imshow(im_sdt.sum(axis=2))
     plt.show()
 
-    from flim_tools.image_processing import sdt_bin
-    
-    
+    from flim_tools.image_processing import bin_sdt
 
-    #threshold the image before calculating phasor.
+    # 7x7 bin
+    im_sdt_binned = bin_sdt(im_sdt, bin_size=3, debug=True)    
     
-    # RESHAPE IMAGE TO 1D ARRAY MANUALLY
-    decays_1d  = np.zeros((n_rows * n_cols, n_timebins))
-    idx = 0
-    for row in np.arange(n_rows):
-        for col in np.arange(n_cols):
-            decays_1d[idx,:] = sdt_im[row,col,:]
-            idx += 1 ##### INCREMENT INDEX!!! NEVER FORGET
+    #threshold decays 
+    decays = im_sdt_binned[im_sdt_binned.sum(axis=2)>1000]
         
-    # FILTER DECAYS
-    arr_bool = decays_1d.sum(axis=1) > 500
-    valid_decays = decays_1d[arr_bool,:]
     
-    # SHOW VALID DECAYS
-    for d in valid_decays:
+    # show First 100 decays
+    for d in decays[:100]:
         plt.plot(d)
     plt.show()
     
-    ### CALIBRATION
-    # irf = np.loadtxt("irf.csv", delimiter="\t")
-    # irf_timebins = irf[:,0] * 1e-9
-    # irf_decay = irf[:,1]
-    # plt.plot(irf_decay)
-    
+   
     #Kelsey IRF's
     irf = tifffile.imread("C:/Users/Nabiki/Desktop/data/Neutrophils_p.4_PMA/Neutrophils-021_IRF.tiff")
-    irf_timebins = irf[:,0]
-    irf_decay = irf[:,1]
+    irf_timebins = irf[:,0] * 1e-9 # timebins in ns
+    irf_decay = irf[:,1] # photons count
     plt.plot(irf_timebins, irf_decay)
     plt.show()
     
@@ -444,10 +434,13 @@ if __name__ == "__main__":
                                      irf_lifetime, 
                                      irf_timebins, 
                                      irf_decay)
+    # enable to plot IRF 
+    # decays = irf_decay.reshape((1,-1))
     
     # compute g and s  
-    array_phasor = [td_to_fd(laser_angular_frequency, irf_timebins, decay) for decay in valid_decays]
-    
+
+    array_phasor = [td_to_fd(laser_angular_frequency, irf_timebins, decay) for decay in decays]
+
    
     # # compute g and s for 
     list_gs = [phasor_to_rectangular_point(ph.angle + calibration.angle ,
@@ -456,13 +449,20 @@ if __name__ == "__main__":
     
     g = [point.g for point in list_gs]
     s = [point.s for point in list_gs]
-    counts = valid_decays.sum(axis=1)
+    counts = decays.sum(axis=1)
     
     # plot
     figure = plt.figure()
-    plt.scatter(g, s, s=2, c=counts, cmap='viridis_r', alpha=0.3)  # s=size, c= colormap_data, cmap=colormap to use    
+    plt.ylim([0,0.6])
+    plt.xlim([0,1])
+    plt.scatter(g, s, s=2, c=counts, cmap='viridis_r', alpha=0.7)  # s=size, c= colormap_data, cmap=colormap to use    
     plt.colorbar()
     draw_universal_semicircle(figure, laser_angular_frequency)
 
 
 
+
+#%%
+#### Kaivalya
+
+# Z:\0-Projects and Experiments\KM - OMI Phasor Plots\OMI images
