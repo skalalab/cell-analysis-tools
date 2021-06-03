@@ -396,7 +396,8 @@ if __name__ == "__main__":
     ########### neutrohpils 
     # working_dir = Path(r"C:\Users\Nabiki\Desktop\development\flim_tools\flim_tools\example_data\t_cell".replace('\\','/'))
     # path_sdt = working_dir / "Tcells-001.sdt"
-    path_sdt = Path("C:/Users/Nabiki/Desktop/data/Neutrophils_p.4_PMA/Neutrophils-021_NADH.sdt")
+    path_sdt = Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_NADH.sdt")
+
     im_sdt = load_sdt_file(path_sdt).squeeze()
     n_rows, n_cols, n_timebins = im_sdt.shape
     integration_time = 1 / laser_angular_frequency
@@ -423,7 +424,7 @@ if __name__ == "__main__":
     
    
     #Kelsey IRF's
-    irf = tifffile.imread("C:/Users/Nabiki/Desktop/data/Neutrophils_p.4_PMA/Neutrophils-021_IRF.tiff")
+    irf = tifffile.imread( Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_IRF.tiff"))
     irf_timebins = irf[:,0] * 1e-9 # timebins in ns
     irf_decay = irf[:,1] # photons count
     plt.plot(irf_timebins, irf_decay)
