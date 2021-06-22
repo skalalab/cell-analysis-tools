@@ -18,6 +18,7 @@ import matplotlib.pylab as plt
 import zipfile
 import collections as coll
 from pprint import pprint
+from flim_tools.io import read_asc
 
 def lifetime_image_to_rectangular_points(f, image):
     """ This function takes all the pixels/histograms
@@ -396,7 +397,8 @@ if __name__ == "__main__":
     ########### neutrohpils 
     # working_dir = Path(r"C:\Users\Nabiki\Desktop\development\flim_tools\flim_tools\example_data\t_cell".replace('\\','/'))
     # path_sdt = working_dir / "Tcells-001.sdt"
-    path_sdt = Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_NADH.sdt")
+    # path_sdt = Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_NADH.sdt")
+    path_sdt = Path("Z:/0-Projects and Experiments/KM - OMI Phasor Plots/LifetimeData_Cycle00000_000001.sdt")
 
     im_sdt = load_sdt_file(path_sdt).squeeze()
     n_rows, n_cols, n_timebins = im_sdt.shape
@@ -424,7 +426,8 @@ if __name__ == "__main__":
     
    
     #Kelsey IRF's
-    irf = tifffile.imread( Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_IRF.tiff"))
+    # irf = tifffile.imread( Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_IRF.tiff"))
+    irf = read_asc("Z:/0-Projects and Experiments/KM - OMI Phasor Plots/40x_WID_2019Mar_IRF.asc")
     irf_timebins = irf[:,0] * 1e-9 # timebins in ns
     irf_decay = irf[:,1] # photons count
     plt.plot(irf_timebins, irf_decay)
@@ -456,7 +459,7 @@ if __name__ == "__main__":
     figure = plt.figure()
     plt.ylim([0,0.6])
     plt.xlim([0,1])
-    plt.scatter(g, s, s=2, c=counts, cmap='viridis_r', alpha=0.7)  # s=size, c= colormap_data, cmap=colormap to use    
+    plt.scatter(g, s, s=1, c=counts, cmap='viridis_r', alpha=0.5)  # s=size, c= colormap_data, cmap=colormap to use    
     plt.colorbar()
     draw_universal_semicircle(figure, laser_angular_frequency)
 

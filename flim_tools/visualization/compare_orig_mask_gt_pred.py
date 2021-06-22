@@ -55,9 +55,22 @@ def compare_orig_mask_gt_pred(im, mask_gt, mask_pred, title="" ):
 
 if __name__ == "__main__":
 
-    print("TODO add test code")
     
-    im_orig = np.random.rand(512,512)
-    im_gt = np.round(im_orig)
+    from flim_tools.visualization import compare_orig_mask_gt_pred
+    import numpy as np
     
-    compare_orig_mask_gt_pred(im_orig, im_gt, im_orig,"comparing originals")
+    im = np.random.rand(40,40)
+    compare_orig_mask_gt_pred(im, im, im)
+
+    # print("TODO add test code")
+    
+    # im_orig = np.random.rand(512,512)
+    # im_gt = np.round(im_orig)
+    
+    # compare_orig_mask_gt_pred(im_orig, im_gt, im_orig,"comparing originals")
+    
+    
+    
+    
+    
+    
