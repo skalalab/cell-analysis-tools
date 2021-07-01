@@ -3,3 +3,4 @@ from .rgb2labels import rgb2labels
 from .rgb2gray.rgb2gray import rgb2gray
 from .bin_sdt import bin_sdt
 from .sum_pool import sum_pool
+from .bin_im import bin_im
