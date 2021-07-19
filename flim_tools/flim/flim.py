@@ -316,14 +316,14 @@ def bin_image(image, bin_factor):
     return binned_image
 
     
-def draw_universal_semicircle(figure, laser_angular_frequency,  debug=False):
+def draw_universal_semicircle(figure, laser_angular_frequency, title='Phasor Plot',  debug=False):
 
    ''' get universal semicircle values for this rep rate '''
    x_circle, y_circle, g, s, lifetime_labels = universal_semicircle_series(laser_angular_frequency)
 
    # Labels and axis of phasor plot
    # figure = plt.figure()
-   figure.suptitle('Phasor Plot')
+   figure.suptitle(title)
    plt.xlabel('g', fontsize=20)
    plt.ylabel('s', fontsize=20)
 
@@ -418,9 +418,9 @@ if __name__ == "__main__":
         
     
     # show First 100 decays
-    for d in decays[:100]:
-        plt.plot(d)
-    plt.show()
+    # for d in decays[:100]:
+    #     plt.plot(d)
+    # plt.show()
     
    
     #Kelsey IRF's
