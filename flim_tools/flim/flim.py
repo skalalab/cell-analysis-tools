@@ -376,6 +376,8 @@ if __name__ == "__main__":
     import matplotlib as mpl
     mpl.rcParams["figure.dpi"] = 600
     import numpy as np
+    from flim_tools.image_processing import bin_sdt
+
     
     # variables
     laser_angular_frequency = 80e6
@@ -398,7 +400,9 @@ if __name__ == "__main__":
     # working_dir = Path(r"C:\Users\Nabiki\Desktop\development\flim_tools\flim_tools\example_data\t_cell".replace('\\','/'))
     # path_sdt = working_dir / "Tcells-001.sdt"
     # path_sdt = Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_NADH.sdt")
-    path_sdt = Path("Z:/0-Projects and Experiments/KM - OMI Phasor Plots/LifetimeData_Cycle00000_000001.sdt")
+    
+    
+    path_sdt = Path(HERE / "example_data/EPC16_Day8_4n-063/LifetimeData_Cycle00001_000001.sdt")
 
     im_sdt = load_sdt_file(path_sdt).squeeze()
     n_rows, n_cols, n_timebins = im_sdt.shape
@@ -410,7 +414,6 @@ if __name__ == "__main__":
     plt.imshow(im_sdt.sum(axis=2))
     plt.show()
 
-    from flim_tools.image_processing import bin_sdt
 
     # 7x7 bin
     im_sdt_binned = bin_sdt(im_sdt, bin_size=3, debug=True)    
@@ -427,7 +430,9 @@ if __name__ == "__main__":
    
     #Kelsey IRF's
     # irf = tifffile.imread( Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_IRF.tiff"))
-    irf = read_asc("Z:/0-Projects and Experiments/KM - OMI Phasor Plots/40x_WID_2019Mar_IRF.asc")
+    # irf = read_asc("Z:/0-Projects and Experiments/KM - OMI Phasor Plots/40x_WID_2019Mar_IRF.asc")
+    irf = read_asc(HERE / "example_data/irf_40xW_02_dec2017_IRF.asc")
+    
     irf_timebins = irf[:,0] * 1e-9 # timebins in ns
     irf_decay = irf[:,1] # photons count
     plt.plot(irf_timebins, irf_decay)
@@ -457,8 +462,8 @@ if __name__ == "__main__":
     
     # plot
     figure = plt.figure()
-    plt.ylim([0,0.6])
-    plt.xlim([0,1])
+    # plt.ylim([0,0.6])
+    # plt.xlim([0,1])
     plt.scatter(g, s, s=1, c=counts, cmap='viridis_r', alpha=0.5)  # s=size, c= colormap_data, cmap=colormap to use    
     plt.colorbar()
     draw_universal_semicircle(figure, laser_angular_frequency)
