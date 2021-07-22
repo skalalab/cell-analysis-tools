@@ -19,6 +19,10 @@ import zipfile
 import collections as coll
 from pprint import pprint
 from flim_tools.io import read_asc
+from flim_tools.image_processing import normalize
+from scipy.signal import convolve
+
+
 
 def lifetime_image_to_rectangular_points(f, image):
     """ This function takes all the pixels/histograms
@@ -317,8 +321,10 @@ def bin_image(image, bin_factor):
     return binned_image
 
     
-def draw_universal_semicircle(figure, laser_angular_frequency,  debug=False):
+def draw_universal_semicircle(figure, laser_angular_frequency, title="Phasor Plot",  debug=False):
 
+    
+   plt.title(title)
    ''' get universal semicircle values for this rep rate '''
    x_circle, y_circle, g, s, lifetime_labels = universal_semicircle_series(laser_angular_frequency)
 
@@ -368,6 +374,64 @@ def universal_semicircle_series(frequency):
     return x_circle, y_circle, g, s, lifetime_labels
 
 
+
+
+# SHIFT IRF 
+def estimate_and_shift_irf(decay, irf_decay, debug=False):
+    # TODO: smooth signals
+    # TODO: center IRF on middle of rising decay gradient or a little before
+    # peak should be near the middle of decay rise or closer to the left side
+    # account for offset of decay vertically
+    num_timebins = len(decay)
+    #SDT DECAY
+    decay_grad = np.gradient(decay)
+    decay_rising = decay_grad.copy()
+    decay_rising[decay_grad < 0] = 0 # take all positive gradient
+    if debug:
+        plt.plot(decay)
+        plt.plot(decay_grad)
+        plt.plot(decay_rising)
+        plt.legend(["decay","gradient","positive gradient"])
+        plt.show()
+    
+    # IRF --> Extract peak of rising
+    irf_decay_grad = np.gradient(irf_decay)
+
+    irf_rising = irf_decay_grad.copy()
+    irf_rising[irf_rising < 0] = 0
+    if debug:
+        plt.plot(irf_decay)
+        plt.plot(irf_decay_grad)
+        plt.plot(irf_rising)
+        plt.legend(["decay","gradient","positive gradient"])
+        plt.show()
+
+    #compute shift 
+    correlated = np.correlate(decay_rising, irf_rising, mode="full")
+    peak_correlated = np.argmax(correlated)
+    shift = peak_correlated - len(decay_rising) # because length is (len_d1 + len_d2 - 1)
+
+    
+    irf_decay_shifted = np.roll(irf_decay, shift)
+
+    # if debug: #visualize shifted correlation   
+    #     plt.plot(normalize(decay_rising))
+    #     plt.plot(normalize(irf_rising))
+    #     plt.plot(normalize(correlated))
+    #     plt.plot(np.roll(normalize(correlated), -np.argmax(correlated) ))
+    #     plt.legend(["decay rising gradient","irf rising gradient","correlated signal"])
+    #     plt.show()
+        
+    if debug: # visualize 
+        plt.plot(normalize(decay))
+        plt.plot(normalize(irf_decay))
+        plt.plot(normalize(irf_decay_shifted))
+        plt.legend(["decay","irf","shifted irf"])
+        plt.show()   
+    
+    
+    return irf_decay_shifted, shift
+
 if __name__ == "__main__":
     
     from pathlib import Path
@@ -402,6 +466,18 @@ if __name__ == "__main__":
     # path_sdt = Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_NADH.sdt")
     
     
+    ###### LOAD SDT FILE 
+    #Kelsey IRF's
+    # irf = tifffile.imread( Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_IRF.tiff"))
+    # irf = read_asc("Z:/0-Projects and Experiments/KM - OMI Phasor Plots/40x_WID_2019Mar_IRF.asc")
+    irf = read_asc(HERE / "example_data/irf_40xW_02_dec2017_IRF.asc")
+    
+    irf_timebins = irf[:,0] * 1e-9 # timebins in ns
+    irf_decay = irf[:,1] # photons count
+    
+
+
+    ###### LOAD SDT FILE 
     path_sdt = Path(HERE / "example_data/EPC16_Day8_4n-063/LifetimeData_Cycle00001_000001.sdt")
 
     im_sdt = load_sdt_file(path_sdt).squeeze()
@@ -413,45 +489,46 @@ if __name__ == "__main__":
     plt.show()
     plt.imshow(im_sdt.sum(axis=2))
     plt.show()
+    
+    
 
+        
+    # offset decay
+
+    
+    # REMOVE DECAY OFFSET
+    
 
     # 7x7 bin
     im_sdt_binned = bin_sdt(im_sdt, bin_size=3, debug=True)    
     
     #threshold decays 
-    decays = im_sdt_binned[im_sdt_binned.sum(axis=2)>1000]
-        
+    decays = im_sdt_binned[im_sdt_binned.sum(axis=2)>2000]
+    
+    
+    # calculate shift here after removing bg
     
     # show First 100 decays
     for d in decays[:100]:
         plt.plot(d)
     plt.show()
     
-   
-    #Kelsey IRF's
-    # irf = tifffile.imread( Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_IRF.tiff"))
-    # irf = read_asc("Z:/0-Projects and Experiments/KM - OMI Phasor Plots/40x_WID_2019Mar_IRF.asc")
-    irf = read_asc(HERE / "example_data/irf_40xW_02_dec2017_IRF.asc")
     
-    irf_timebins = irf[:,0] * 1e-9 # timebins in ns
-    irf_decay = irf[:,1] # photons count
-    plt.plot(irf_timebins, irf_decay)
-    plt.show()
-    
+    # compute calibration after irf aligned
     irf_lifetime = 0
     calibration = phasor_calibration(laser_angular_frequency, 
                                      irf_lifetime, 
                                      irf_timebins, 
                                      irf_decay)
-    # enable to plot IRF 
-    # decays = irf_decay.reshape((1,-1))
-    
-    # compute g and s  
+   
 
+
+    
+    # COMPUTE G AND S VALUES 
     array_phasor = [td_to_fd(laser_angular_frequency, irf_timebins, decay) for decay in decays]
 
    
-    # # compute g and s for 
+    # compute g and s for 
     list_gs = [phasor_to_rectangular_point(ph.angle + calibration.angle ,
                                             ph.magnitude * calibration.scaling_factor) 
                 for ph in array_phasor]
@@ -462,10 +539,11 @@ if __name__ == "__main__":
     
     # plot
     figure = plt.figure()
-    # plt.ylim([0,0.6])
-    # plt.xlim([0,1])
-    plt.scatter(g, s, s=1, c=counts, cmap='viridis_r', alpha=0.5)  # s=size, c= colormap_data, cmap=colormap to use    
-    plt.colorbar()
+    plt.ylim([0,1])
+    plt.xlim([0,1])
+    plt.axis('equal')
+    plt.scatter(g, s, s=1,  cmap='viridis_r', alpha=1)  # s=size, c= colormap_data, cmap=colormap to use    
+    # plt.colorbar()
     draw_universal_semicircle(figure, laser_angular_frequency)
 
 
