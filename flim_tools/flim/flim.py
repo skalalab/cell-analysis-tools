@@ -321,7 +321,8 @@ def bin_image(image, bin_factor):
     return binned_image
 
     
-def draw_universal_semicircle(figure, laser_angular_frequency, title="Phasor Plot",  debug=False):
+
+def draw_universal_semicircle(figure, laser_angular_frequency, title='Phasor Plot',  debug=False):
 
     
    plt.title(title)
@@ -330,7 +331,7 @@ def draw_universal_semicircle(figure, laser_angular_frequency, title="Phasor Plo
 
    # Labels and axis of phasor plot
    # figure = plt.figure()
-   figure.suptitle('Phasor Plot')
+   figure.suptitle(title)
    plt.xlabel('g', fontsize=20)
    plt.ylabel('s', fontsize=20)
 
@@ -509,9 +510,9 @@ if __name__ == "__main__":
     # calculate shift here after removing bg
     
     # show First 100 decays
-    for d in decays[:100]:
-        plt.plot(d)
-    plt.show()
+    # for d in decays[:100]:
+    #     plt.plot(d)
+    # plt.show()
     
     
     # compute calibration after irf aligned
