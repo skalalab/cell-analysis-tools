@@ -14,3 +14,4 @@ flim_tools_econtreras.egg-info/*
 flim_tools/image_processing/rgb2gray/.idea/*
 flim_tools/visualization/__pycache__/*
 flim_tools/general_functions/__pycache__/*
+
