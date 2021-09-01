@@ -1,4 +1,4 @@
-`import tifffile
+import tifffile
 from pathlib import Path
 from ipywidgets import Box
 import ipywidgets as widgets
