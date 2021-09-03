@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Metrics &mdash; flim_tools  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Image Processing Functions" href="../image_processing/image_processing.html" />
+    <link rel="prev" title="flim_tools’s documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> flim_tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-metrics.image">Image Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-metrics.roi">Roi Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../image_processing/image_processing.html">Image Processing Functions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">flim_tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Metrics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/metrics/metrics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="metrics">
+<h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-metrics.image">
+<span id="image-metrics"></span><h2>Image Metrics<a class="headerlink" href="#module-metrics.image" title="Permalink to this headline">¶</a></h2>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics.image.average_relative_performance" title="metrics.image.average_relative_performance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">average_relative_performance</span></code></a>(mask_gt1, …)</p></td>
+<td><p>Returns average relative performance of a predicted mask against two ground truth masks from two different users</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#metrics.image.dice" title="metrics.image.dice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dice</span></code></a>(im1, im2[, empty_score])</p></td>
+<td><p>Computes the dice coefficient/F1 score, a measure of average similarity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics.image.hausdorff_distance" title="metrics.image.hausdorff_distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hausdorff_distance</span></code></a>(mask_pred, mask_gt)</p></td>
+<td><p>Calculates the Hausdorff distance for a given image, provided a ground truth.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#metrics.image.jaccard" title="metrics.image.jaccard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jaccard</span></code></a>(mask_gt, mask_pred)</p></td>
+<td><p>Calculates the IoU/jaccard index for a pair of masks.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics.image.percent_content_captured" title="metrics.image.percent_content_captured"><code class="xref py py-obj docutils literal notranslate"><span class="pre">percent_content_captured</span></code></a>(mask_a, mask_b)</p></td>
+<td><p>Computes the content of mask_a captured in mask_b and returns it as a percent.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#metrics.image.total_error" title="metrics.image.total_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_error</span></code></a>(mask_gt, mask_pred[, weight_fn, …])</p></td>
+<td><p>Computes the percent of misclassified pixels on an image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#metrics.image.two_user_dice_similarity" title="metrics.image.two_user_dice_similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">two_user_dice_similarity</span></code></a>(mask_gt1, mask_gt2, …)</p></td>
+<td><p>Variation on average_relative_performance but areas are added in the denominator</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.image.average_relative_performance">
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">average_relative_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.average_relative_performance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns average relative performance of a predicted mask against
+two ground truth masks from two different users</p>
+<p>Taken from mito hacker paper <cite>https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7642274/</cite></p>
+<p>((Mito Catcher vs. User 1 + Mito Catcher vs. User 2)/(User 1 vs. User 2))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_gt1</strong> (<em>ndarray</em>) – ground truth mask 1.</p></li>
+<li><p><strong>mask_gt2</strong> (<em>ndarray</em>) – ground truth mask 2.</p></li>
+<li><p><strong>mask_predicted</strong> (<em>ndarray</em>) – predicted mask.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>average performance score.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.image.dice">
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">dice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.dice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the dice coefficient/F1 score, a measure of average similarity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im1</strong> (<em>array-like</em><em>, </em><em>bool</em>) – Any array of arbitrary size. If not boolean, will be converted.</p></li>
+<li><p><strong>im2</strong> (<em>array-like</em><em>, </em><em>bool</em>) – Any other array of identical size. If not boolean, will be converted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>dice</strong> – Dice coefficient as a float on range [0,1].
+Maximum similarity = 1
+No similarity = 0
+Both are empty (sum eq to zero) = empty_score</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The order of inputs for <cite>dice</cite> is irrelevant. The result will be
+identical if <cite>im1</cite> and <cite>im2</cite> are switched.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.image.hausdorff_distance">
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">hausdorff_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.hausdorff_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the Hausdorff distance for a given image, provided a ground truth. Both arrays must have the same number of columns.
+see <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html</a>
+:param mask_pred: predicted segmentation mask
+:type mask_pred: np.ndarray
+:param mask_gt: ground truth mask
+:type mask_gt: np.ndarray</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>ddouble</em> – The directed Hausdorff distance between arrays u and v,</p></li>
+<li><p><em>index_1int</em> – index of point contributing to Hausdorff pair in u</p></li>
+<li><p><em>index_2int</em> – index of point contributing to Hausdorff pair in v</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.image.jaccard">
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">jaccard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.jaccard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the IoU/jaccard index for a pair of masks.</p>
+<p>Logic is implemented to require images of the same size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_pred</strong> (<em>np.ndarray</em>) – Ground truth numpy ndarray image.</p></li>
+<li><p><strong>mask_gt</strong> (<em>np.ndarray</em>) – Current image numpy ndarray.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>jaccard_index</strong> – Calculated Jaccard index/distance.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.image.percent_content_captured">
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">percent_content_captured</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.percent_content_captured" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the content of mask_a captured in mask_b and returns it as a percent. (A intersect B)/A
+# From the paper <cite>Mitohacker &lt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7642274/&gt;</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_a</strong> (<em>ndarray</em>) – boolean mask.</p></li>
+<li><p><strong>mask_b</strong> (<em>ndarray</em>) – boolean mask.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>percent</strong> – percent of mask_a content captured by mask_b.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.image.total_error">
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">total_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.total_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the percent of misclassified pixels on an image.
+In the case where one is more important than the
+other, a weighted average may be used: c0FP + c1FN
+<a class="reference external" href="https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou">https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_gt</strong> (<em>bool ndarray</em>) – groudn truth mask.</p></li>
+<li><p><strong>mask_predicted</strong> (<em>bool ndarray</em>) – DESCRIPTION.</p></li>
+<li><p><strong>weight_fn</strong> (<em>int</em><em>, </em><em>optional</em>) – scalar weight applied to false negatives. The default is 1.</p></li>
+<li><p><strong>weight_fp</strong> (<em>int</em><em>, </em><em>optional</em>) – scalar weight applied to false positives. The default is 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>percent</strong> – total error of the predicted mask given a ground truth mask.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="metrics.image.two_user_dice_similarity">
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">two_user_dice_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.two_user_dice_similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variation on average_relative_performance but areas are added in the
+denominator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_gt1</strong> (<em>ndarray</em>) – ground truth mask 1.</p></li>
+<li><p><strong>mask_gt2</strong> (<em>ndarray</em>) – ground truth mask 2.</p></li>
+<li><p><strong>mask_predicted</strong> (<em>ndarray</em>) – predicted mask.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>dice score</strong> – two user average performance score, dice like.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-metrics.roi">
+<span id="roi-metrics"></span><h2>Roi Metrics<a class="headerlink" href="#module-metrics.roi" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../image_processing/image_processing.html" class="btn btn-neutral float-right" title="Image Processing Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="flim_tools’s documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Skala Lab.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
