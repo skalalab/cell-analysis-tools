@@ -25,14 +25,22 @@ from scipy.signal import convolve
 
 
 def lifetime_image_to_rectangular_points(f, image):
-    """ This function takes all the pixels/histograms
+    """
+    This function takes all the pixels/histograms
     of an image and plots them in the phasor plot
-    Takes in a
-    inputs:
-        f - laser angular frequency
-        image -  3d array representation of image, where the axis are [t,x,y]
-    outputs:
-        ImagePhasorPoints - object holding array of points
+
+    Parameters
+    ----------
+    f : frequency 
+        laser angular frequency
+    image : ndarray
+        3d array representation of image, where the axis are [t,x,y]
+
+    Returns
+    -------
+
+    ImagePhasorPoints : ndarray 
+        object holding array of points
             points_g - 2d array of g coordinates
             points_s - 2d array of s coordinates
     """
@@ -96,13 +104,17 @@ def lifetime_image_to_rectangular_points(f, image):
 
 def td_to_fd(f, timebins, counts):
     ''' Time to frequency domain transformation
-        input
-            - f: laser repetition angular frequency
-            - timebins: numpy array of timebins
-            - counts: photon counts of the histogram()
-        returns: 
-            - angle (rad)
-            - magnitude of phasor
+
+    Parameters
+    ---------- 
+        f {int} : laser repetition angular frequency
+        timebins {ndarray}: numpy array of timebins
+        counts {ndarray}: photon counts of the histogram()
+
+    Returns
+    -------
+        angle {float} : angle in radians
+        magnitude {float} : magnitude of phasor
     '''
     w = 2 * np.pi * f  # f
     Phasor = coll.namedtuple('Phasor', 'angle magnitude') #nameddtuple 
@@ -123,16 +135,21 @@ def td_to_fd(f, timebins, counts):
 
 def phasor_calibration(f, lifetime, timebins, counts):
     ''' Phasor Plot Calibration
-        input 
-            - f: laser repetition angular frequency
-            - lifetime: lifetime of known sample in ns (single exponential decay)
-            - timebins: timebins of samples
-            - counts: photon counts of histogram
-        returns
-            - angle_offset: difference in angle between known sample and actual
-            - magnitude_offset: difference in magnitude between known sample and actual
-        Note: if no timebins or histograms passed then returns angle and phase of
-            lifetime passed in
+
+    Parameters
+    ---------- 
+        f {int} : laser repetition angular frequency
+        lifetime {int} : lifetime of known sample in ns (single exponential decay)
+        timebins {int} : timebins of samples
+        counts {int} : photon counts of histogram
+    Returns
+    -------
+        angle_offset {float}: difference in angle between known sample and actual
+        magnitude_offset {float}: difference in magnitude between known sample and actual
+    Note
+    ----
+        If no timebins or histograms passed then returns angle and phase of
+        lifetime passed in
     '''
     Calibration = coll.namedtuple('Calibration', 'angle scaling_factor')
 
@@ -149,13 +166,16 @@ def phasor_calibration(f, lifetime, timebins, counts):
     return Calibration(angle=angle,  scaling_factor=ratio)
     
 def phasor_to_rectangular_point(angle, magnitude):
-    ''' get x position of phasor
-    input:
-        - angle
-        - magnitude
-    returns:
-        - g: x axis coordinate
-        - s: y axis coordinate
+    ''' Gets x and y position of phasor in rectangular coordinates
+
+    Parameters
+    ----------
+        angle {float} : phasor angle in radians
+        magnitude {float} : phasor magnitude
+    Returns
+    -------
+        g {float} : x axis coordinate
+        s {float} : y axis coordinate
     '''
     Point = coll.namedtuple('Point', 'g s')
     g = magnitude * np.cos(angle)
@@ -175,11 +195,15 @@ def rectangular_to_phasor_lifetimes_array(g, s):
     ''' 
     Takes an array(image) of g and s points and
     converts them to angle and magnitude phasor arrays
-    inputs:
-        g - array of g coordinates (x-coordinates)
-        s - array of s coordinates (y-coordinates)
-    outputs:
-        PhasorArray object
+
+    Parameters
+    ----------
+        g {float} : array of g coordinates (x-coordinates)
+        s {float} :array of s coordinates (y-coordinates)
+
+    Returns
+    -------
+        PhasorArray object : float
             lifetime_angles_array - array of angles for each pixel
             lifetime_magnitudes_array - array of magnitudes for each pixel
     '''
@@ -213,12 +237,21 @@ def phasor_to_rectangular_lifetimes_array(angles, magnitudes):
     
 def ideal_sample_phasor(f, lifetime):
     '''
-    input:
-        - f: laser rep rate
-        - lifetime: lifetime of desired single exponential sample
-    returns:
-        angle - angle of ideal sample
-        magnitude - magnitude of ideal sample
+    Generates a phasor for a specific lifetime at a given frequency.
+
+    Parameters
+    ----------
+        f : int
+            laser rep rate
+        lifetime : float
+            lifetime of desired single exponential sample
+
+    Returns
+    -------
+        angle : float
+            angle of ideal sample
+        magnitude : float
+            magnitude of ideal sample
     '''
     Phasor = coll.namedtuple('Phasor', 'angle magnitude')
 
@@ -238,11 +271,17 @@ def ideal_sample_phasor(f, lifetime):
 def bin_image(image, bin_factor):
     '''
     This function takes in an image and bins it's histograms
-    input:
-        image - image to bin, must be a 3d array of shape(t,x,y)
-        bin_size - pixel radius(including diagonals) of bins to create
-    output:
-        binned_image - new image with binned pixels
+    
+    
+    Parameters
+    ----------
+
+    image {ndarray} - image to bin, must be a 3d array of shape(t,x,y)
+    bin_size {int} - pixel radius(including diagonals) of bins to create
+    
+    Parameters
+    ----------
+        binned_image {ndarray} - new image with binned pixels
     '''
 
 #    image = image_thresholded
@@ -351,17 +390,28 @@ def draw_universal_semicircle(figure, laser_angular_frequency, title='Phasor Plo
 
 def universal_semicircle_series(frequency):
     """
+
     Given the frequency this function will return x and y points for plotting the
     universal semicircle, as well as the corresponding g and s values for
     common lifetimes between 0.5ns to 10ns
 
-    :param frequency: angular laser repetition frequency
-    :returns:
-    x_circle: x coordinates for universal semicircle
-    y_circle: y coordinates for universal semicircle
-    g: x coordinates for labeled lifetimes
-    s: y coordinates for labeled lifetimes
-    lifetime_labels: labels to be applied to the (g,s) coordinates
+    Parameters
+    ----------
+        frequency {float} : angular laser repetition frequency
+    
+    Returns
+    -------
+
+        x_circle : float
+            x coordinates for universal semicircle
+        y_circle : float
+            y coordinates for universal semicircle
+        g : float
+            x coordinates for labeled lifetimes
+        s : float
+            y coordinates for labeled lifetimes
+        lifetime_labels : list
+            labels to be applied to the (g,s) coordinates
     """
     x_coord = np.linspace(0, 1, num=1000)
     y_circle = np.sqrt(x_coord - x_coord ** 2)
@@ -379,6 +429,32 @@ def universal_semicircle_series(frequency):
 
 # SHIFT IRF 
 def estimate_and_shift_irf(decay, irf_decay, debug=False):
+    """
+    Estimates shift  given a decay and an IRF. 
+
+    Parameters
+    -----------
+        decay : ndarray
+            1D array containing decay curve
+        irf_decay : ndarray
+            1D array containing IRF  
+
+        debug : bool
+            Optional flag to display intermediate calculations
+
+    Returns
+    -------
+        irf_decay_shifted : ndarray
+            Shifted IRF as a 1d array
+        shift : int
+            value IRF was shifted by
+
+    Note
+    ----
+        IRF and decay should not have low SNR or gradient function will produce incorrect alignment   
+    
+    """
+
     # TODO: smooth signals
     # TODO: center IRF on middle of rising decay gradient or a little before
     # peak should be near the middle of decay rise or closer to the left side

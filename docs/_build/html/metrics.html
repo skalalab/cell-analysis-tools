@@ -11,10 +11,10 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -26,23 +26,23 @@
 
   
   <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
+    <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
     
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Image Processing Functions" href="../image_processing/image_processing.html" />
-    <link rel="prev" title="flim_tools’s documentation" href="../index.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Image Processing" href="image_processing.html" />
+    <link rel="prev" title="flim_tools’s documentation" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -56,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> flim_tools
+            <a href="index.html" class="icon icon-home"> flim_tools
           
 
           
@@ -69,7 +69,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -94,7 +94,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-metrics.roi">Roi Metrics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../image_processing/image_processing.html">Image Processing Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flim.html">Flim</a></li>
 </ul>
 
             
@@ -110,7 +111,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">flim_tools</a>
+          <a href="index.html">flim_tools</a>
         
       </nav>
 
@@ -141,7 +142,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Metrics</li>
     
@@ -149,7 +150,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/metrics/metrics.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/metrics.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -198,7 +199,7 @@
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="metrics.image.average_relative_performance">
-<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">average_relative_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.average_relative_performance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">average_relative_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metrics/image.html#average_relative_performance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metrics.image.average_relative_performance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns average relative performance of a predicted mask against
 two ground truth masks from two different users</p>
 <p>Taken from mito hacker paper <cite>https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7642274/</cite></p>
@@ -222,7 +223,7 @@ two ground truth masks from two different users</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="metrics.image.dice">
-<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">dice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.dice" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">dice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metrics/image.html#dice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metrics.image.dice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the dice coefficient/F1 score, a measure of average similarity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -248,7 +249,7 @@ identical if <cite>im1</cite> and <cite>im2</cite> are switched.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="metrics.image.hausdorff_distance">
-<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">hausdorff_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.hausdorff_distance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">hausdorff_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metrics/image.html#hausdorff_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metrics.image.hausdorff_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the Hausdorff distance for a given image, provided a ground truth. Both arrays must have the same number of columns.
 see <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html</a>
 :param mask_pred: predicted segmentation mask
@@ -269,7 +270,7 @@ see <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 
 <dl class="py function">
 <dt class="sig sig-object py" id="metrics.image.jaccard">
-<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">jaccard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.jaccard" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">jaccard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metrics/image.html#jaccard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metrics.image.jaccard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the IoU/jaccard index for a pair of masks.</p>
 <p>Logic is implemented to require images of the same size.</p>
 <dl class="field-list simple">
@@ -290,7 +291,7 @@ see <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 
 <dl class="py function">
 <dt class="sig sig-object py" id="metrics.image.percent_content_captured">
-<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">percent_content_captured</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.percent_content_captured" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">percent_content_captured</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metrics/image.html#percent_content_captured"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metrics.image.percent_content_captured" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the content of mask_a captured in mask_b and returns it as a percent. (A intersect B)/A
 # From the paper <cite>Mitohacker &lt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7642274/&gt;</cite></p>
 <dl class="field-list simple">
@@ -311,7 +312,7 @@ see <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 
 <dl class="py function">
 <dt class="sig sig-object py" id="metrics.image.total_error">
-<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">total_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.total_error" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">total_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metrics/image.html#total_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metrics.image.total_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the percent of misclassified pixels on an image.
 In the case where one is more important than the
 other, a weighted average may be used: c0FP + c1FN
@@ -336,7 +337,7 @@ other, a weighted average may be used: c0FP + c1FN
 
 <dl class="py function">
 <dt class="sig sig-object py" id="metrics.image.two_user_dice_similarity">
-<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">two_user_dice_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#metrics.image.two_user_dice_similarity" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metrics.image.</span></span><span class="sig-name descname"><span class="pre">two_user_dice_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metrics/image.html#two_user_dice_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metrics.image.two_user_dice_similarity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Variation on average_relative_performance but areas are added in the
 denominator</p>
 <dl class="field-list simple">
@@ -368,8 +369,8 @@ denominator</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../image_processing/image_processing.html" class="btn btn-neutral float-right" title="Image Processing Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../index.html" class="btn btn-neutral float-left" title="flim_tools’s documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="image_processing.html" class="btn btn-neutral float-right" title="Image Processing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="flim_tools’s documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

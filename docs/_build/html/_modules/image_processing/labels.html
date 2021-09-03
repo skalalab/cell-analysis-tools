@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>image_processing.labels &mdash; flim_tools  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> flim_tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../flim.html">Flim</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">flim_tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>image_processing.labels</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for image_processing.labels</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">flim_tools.io</span> <span class="kn">import</span> <span class="n">load_sdt_file</span>
+<span class="kn">from</span> <span class="nn">flim_tools.visualization</span> <span class="kn">import</span> <span class="n">compare_images</span>
+<span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="k">as</span> <span class="nn">ndi</span>
+
+
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+
+
+<span class="kn">import</span> <span class="nn">tifffile</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">label</span>
+
+
+<div class="viewcode-block" id="rgb2labels"><a class="viewcode-back" href="../../image_processing.html#image_processing.labels.rgb2labels">[docs]</a><span class="k">def</span> <span class="nf">rgb2labels</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a 3ch rgb mask image into a 1ch uint16 mask image.   </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    im : ndarray</span>
+<span class="sd">        input 3ch RGB image of rois.</span>
+<span class="sd">    debug : bool, optional</span>
+<span class="sd">        Enable display of intermediates. The default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mask : ndarray</span>
+<span class="sd">        labels mask from RGB image.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>   
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;original_image&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1">##### convert RGB to intensity with unique values</span>
+    <span class="n">im</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">im</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">im</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">im</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+    <span class="n">flat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;flattened image&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="n">unique_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+    <span class="n">unique_values</span> <span class="o">=</span> <span class="n">unique_values</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1"># remove bg</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unique values without bg: </span><span class="si">{</span><span class="n">unique_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># output mask</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="c1"># incrementing index</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">unique_values</span><span class="p">:</span> <span class="c1"># iterate through values</span>
+        <span class="n">im_rois</span> <span class="o">=</span> <span class="p">(</span><span class="n">flat</span><span class="o">==</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">labeled_mask</span><span class="p">,</span> <span class="n">n_rois</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">im_rois</span><span class="p">)</span>
+        <span class="c1"># iterate through labels</span>
+        <span class="k">for</span> <span class="n">roi_label</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labeled_mask</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]:</span> <span class="c1"># exclude gb mask</span>
+            <span class="n">roi</span> <span class="o">=</span> <span class="p">(</span><span class="n">labeled_mask</span> <span class="o">==</span> <span class="n">roi_label</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">idx</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">+</span> <span class="n">roi</span>
+            <span class="n">idx</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;intermediate mask&quot;</span><span class="p">)</span>        
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1">###### reorder index to increasing values</span>
+    
+    <span class="n">iter_mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">=</span> <span class="n">iter_mask</span><span class="o">.</span><span class="n">shape</span>
+    
+    <span class="n">label_id</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># starting label</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_rows</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;processing row: </span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">iter_mask</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># mask found</span>
+                <span class="c1">#print(f&quot;value: {mask[row,col]}&quot;)</span>
+                <span class="n">roi_value</span> <span class="o">=</span> <span class="n">mask</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span>
+                <span class="n">mask</span><span class="p">[</span><span class="n">iter_mask</span><span class="o">==</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_id</span> <span class="c1"># replace mask value</span>
+                <span class="n">iter_mask</span><span class="p">[</span><span class="n">iter_mask</span><span class="o">==</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># clear out mask in iter_mask</span>
+                <span class="n">label_id</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># increment index</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;incrementing order of labels&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+    <span class="k">return</span> <span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="fill_and_label_rois"><a class="viewcode-back" href="../../image_processing.html#image_processing.labels.fill_and_label_rois">[docs]</a><span class="k">def</span> <span class="nf">fill_and_label_rois</span><span class="p">(</span><span class="n">curr_nuclei</span><span class="p">):</span> 
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills and labels ROI outlines using unique ints for each region.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ---------- </span>
+<span class="sd">    param curr_nucelei : ndarray</span>
+<span class="sd">        Current image to process</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output : ndarray </span>
+<span class="sd">        ROIs filled and labeled with unique int representations</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">ndi</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">ndi</span><span class="o">.</span><span class="n">binary_fill_holes</span><span class="p">(</span><span class="n">curr_nuclei</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="rgb2gray"><a class="viewcode-back" href="../../image_processing.html#image_processing.labels.rgb2gray">[docs]</a><span class="k">def</span> <span class="nf">rgb2gray</span><span class="p">(</span><span class="n">mask_rgb</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    # RGB to Grayscale</span>
+<span class="sd">    ## Code logic:</span>
+<span class="sd">    - Essentially, read in mask only image (not composite) and figure out unique tuples that represent singular RGB values.</span>
+<span class="sd">    - A typical RBG value to produce a color value can be broken up into (R, G, B) insity values.</span>
+<span class="sd">    - Tuples are preferable over numpy arrays as they can be easily condensed into unique elemnts using a set and then</span>
+<span class="sd">    converted back into a list (they are hashable).</span>
+<span class="sd">    - After uniques are found, build a dictionary with values from 1 to number of unique RGB values in the images.</span>
+<span class="sd">    These will become the grayscale int values that we then plot.</span>
+<span class="sd">    The resulting array should automatically upscale from 8-bit integer if needed (&gt;256 unique elements).</span>
+<span class="sd">    - **This only works for mask images, NOT overlays!**</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mask_rgb : np.ndarray</span>
+<span class="sd">        DESCRIPTION.</span>
+<span class="sd">    debug : bool, optional</span>
+<span class="sd">        Enable debugging output. The default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : np.ndarray</span>
+<span class="sd">        Grayscale image.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Iterate over every row and column in the mask image and generate a list of RGB tuples</span>
+    <span class="c1"># There are probably more efficient ways to do this with np.reshape/np.squeeze, but for readability this was used:</span>
+    <span class="c1">#     - if you are dealing with a larger image set, adjust as needed for a more efficient solution</span>
+    <span class="c1"># Creating a set initially and having to check every time we add a new element for whether it is unique is inefficient</span>
+    
+    <span class="n">tuple_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">mask_rgb</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">tuple_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">column</span><span class="p">))</span>
+    
+    <span class="c1"># Convert from list -&gt; set -&gt; list to only keep unique RGB values for lookup table</span>
+    <span class="c1"># Benefit of the tuple shows here! Hashable in a set which a numpy array alone wouldn&#39;t be</span>
+    
+    <span class="n">tuple_list</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">tuple_list</span><span class="p">))</span>
+    
+    <span class="c1"># Make a dictionary of RGB tuples to int index from 1 to length of unique RGB tuples</span>
+    <span class="c1"># Add one to reserve 0 for (0,0,0) and update (0,0,0) at the end to be 0</span>
+    
+    <span class="n">tuple_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">tuple_list</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tuple_list</span><span class="p">))}</span>
+    <span class="n">tuple_dict</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c1"># Generate a numpy of colors and IDs.</span>
+    <span class="c1">#   - The colors array will be n x 3 depending on the number of unique RGB values</span>
+    <span class="c1">#   - The color_ids array will be n x 1 representing each of the new values for any given RGB value</span>
+    <span class="c1">#   - This creates effectively a lookup table for converting a list of RGB values to a grayscale int equivalent</span>
+    
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">tuple_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="n">color_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">tuple_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    
+    
+    <span class="c1"># Always prefer 8bit int if we can get away with it for easier viewing in windows platforms.</span>
+    <span class="c1">#   - If there are more than 255 distinct values, then use np.uint32 as that is always positive</span>
+    <span class="c1">#   and guarantees compatibility with even transparency based RGB codes (#AARRGGBB)</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tuple_dict</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">255</span><span class="p">:</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span>
+    
+    <span class="c1"># Initialize output array as the shape of the original image (minus RGB channels) and set everything to 0 initially</span>
+    <span class="c1"># Also auto update dtype to be uint8 if possible, otherwise uint32</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mask_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mask_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">)</span>
+    
+    <span class="c1"># Finally, check color of individual pixels in original mask against the color lookup table.</span>
+    <span class="c1"># If all 3 RGB values match, then the index and new label of that point are returned</span>
+    
+    <span class="n">label</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mask_rgb</span> <span class="o">==</span> <span class="n">colors</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span>
+    
+    <span class="n">unique_colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    
+    <span class="c1"># Index rows and columns to now be the color ID determined above</span>
+    <span class="c1"># Length of each of these will be mask.shape[0]*mask.shape[1], and will be automatically reshaped to fit the result array</span>
+    
+    <span class="n">result</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">color_ids</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">result</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+   
+        
+    <span class="c1">#### rgb2labels test  </span>
+
+    <span class="c1"># https://stackoverflow.com/questions/24780697/numpy-unique-list-of-colors-in-the-image</span>
+    <span class="c1"># pixels_1d_array = im.reshape((-1,im.shape[2]))</span>
+    <span class="c1"># unique_colors = np.unique(pixels_1d_array, axis=0)</span>
+    
+    <span class="n">image_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;rgb2gray/sample_data&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># path_im = image_dir / &quot;N_photons_day22_feat2_Object Predictions_cyto_overlay.tiff&quot;</span>
+    <span class="n">path_im</span> <span class="o">=</span> <span class="n">image_dir</span> <span class="o">/</span> <span class="s2">&quot;N_photons_day22_feat2_Object Predictions_cyto.tiff&quot;</span>
+    
+    <span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path_im</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">rgb2labels</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">unique_colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+
+    
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Skala Lab.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
