@@ -1,4 +1,6 @@
 {
     "restructuredtext.confPath": "${workspaceFolder}\\docs",
-    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe"
+    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe",
+    "restructuredtext.linter.disabled": true,
+    "restructuredtext.languageServer.disabled": true
 }

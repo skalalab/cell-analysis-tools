@@ -107,14 +107,19 @@ def td_to_fd(f, timebins, counts):
 
     Parameters
     ---------- 
-        f {int} : laser repetition angular frequency
-        timebins {ndarray}: numpy array of timebins
-        counts {ndarray}: photon counts of the histogram()
+        f  : int 
+            laser repetition angular frequency
+        timebins : ndarray
+            numpy array of timebins
+        counts : ndarray
+            photon counts of the histogram()
 
     Returns
     -------
-        angle {float} : angle in radians
-        magnitude {float} : magnitude of phasor
+        angle  : float 
+            angle in radians
+        magnitude  : float 
+            magnitude of phasor
     '''
     w = 2 * np.pi * f  # f
     Phasor = coll.namedtuple('Phasor', 'angle magnitude') #nameddtuple 
@@ -138,10 +143,14 @@ def phasor_calibration(f, lifetime, timebins, counts):
 
     Parameters
     ---------- 
-        f {int} : laser repetition angular frequency
-        lifetime {int} : lifetime of known sample in ns (single exponential decay)
-        timebins {int} : timebins of samples
-        counts {int} : photon counts of histogram
+        f  : int 
+            laser repetition angular frequency
+        lifetime  : int 
+            lifetime of known sample in ns (single exponential decay)
+        timebins  : int 
+            timebins of samples
+        counts  : int 
+            photon counts of histogram
     Returns
     -------
         angle_offset {float}: difference in angle between known sample and actual
@@ -170,12 +179,16 @@ def phasor_to_rectangular_point(angle, magnitude):
 
     Parameters
     ----------
-        angle {float} : phasor angle in radians
-        magnitude {float} : phasor magnitude
+        angle  : float 
+            phasor angle in radians
+        magnitude  : float 
+            phasor magnitude
     Returns
     -------
-        g {float} : x axis coordinate
-        s {float} : y axis coordinate
+        g  : float 
+            x axis coordinate
+        s  : float
+            y axis coordinate
     '''
     Point = coll.namedtuple('Point', 'g s')
     g = magnitude * np.cos(angle)
@@ -198,8 +211,10 @@ def rectangular_to_phasor_lifetimes_array(g, s):
 
     Parameters
     ----------
-        g {float} : array of g coordinates (x-coordinates)
-        s {float} :array of s coordinates (y-coordinates)
+        g  : float 
+            array of g coordinates (x-coordinates)
+        s  : float 
+            array of s coordinates (y-coordinates)
 
     Returns
     -------
@@ -217,15 +232,22 @@ def rectangular_to_phasor_lifetimes_array(g, s):
 
 def phasor_to_rectangular_lifetimes_array(angles, magnitudes):
     ''' Takes in two arrays of angles and magnitudes
-        and converts them to array of g and s points
-    input:
-        f - laser angular frequency
-        angles - array of angles
-        mangitudes - array of magnitudes
-    output
-        RectangularLifetimesArray - object with g and s array of lifetimes
-            g - array of g-coordinates(x-coordinates)
-            s - array of s-coordinates (y-coordinates)
+    and converts them to array of g and s points
+    
+    Parameters
+    ----------
+        f : int 
+            laser angular frequency
+        angles : float 
+            array of angles
+        mangitudes : float
+            array of magnitudes
+    Returns
+    -------
+        RectangularLifetimesArray : Phasor collection object
+            object with g and s array of lifetimes
+                g - array of g-coordinates(x-coordinates)
+                s - array of s-coordinates (y-coordinates)
     '''
     RectangularLifetimesArray = coll.namedtuple('RectangularLifetimesArray', 'g s')
 
@@ -253,6 +275,7 @@ def ideal_sample_phasor(f, lifetime):
         magnitude : float
             magnitude of ideal sample
     '''
+
     Phasor = coll.namedtuple('Phasor', 'angle magnitude')
 
     # lifetime = lifetime * 1e-12  # lifetime in ns
@@ -268,6 +291,7 @@ def ideal_sample_phasor(f, lifetime):
     print("Input lifetime: ", (1/w * ideal_s/ideal_g))
     return Phasor(angle=angle, magnitude=magnitude)
 
+
 def bin_image(image, bin_factor):
     '''
     This function takes in an image and bins it's histograms
@@ -276,12 +300,15 @@ def bin_image(image, bin_factor):
     Parameters
     ----------
 
-    image {ndarray} - image to bin, must be a 3d array of shape(t,x,y)
-    bin_size {int} - pixel radius(including diagonals) of bins to create
+    image : ndarray
+        image to bin, must be a 3d array of shape(t,x,y)
+    bin_size : int
+        pixel radius(including diagonals) of bins to create
     
-    Parameters
-    ----------
-        binned_image {ndarray} - new image with binned pixels
+    Returns
+    -------
+        binned_image : ndarray
+            new image with binned pixels
     '''
 
 #    image = image_thresholded
@@ -362,30 +389,43 @@ def bin_image(image, bin_factor):
     
 
 def draw_universal_semicircle(figure, laser_angular_frequency, title='Phasor Plot',  debug=False):
+    """
+    Draws the universal semicircle over the give figure.
 
+    Parameters
+    ----------
+        figure : matplotlib figure object
+            figure object to draw semicircle over
+        laser_angular_frequency : int
+            rep rate or laser angular frequency, affects position of labeled points
+
+    Returns
+    -------
+        None
+    """
     
-   plt.title(title)
-   ''' get universal semicircle values for this rep rate '''
-   x_circle, y_circle, g, s, lifetime_labels = universal_semicircle_series(laser_angular_frequency)
+    plt.title(title)
+    ''' get universal semicircle values for this rep rate '''
+    x_circle, y_circle, g, s, lifetime_labels = universal_semicircle_series(laser_angular_frequency)
 
-   # Labels and axis of phasor plot
-   # figure = plt.figure()
-   figure.suptitle(title)
-   plt.xlabel('g', fontsize=20)
-   plt.ylabel('s', fontsize=20)
+    # Labels and axis of phasor plot
+    # figure = plt.figure()
+    figure.suptitle(title)
+    plt.xlabel('g', fontsize=20)
+    plt.ylabel('s', fontsize=20)
 
-   # add circle and lifetime estimates
-   plt.plot(x_circle, y_circle, '-', color='teal')
-   plt.plot(g, s, '.', color='magenta')
+    # add circle and lifetime estimates
+    plt.plot(x_circle, y_circle, '-', color='teal')
+    plt.plot(g, s, '.', color='magenta')
 
-   if debug:
-       print('type: ', type(lifetime_labels), ' labels: ', lifetime_labels)
+    if debug:
+        print('type: ', type(lifetime_labels), ' labels: ', lifetime_labels)
 
-   ''' ADD LIFETIME LABELS '''
-   for i, txt in enumerate(lifetime_labels):
-       # self.ax.annotate(txt, (g[i], s[i]))
-       plt.annotate(txt, (g[i], s[i]))
-   plt.show()
+    ''' ADD LIFETIME LABELS '''
+    for i, txt in enumerate(lifetime_labels):
+        # self.ax.annotate(txt, (g[i], s[i]))
+        plt.annotate(txt, (g[i], s[i]))
+    plt.show()
 
 
 def universal_semicircle_series(frequency):

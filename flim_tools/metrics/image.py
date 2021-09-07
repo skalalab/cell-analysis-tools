@@ -20,7 +20,7 @@ def dice(im1, im2, empty_score=1.0):
         No similarity = 0
         Both are empty (sum eq to zero) = empty_score
         
-    Notes
+    Note
     -----
     The order of inputs for `dice` is irrelevant. The result will be
     identical if `im1` and `im2` are switched.
