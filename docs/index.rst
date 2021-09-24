@@ -11,9 +11,10 @@ flim_tools's documentation
    :maxdepth: 2
    :caption: Contents:
 
-   metrics
-   image_processing
-   flim
+   rest_files/metrics
+   rest_files/image_processing
+   rest_files/flim
+   rest_files/io
 
 Indices and tables
 ==================
