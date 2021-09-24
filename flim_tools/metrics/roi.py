@@ -176,34 +176,8 @@ def average_intensity(roi):
 
 
 
-def magnitude(roi):
-    """The magnitude of a vector, which can be computed at either a pixel or mitochondrion level.
 
-    """
-    pass
 
-def angle(roi):
-    """The angle of a vector, which can be computed at either a pixel or mitochondrion level.
-
-    """
-    pass
-
-def fractal_dimension_mean(roi):
-    """The mean value of the fractal dimensions of each pixel in a segmented region. Higher values represent more complex patterns.
-
-    """
-    pass
-
-def fractal_dimension_std(roi):
-    """The standard deviation of the fractal dimensions of each pixel in a segmented region.
-    """
-    pass
-
-def fractal_dimension_lacunarity(roi):
-    """The squared value of the standard deviation of fractal dimension divided by the mean fractal dimension. Lower value represents a dense pattern while higher values represent more open patterns.
-
-    """
-    pass
 
 def mitochondria_morphological_class(roi):
     """The punctate, swollen, and networked morphologies.
@@ -216,9 +190,6 @@ if __name__ == "__main__":
     import matplotlib.pylab as plt
     import matplotlib as mpl
     mpl.rcParams["figure.dpi"] = 300
-
-
-
 
     idx_rows, idx_cols = ellipse(20,20, 5,7)
     shape_ellipse = np.zeros((40,40))
