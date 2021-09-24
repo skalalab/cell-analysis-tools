@@ -7,6 +7,7 @@ from .normalize import normalize
 from .kmeans_threshold import kmeans_threshold
 from .rgb2labels import rgb2labels
 from .rgb2gray import rgb2gray
+from .fft_image_filter import remove_horizontal_vertical_edges
 
 
 __all__ = [
@@ -16,6 +17,6 @@ __all__ = [
     "normalize",
     "kmeans_threshold",
     "rgb2labels",
-    "rgb2gray"
-    
+    "rgb2gray",
+    "remove_horizontal_vertical_edges"
 ]

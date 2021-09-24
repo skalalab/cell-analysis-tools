@@ -167,52 +167,13 @@ def perimeter(roi):
     """
     return _return_regionprops(roi).perimeter
 
-def max_radius(roi):
-    """The maximum distance of any pixel in the segmented region to the closest background pixel.
-    """
-    pass
 
-def mean_radius(roi):
-    """Mean value the distances of all pixels in the segmented region to their closest background pixel.
-    """
-    pass
-
-def median_radius(roi):
-    """Median value the distances of all pixels in the segmented region to their closest background pixel.
-
-    """
-    pass
 def average_intensity(roi):
     """The average of pixel intensities within the segmented region.
 
     """
-    pass
+    return _return_regionprops(roi).intensity_mean
 
-def integrated_intensity(roi):
-    """The sum of the pixel intensities within the segmented region.
-
-    """
-    pass
-
-
-def median_std_intensity(roi):
-    """The median of standard deviation of intensity values in a segmented region. These values are obtained by computing the standard deviation of the intensity values of a pixel across all frames of a video.
-
-    """
-    pass
-
-
-def dx(roi):
-    """The x component of a motion vector, which can be computed at either a pixel or mitochondrion level.
-
-    """
-    pass
-
-def dy(roi):
-    """The y component of a motion vector, which can be computed at either a pixel or mitochondrion level.
-
-    """
-    pass
 
 
 def magnitude(roi):
