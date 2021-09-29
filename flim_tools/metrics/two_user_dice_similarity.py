@@ -30,3 +30,4 @@ def two_user_dice_similarity(mask_gt1, mask_gt2, mask_pred):
     return (np.sum(np.logical_and(mask_pred, mask_gt1)) +
             np.sum(np.logical_and(mask_pred, mask_gt2))) \
             / (np.sum(mask_gt1) + np.sum(mask_gt2)) # sum areas
+

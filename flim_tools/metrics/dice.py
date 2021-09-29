@@ -17,10 +17,10 @@ def dice(im1, im2, empty_score=1.0):
         Any other array of identical size. If not boolean, will be converted.
     Returns
     -------
-    dice : float
-        Dice coefficient as a float on range [0,1].
-        Maximum similarity = 1
-        No similarity = 0
+    float
+        Dice coefficient as a float on range [0,1]. \n
+        Maximum similarity = 1 \n
+        No similarity = 0 \n
         Both are empty (sum eq to zero) = empty_score
         
     Note
