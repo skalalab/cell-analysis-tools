@@ -3,7 +3,7 @@ from scipy import ndimage
 
 
 
-def max_radius(roi, return_index=False):
+def radius_max(roi, return_index=False):
     """
 
     The maximum distance of any pixel in the segmented region to the closest background pixel.
@@ -31,9 +31,9 @@ def max_radius(roi, return_index=False):
     if return_index:
         return distance[idx_max_value], idx_max_value
     
-    return distance[idx_max_value]
+    yield distance[idx_max_value]
 
-def mean_radius(roi):
+def radius_mean(roi):
     """
     Mean value the distances of all pixels in the segmented region to their closest background pixel.
 
@@ -49,9 +49,9 @@ def mean_radius(roi):
 
     """
     
-    return np.mean(ndimage.distance_transform_edt(roi))
+    yield np.mean(ndimage.distance_transform_edt(roi))
 
-def median_radius(roi):
+def radius_median(roi):
     """
     Median value the distances of all pixels in the segmented region to their closest background pixel.
 
@@ -66,7 +66,7 @@ def median_radius(roi):
         median distance of all the pixels distances to background
 
     """
-    return np.median(ndimage.distance_transform_edt(roi))
+    yield np.median(ndimage.distance_transform_edt(roi))
 
 
 if __name__ == "__main__":
@@ -88,12 +88,12 @@ if __name__ == "__main__":
     idx_max_value = np.unravel_index(distance.argmax(), distance.shape)
     distance[idx_max_value]
     
-    print(f"max radius: {max_radius(roi)}")
+    print(f"max radius: {radius_max(roi)}")
     # MEAN RADIUS
-    print(f"mean radius: {mean_radius(roi)}")
+    print(f"mean radius: {radius_mean(roi)}")
     
     # MEDIAN RADIUS
-    print(f"median radius: {median_radius(roi)}")
+    print(f"median radius: {radius_median(roi)}")
     
     
     

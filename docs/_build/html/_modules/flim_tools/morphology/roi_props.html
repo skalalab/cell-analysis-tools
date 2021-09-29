@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>flim_tools.morphology.roi_props &mdash; flim_tools  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> flim_tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/morphology.html">Morphology</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">flim_tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>flim_tools.morphology.roi_props</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for flim_tools.morphology.roi_props</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">regionprops</span><span class="p">,</span> <span class="n">label</span>
+<span class="kn">from</span> <span class="nn">numpy.ma</span> <span class="kn">import</span> <span class="n">masked_array</span>
+
+<span class="k">def</span> <span class="nf">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    
+    <span class="n">im_labeled</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span>
+    <span class="n">im_regionprops</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">im_labeled</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">im_regionprops</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Error: multi roi mask passed&quot;</span>
+    <span class="k">return</span> <span class="n">im_regionprops</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># return single roi&#39;s props</span>
+    
+<div class="viewcode-block" id="area"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.area">[docs]</a><span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="n">roi</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Number of pixels in a segmented region.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        roi of region to copute area</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    area : int</span>
+<span class="sd">        Number of pixels in the mask</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from skiamge.draw import ellipse</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; idx_rows, idx_cols = ellipse(20,20, 5,7)</span>
+<span class="sd">    &gt;&gt;&gt; shape_ellipse = np.zeros((40,40))</span>
+<span class="sd">    &gt;&gt;&gt; shape_ellipse[idx_rows, idx_cols] = 1</span>
+<span class="sd">    &gt;&gt;&gt; area_ellipse = int(np.sum(shape_ellipse))</span>
+<span class="sd">    &gt;&gt;&gt; area_ellipse</span>
+<span class="sd">    105</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+   
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">area</span></div>
+
+<div class="viewcode-block" id="major_axis_length"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.major_axis_length">[docs]</a><span class="k">def</span> <span class="nf">major_axis_length</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Number of pixels on the major axis of the fitted ellipse.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        ndarray with single roi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        numbe of pixels in the major axis</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">major_axis_length</span></div>
+    
+
+<div class="viewcode-block" id="minor_axis_length"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.minor_axis_length">[docs]</a><span class="k">def</span> <span class="nf">minor_axis_length</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Number of pixels on the minor axis of the fitted ellipse.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        ndarray with single roi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">         numbe of pixels in the minor axis</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">minor_axis_length</span></div>
+
+<div class="viewcode-block" id="eccentricity"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.eccentricity">[docs]</a><span class="k">def</span> <span class="nf">eccentricity</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ratio of the distance between the foci of the ellipse to its major axis length.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        ndarray with single roi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        eccentricity value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">eccentricity</span></div>
+
+<div class="viewcode-block" id="orientation"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.orientation">[docs]</a><span class="k">def</span> <span class="nf">orientation</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Angle between the 0th axis (rows) and the major axis of the </span>
+<span class="sd">    ellipse that has the same second moments as the region, </span>
+<span class="sd">    ranging from -pi/2 to pi/2 counter-clockwise.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        ndarray with single roi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Angle between major axis of ellipse and the x-axis.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">orientation</span></div>
+
+<div class="viewcode-block" id="solidity"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.solidity">[docs]</a><span class="k">def</span> <span class="nf">solidity</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ratio of the area of the segmented region over the area of </span>
+<span class="sd">    the convex hull of the segmentation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        ndarray with single roi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        solidity value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">solidity</span></div>
+
+<div class="viewcode-block" id="extent"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.extent">[docs]</a><span class="k">def</span> <span class="nf">extent</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ratio of the area of the segmented region over the area of </span>
+<span class="sd">    the bounding box of the segmented region.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        ndarray with single roi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        extent ratio value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">extent</span></div>
+
+<div class="viewcode-block" id="perimeter"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.perimeter">[docs]</a><span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Number of pixels in the contour of the segmented region.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        ndarray with single roi.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        number of pixels in perimeter.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">perimeter</span></div>
+
+
+<div class="viewcode-block" id="average_intensity"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.average_intensity">[docs]</a><span class="k">def</span> <span class="nf">average_intensity</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The average of pixel intensities within the segmented region.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">intensity_mean</span></div>
+
+
+
+<div class="viewcode-block" id="integrated_intensity"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.integrated_intensity">[docs]</a><span class="k">def</span> <span class="nf">integrated_intensity</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">im_itensity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The sum of the pixel intensities within the segmented region.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">roi_inverted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">.</span><span class="n">invert</span><span class="p">()</span>
+    <span class="n">roi_masked</span> <span class="o">=</span> <span class="n">masked_array</span><span class="p">(</span><span class="n">im_itensity</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">roi_inverted</span><span class="p">)</span>
+    
+    <span class="k">yield</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">roi_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> </div>
+
+
+
+<div class="viewcode-block" id="mitochondria_morphological_class"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.mitochondria_morphological_class">[docs]</a><span class="k">def</span> <span class="nf">mitochondria_morphological_class</span><span class="p">(</span><span class="n">roi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The punctate, swollen, and networked morphologies.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="kn">from</span> <span class="nn">skimage.draw</span> <span class="kn">import</span> <span class="n">ellipse</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+    <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+
+    <span class="n">idx_rows</span><span class="p">,</span> <span class="n">idx_cols</span> <span class="o">=</span> <span class="n">ellipse</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">shape_ellipse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">40</span><span class="p">,</span><span class="mi">40</span><span class="p">))</span>
+    <span class="n">shape_ellipse</span><span class="p">[</span><span class="n">idx_rows</span><span class="p">,</span><span class="n">idx_cols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="n">area</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="p">)</span>
+    
+    <span class="n">im_labeled</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im_labeled</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">im_regionprops</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">im_labeled</span><span class="p">)</span>
+
+    <span class="n">_return_regionprops</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="p">)</span><span class="o">.</span><span class="n">area</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Skala Lab.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

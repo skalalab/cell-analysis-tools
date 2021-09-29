@@ -13,5 +13,5 @@ __all__ = [
 "total_error",
 "percent_content_captured",
 "two_user_dice_similarity",
-"hausdorff_distance"
+"hausdorff_distance",
 ]

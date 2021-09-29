@@ -15,6 +15,7 @@ flim_tools's documentation
    rest_files/image_processing
    rest_files/flim
    rest_files/io
+   rest_files/morphology
 
 Indices and tables
 ==================

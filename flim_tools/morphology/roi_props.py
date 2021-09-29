@@ -1,7 +1,7 @@
 
 import numpy as np
 from skimage.measure import regionprops, label
-
+from numpy.ma import masked_array
 
 def _return_regionprops(roi):
     
@@ -56,7 +56,7 @@ def major_axis_length(roi):
     return _return_regionprops(roi).major_axis_length
     
 
-def minor_axis(roi):
+def minor_axis_length(roi):
     """
     Number of pixels on the minor axis of the fitted ellipse.
 
@@ -176,6 +176,14 @@ def average_intensity(roi):
 
 
 
+def integrated_intensity(roi, im_itensity):
+    """The sum of the pixel intensities within the segmented region.
+
+    """
+    roi_inverted = np.array(roi).astype(bool).invert()
+    roi_masked = masked_array(im_itensity, mask=roi_inverted)
+    
+    yield np.sum(roi_masked, axis=(0,1)) 
 
 
 
