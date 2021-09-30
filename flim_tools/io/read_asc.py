@@ -27,44 +27,28 @@ def read_asc(path):
         DESCRIPTION.
 
     """
-    with codecs.open(path, encoding='utf-8-sig') as file:
+    with codecs.open(path, encoding="utf-8-sig") as file:
         # for each line for each value, convert to float
         array = np.array([[float(x) for x in line.split()] for line in file])
-    
+
     return array
 
 
 if __name__ == "__main__":
-    
+
     from flim_tools.io import read_asc
-    
+
     ### test loading ASC files
     test_files = Path("./test_files")
     test_files.exists()
     list_path_test_files = list(test_files.glob("*"))
     list_test_files_str = [str(p) for p in list_path_test_files]
-    
-    list_asc_files_str = list(filter(re.compile(r'.*\.asc').match, list_test_files_str))
-    list_asc_files = [Path(p) for p in list_asc_files_str] 
-    
+
+    list_asc_files_str = list(filter(re.compile(r".*\.asc").match, list_test_files_str))
+    list_asc_files = [Path(p) for p in list_asc_files_str]
+
     for path_file in list_asc_files:
         image = read_asc(path_file)
         plt.title(path_file.name)
         plt.imshow(image)
         plt.show()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

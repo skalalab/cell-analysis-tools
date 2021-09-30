@@ -1,15 +1,14 @@
-
-
-# Dependencies 
+# Dependencies
 import numpy as np
 import os
 import tifffile
 import pandas as pd
 import collections as coll
 import pylab
+
 # import plotly.graph_objs as go
 # from plotly.offline import plot
-#import sdtfile as sdt
+# import sdtfile as sdt
 import matplotlib.pylab as plt
 import zipfile
 import collections as coll
@@ -20,7 +19,7 @@ from scipy.signal import convolve
 
 
 def rectangular_to_phasor_lifetimes_array(g, s):
-    ''' 
+    """ 
     Takes an array(image) of g and s points and
     converts them to angle and magnitude phasor arrays
 
@@ -36,10 +35,10 @@ def rectangular_to_phasor_lifetimes_array(g, s):
         PhasorArray object : float
             lifetime_angles_array - array of angles for each pixel
             lifetime_magnitudes_array - array of magnitudes for each pixel
-    '''
-    PhasorLifetimesArray = coll.namedtuple('PhasorLifetimesArray', 'angles magnitudes')
+    """
+    PhasorLifetimesArray = coll.namedtuple("PhasorLifetimesArray", "angles magnitudes")
 
     # calculate angles and magnitudes for all points
-    angles = np.pi-np.arctan2(s, -g)
-    magnitudes = np.sqrt(g**2 + s**2)
+    angles = np.pi - np.arctan2(s, -g)
+    magnitudes = np.sqrt(g ** 2 + s ** 2)
     return PhasorLifetimesArray(angles=angles, magnitudes=magnitudes)

@@ -1,5 +1,3 @@
-
-
 from .bin_2d import bin_2d
 from .bin_3d import bin_3d
 from .sum_pool_3d import sum_pool_3d
@@ -18,5 +16,5 @@ __all__ = [
     "kmeans_threshold",
     "rgb2labels",
     "rgb2gray",
-    "remove_horizontal_vertical_edges"
+    "remove_horizontal_vertical_edges",
 ]

@@ -1,8 +1,6 @@
-
 import numpy as np
 from scipy.spatial.distance import directed_hausdorff
 from .helper import _validate_array_and_make_bool
-
 
 
 def hausdorff_distance(mask_pred, mask_gt):
@@ -26,8 +24,8 @@ def hausdorff_distance(mask_pred, mask_gt):
             index of point contributing to Hausdorff pair in v
 
     """
-    
+
     mask_pred = _validate_array_and_make_bool(mask_pred)
     mask_gt = _validate_array_and_make_bool(mask_gt)
-    
+
     return directed_hausdorff(mask_pred, mask_gt)

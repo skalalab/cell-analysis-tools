@@ -1,14 +1,14 @@
-
-# Dependencies 
+# Dependencies
 import numpy as np
 import os
 import tifffile
 import pandas as pd
 import collections as coll
 import pylab
+
 # import plotly.graph_objs as go
 # from plotly.offline import plot
-#import sdtfile as sdt
+# import sdtfile as sdt
 import matplotlib.pylab as plt
 import zipfile
 import collections as coll
@@ -21,7 +21,7 @@ from flim_tools.flim import ideal_sample_phasor, td_to_fd
 
 
 def phasor_calibration(f, lifetime, timebins, counts):
-    ''' Phasor Plot Calibration
+    """ Phasor Plot Calibration
 
     Parameters
     ---------- 
@@ -41,17 +41,17 @@ def phasor_calibration(f, lifetime, timebins, counts):
     ----
         If no timebins or histograms passed then returns angle and phase of
         lifetime passed in
-    '''
-    Calibration = coll.namedtuple('Calibration', 'angle scaling_factor')
+    """
+    Calibration = coll.namedtuple("Calibration", "angle scaling_factor")
 
     # calculate idea and real phasors
     ideal_sampl_phasor = ideal_sample_phasor(f, lifetime)
     real = td_to_fd(f, timebins, counts)
-    
-    ''' calculate angle offset '''
-    angle = ideal_sampl_phasor.angle - real.angle    
-    
-    ''' ratio of magnitudes -> ideal/actual '''
+
+    """ calculate angle offset """
+    angle = ideal_sampl_phasor.angle - real.angle
+
+    """ ratio of magnitudes -> ideal/actual """
     ratio = ideal_sampl_phasor.magnitude / real.magnitude
-    
-    return Calibration(angle=angle,  scaling_factor=ratio)
+
+    return Calibration(angle=angle, scaling_factor=ratio)

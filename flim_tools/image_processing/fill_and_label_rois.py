@@ -1,6 +1,7 @@
 import scipy.ndimage as ndi
 
-def fill_and_label_rois(curr_nuclei): 
+
+def fill_and_label_rois(curr_nuclei):
     """
     Fills and labels ROI outlines using unique ints for each region.
 

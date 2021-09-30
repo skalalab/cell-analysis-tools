@@ -24,6 +24,5 @@ def percent_content_captured(mask_a, mask_b):
     """
     mask_a = _validate_array_and_make_bool(mask_a)
     mask_b = _validate_array_and_make_bool(mask_b)
-    
-    return np.sum(np.logical_and(mask_a, mask_b)) / np.sum(mask_a)
 
+    return np.sum(np.logical_and(mask_a, mask_b)) / np.sum(mask_a)

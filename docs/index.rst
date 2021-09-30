@@ -7,6 +7,9 @@
 flim_tools's documentation
 ======================================
 
+This library contains many functions used for processing and analysing flim datasets.
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

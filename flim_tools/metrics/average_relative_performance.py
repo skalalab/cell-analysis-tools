@@ -3,7 +3,7 @@ from scipy.spatial.distance import directed_hausdorff
 from .helper import _validate_array_and_make_bool
 
 
-def average_relative_performance(mask_gt1, mask_gt2, mask_pred): 
+def average_relative_performance(mask_gt1, mask_gt2, mask_pred):
     """
     Returns average relative performance of a predicted mask against 
     two ground truth masks from two different users
@@ -31,9 +31,7 @@ def average_relative_performance(mask_gt1, mask_gt2, mask_pred):
     mask_gt2 = _validate_array_and_make_bool(mask_gt2)
     mask_predicted = _validate_array_and_make_bool(mask_pred)
 
-    return (np.sum(np.logical_and(mask_predicted, mask_gt1)) +
-            np.sum(np.logical_and(mask_predicted, mask_gt2))) \
-            / (2 * np.sum((np.logical_and(mask_gt1, mask_gt2))))
-
-
-
+    return (
+        np.sum(np.logical_and(mask_predicted, mask_gt1))
+        + np.sum(np.logical_and(mask_predicted, mask_gt2))
+    ) / (2 * np.sum((np.logical_and(mask_gt1, mask_gt2))))

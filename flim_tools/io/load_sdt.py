@@ -20,23 +20,24 @@ def load_sdt_file(file_path):
     Returns:
         image = 3d-array representation of image
     """
-    
+
     with zipfile.ZipFile(file_path) as myzip:
-            z1 = myzip.infolist()[0]    # "data_block" or sdt bruker uses "data_block001" for multi-sdt"            
-            with myzip.open(z1.filename) as myfile:
-                data = myfile.read()
-                data = np.frombuffer(data, np.uint16)
+        z1 = myzip.infolist()[
+            0
+        ]  # "data_block" or sdt bruker uses "data_block001" for multi-sdt"
+        with myzip.open(z1.filename) as myfile:
+            data = myfile.read()
+            data = np.frombuffer(data, np.uint16)
 
     # format == [channel, x, y, num_timebins]
 
-
     # todo
-    '''  figure out how to extract this info from sdt file'''
+    """  figure out how to extract this info from sdt file"""
     img_1_256_256_256 = 16777216
     img_1_512_512_256 = 67108864
     img_2_512_512_256 = 134217728  # array size
     img_3_512_512_256 = 201326592
-    img_2_256_256_256 = 2*256*256*256
+    img_2_256_256_256 = 2 * 256 * 256 * 256
     if len(data) == img_2_512_512_256:
         c, x, y, z = (2, 512, 512, 256)
     if len(data) == img_1_256_256_256:
@@ -48,18 +49,16 @@ def load_sdt_file(file_path):
     if len(data) == img_2_256_256_256:
         c, x, y, z = (2, 256, 256, 256)
 
-    # if c == 1:
-    #     ''' order is [XYT] '''
-    #     numpy_image = np.reshape(data, (x, y, z))
-    #     # if debug: tif.imshow(np.sum(image,axis=2))
-    #     return numpy_image
-    
-    # else:
-        ''' order is [CXYT] '''
+        # if c == 1:
+        #     ''' order is [XYT] '''
+        #     numpy_image = np.reshape(data, (x, y, z))
+        #     # if debug: tif.imshow(np.sum(image,axis=2))
+        #     return numpy_image
+
+        # else:
+        """ order is [CXYT] """
     numpy_image = np.reshape(data, (c, x, y, z))
     return np.float32(numpy_image)
-
-
 
 
 def load_sdt_data(filepath):
@@ -87,9 +86,11 @@ def load_sdt_data(filepath):
 
     """
     with zipfile.ZipFile(filepath) as myzip:
-       z1 = myzip.infolist()[0]  # "data_block" or sdt bruker uses "data_block001" for multi-sdt"
-       with myzip.open(z1.filename) as myfile:
-           data = myfile.read()
-           data = np.frombuffer(data, np.uint16)
+        z1 = myzip.infolist()[
+            0
+        ]  # "data_block" or sdt bruker uses "data_block001" for multi-sdt"
+        with myzip.open(z1.filename) as myfile:
+            data = myfile.read()
+            data = np.frombuffer(data, np.uint16)
 
     return data
