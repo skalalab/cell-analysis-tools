@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jun 18 15:50:49 2021
-
-@author: Nabiki
-"""
 import matplotlib as mpl
 
 mpl.rcParams["figure.dpi"] == 300

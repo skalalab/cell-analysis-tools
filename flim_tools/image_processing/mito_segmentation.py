@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
-
-
 from pathlib import Path
 import tifffile
 import matplotlib.pylab as plt
-
 import matplotlib as mpl
-
 mpl.rcParams["figure.dpi"] = 300
 import numpy as np
 

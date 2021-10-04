@@ -1,5 +1,3 @@
-# collection of tools for image processing and preprocessing
-
 from sklearn.cluster import KMeans
 import numpy as np
 import matplotlib.pylab as plt

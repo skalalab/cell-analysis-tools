@@ -6,7 +6,7 @@ import scipy.ndimage as ndi
 from tkinter import Tk
 from tkinter.filedialog import askdirectory
 
-from flim_tools.image_processing.labels import fill_and_label_rois
+from flim_tools.image_processing import fill_and_label_rois
 
 base_path = "."
 
@@ -76,18 +76,6 @@ def convert_files(a):
         base_path = "."
 
     convert_to_filled_and_labeled_rois()
-
-
-# def fill_and_label_rois(curr_nuclei):
-# 	"""
-# 	Fills and labels ROI outlines using unique ints for each region.
-
-# 	Args:
-# 		:param curr_nucelei: Current image to process
-# 	Returns:
-# 		:return: ROIs filled and labeled with unique int representations
-# 	"""
-# 	return ndi.label(ndi.binary_fill_holes(curr_nuclei))[0]
 
 
 def convert_to_filled_and_labeled_rois():

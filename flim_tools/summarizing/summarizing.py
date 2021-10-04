@@ -1,20 +1,9 @@
 from read_roi import read_roi_zip
-import os
 import tifffile
 from matplotlib import pyplot as plt
 import numpy as np
-import re
 import numpy
 from skimage.draw import polygon2mask
-import zipfile
-import sdtfile
-
-"""
-Created on Fri Oct 23 11:51:48 2020
-
-@author: Nabiki
-"""
-
 
 # given a list of ROIs returns a mask
 def create_mask_from_rois(rois_vert):
@@ -93,12 +82,3 @@ def refined_roi_sets(roi_sets, masks):
     return new_roi_sets
 
 
-#            ## multiply nadph masks with each roi to update them
-#''' iterate through the ROIs and update their area'''
-# updated_roi_sets = []
-# for pos, roi_set in enumerate(roi_sets): # iterate through sets
-#    new_set = []
-#    for roi in roi_set: # iterate through rois
-#        new_set.append(roi * refined_roi_masks[pos])
-#    updated_roi_sets.append(new_set)
-#

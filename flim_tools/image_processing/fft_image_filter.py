@@ -1,12 +1,9 @@
-# Python fft filter
-
 from time import time
 import numpy as np
 from numpy.fft import fft2, fftshift, ifft2, ifft, ifftshift
 from numpy import ones
 
 from skimage.morphology import disk
-from pathlib import Path
 from PIL import Image
 import matplotlib.pylab as plt
 

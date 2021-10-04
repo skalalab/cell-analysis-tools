@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb  4 09:54:07 2021
-
-@author: Nabiki
-"""
-
 import numpy as np
 from sklearn.linear_model import RANSACRegressor
 

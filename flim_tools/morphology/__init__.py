@@ -12,7 +12,7 @@ from .roi_props import (
     perimeter,
     average_intensity,
     integrated_intensity,
-    mitochondria_morphological_class,
+    mitochondria_morphological_class
 )
 
 

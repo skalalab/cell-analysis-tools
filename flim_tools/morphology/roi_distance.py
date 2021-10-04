@@ -1,8 +1,6 @@
 from scipy import ndimage
 
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.distance_transform_edt.html#scipy.ndimage.distance_transform_edt
-
-
 def radius_max(roi, return_index=False):
     """
 
@@ -24,6 +22,9 @@ def radius_max(roi, return_index=False):
     Note
     ----
     If there are multiple, it returns the first instance (see np.argmax)
+
+    References
+    ----------
     """
 
     idx_max_value = np.unravel_index(distance.argmax(), distance.shape)
