@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -159,27 +159,21 @@
            <div itemprop="articleBody">
             
   <h1>Source code for flim_tools.flim.phasor_to_rectangular_point</h1><div class="highlight"><pre>
-<span></span>
-<span class="c1"># Dependencies </span>
+<span></span><span class="c1"># Dependencies</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tifffile</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">coll</span>
 <span class="kn">import</span> <span class="nn">pylab</span>
-<span class="c1"># import plotly.graph_objs as go</span>
-<span class="c1"># from plotly.offline import plot</span>
-<span class="c1">#import sdtfile as sdt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">zipfile</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">coll</span>
-<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">from</span> <span class="nn">flim_tools.io</span> <span class="kn">import</span> <span class="n">read_asc</span>
 <span class="kn">from</span> <span class="nn">flim_tools.image_processing</span> <span class="kn">import</span> <span class="n">normalize</span>
 <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">convolve</span>
 
+
 <div class="viewcode-block" id="phasor_to_rectangular_point"><a class="viewcode-back" href="../../../rest_files/flim.html#flim_tools.flim.phasor_to_rectangular_point">[docs]</a><span class="k">def</span> <span class="nf">phasor_to_rectangular_point</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; Gets x and y position of phasor in rectangular coordinates</span>
+    <span class="sd">&quot;&quot;&quot; Gets x and y position of phasor in rectangular coordinates</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -193,8 +187,8 @@
 <span class="sd">            x axis coordinate</span>
 <span class="sd">        s  : float</span>
 <span class="sd">            y axis coordinate</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">Point</span> <span class="o">=</span> <span class="n">coll</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Point&#39;</span><span class="p">,</span> <span class="s1">&#39;g s&#39;</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Point</span> <span class="o">=</span> <span class="n">coll</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span> <span class="s2">&quot;g s&quot;</span><span class="p">)</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">magnitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">magnitude</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">)</span></div>

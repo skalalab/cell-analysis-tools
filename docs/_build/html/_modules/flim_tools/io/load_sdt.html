@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -160,17 +160,12 @@
             
   <h1>Source code for flim_tools.io.load_sdt</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">read_roi</span> <span class="kn">import</span> <span class="n">read_roi_zip</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tifffile</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">skimage.draw</span> <span class="kn">import</span> <span class="n">polygon2mask</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">import</span> <span class="nn">codecs</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">re</span>
 
 
 <div class="viewcode-block" id="load_sdt_file"><a class="viewcode-back" href="../../../rest_files/io.html#flim_tools.io.load_sdt_file">[docs]</a><span class="k">def</span> <span class="nf">load_sdt_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
@@ -181,23 +176,24 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        image = 3d-array representation of image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">myzip</span><span class="p">:</span>
-            <span class="n">z1</span> <span class="o">=</span> <span class="n">myzip</span><span class="o">.</span><span class="n">infolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># &quot;data_block&quot; or sdt bruker uses &quot;data_block001&quot; for multi-sdt&quot;            </span>
-            <span class="k">with</span> <span class="n">myzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">z1</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+        <span class="n">z1</span> <span class="o">=</span> <span class="n">myzip</span><span class="o">.</span><span class="n">infolist</span><span class="p">()[</span>
+            <span class="mi">0</span>
+        <span class="p">]</span>  <span class="c1"># &quot;data_block&quot; or sdt bruker uses &quot;data_block001&quot; for multi-sdt&quot;</span>
+        <span class="k">with</span> <span class="n">myzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">z1</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
 
     <span class="c1"># format == [channel, x, y, num_timebins]</span>
 
-
     <span class="c1"># todo</span>
-    <span class="sd">&#39;&#39;&#39;  figure out how to extract this info from sdt file&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;  figure out how to extract this info from sdt file&quot;&quot;&quot;</span>
     <span class="n">img_1_256_256_256</span> <span class="o">=</span> <span class="mi">16777216</span>
     <span class="n">img_1_512_512_256</span> <span class="o">=</span> <span class="mi">67108864</span>
     <span class="n">img_2_512_512_256</span> <span class="o">=</span> <span class="mi">134217728</span>  <span class="c1"># array size</span>
     <span class="n">img_3_512_512_256</span> <span class="o">=</span> <span class="mi">201326592</span>
-    <span class="n">img_2_256_256_256</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="mi">256</span><span class="o">*</span><span class="mi">256</span><span class="o">*</span><span class="mi">256</span>
+    <span class="n">img_2_256_256_256</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">img_2_512_512_256</span><span class="p">:</span>
         <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">img_1_256_256_256</span><span class="p">:</span>
@@ -209,18 +205,16 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">img_2_256_256_256</span><span class="p">:</span>
         <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
 
-    <span class="c1"># if c == 1:</span>
-    <span class="c1">#     &#39;&#39;&#39; order is [XYT] &#39;&#39;&#39;</span>
-    <span class="c1">#     numpy_image = np.reshape(data, (x, y, z))</span>
-    <span class="c1">#     # if debug: tif.imshow(np.sum(image,axis=2))</span>
-    <span class="c1">#     return numpy_image</span>
-    
-    <span class="c1"># else:</span>
-        <span class="sd">&#39;&#39;&#39; order is [CXYT] &#39;&#39;&#39;</span>
+        <span class="c1"># if c == 1:</span>
+        <span class="c1">#     &#39;&#39;&#39; order is [XYT] &#39;&#39;&#39;</span>
+        <span class="c1">#     numpy_image = np.reshape(data, (x, y, z))</span>
+        <span class="c1">#     # if debug: tif.imshow(np.sum(image,axis=2))</span>
+        <span class="c1">#     return numpy_image</span>
+
+        <span class="c1"># else:</span>
+        <span class="sd">&quot;&quot;&quot; order is [CXYT] &quot;&quot;&quot;</span>
     <span class="n">numpy_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">numpy_image</span><span class="p">)</span></div>
-
-
 
 
 <div class="viewcode-block" id="load_sdt_data"><a class="viewcode-back" href="../../../rest_files/io.html#flim_tools.io.load_sdt_data">[docs]</a><span class="k">def</span> <span class="nf">load_sdt_data</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
@@ -248,10 +242,12 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">myzip</span><span class="p">:</span>
-       <span class="n">z1</span> <span class="o">=</span> <span class="n">myzip</span><span class="o">.</span><span class="n">infolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># &quot;data_block&quot; or sdt bruker uses &quot;data_block001&quot; for multi-sdt&quot;</span>
-       <span class="k">with</span> <span class="n">myzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">z1</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
-           <span class="n">data</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-           <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+        <span class="n">z1</span> <span class="o">=</span> <span class="n">myzip</span><span class="o">.</span><span class="n">infolist</span><span class="p">()[</span>
+            <span class="mi">0</span>
+        <span class="p">]</span>  <span class="c1"># &quot;data_block&quot; or sdt bruker uses &quot;data_block001&quot; for multi-sdt&quot;</span>
+        <span class="k">with</span> <span class="n">myzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">z1</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
 </pre></div>

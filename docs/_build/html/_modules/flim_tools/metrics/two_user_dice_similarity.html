@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -159,13 +159,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for flim_tools.metrics.two_user_dice_similarity</h1><div class="highlight"><pre>
-<span></span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">.helper</span> <span class="kn">import</span> <span class="n">_validate_array_and_make_bool</span>
 
 
-
-<div class="viewcode-block" id="two_user_dice_similarity"><a class="viewcode-back" href="../../../rest_files/metrics.html#flim_tools.metrics.two_user_dice_similarity">[docs]</a><span class="k">def</span> <span class="nf">two_user_dice_similarity</span><span class="p">(</span><span class="n">mask_gt1</span><span class="p">,</span> <span class="n">mask_gt2</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">):</span> 
+<div class="viewcode-block" id="two_user_dice_similarity"><a class="viewcode-back" href="../../../rest_files/metrics.html#flim_tools.metrics.two_user_dice_similarity">[docs]</a><span class="k">def</span> <span class="nf">two_user_dice_similarity</span><span class="p">(</span><span class="n">mask_gt1</span><span class="p">,</span> <span class="n">mask_gt2</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Variation on average_relative_performance but areas are added in the</span>
 <span class="sd">    denominator</span>
@@ -187,11 +185,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># from above but add mask areas as above</span>
     <span class="c1"># ((Mito Catcher vs. User 1 + Mito Catcher vs. User 2)/(User 1 vs. User 2))</span>
-    
-    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt1</span><span class="p">))</span> <span class="o">+</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt2</span><span class="p">)))</span> \
-            <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_gt1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_gt2</span><span class="p">))</span> <span class="c1"># sum areas</span></div>
 
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt1</span><span class="p">))</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt2</span><span class="p">))</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_gt1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_gt2</span><span class="p">)</span>
+    <span class="p">)</span>  <span class="c1"># sum areas</span></div>
 </pre></div>
 
            </div>

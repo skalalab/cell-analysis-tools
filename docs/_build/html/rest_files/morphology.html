@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Morphology &mdash; flim_tools  documentation</title>
@@ -87,7 +88,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
@@ -161,7 +162,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-flim_tools.morphology">
+  <section id="module-flim_tools.morphology">
 <span id="morphology"></span><h1>Morphology<a class="headerlink" href="#module-flim_tools.morphology" title="Permalink to this headline">¶</a></h1>
 <p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
@@ -170,304 +171,33 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.area" title="flim_tools.morphology.area"><code class="xref py py-obj docutils literal notranslate"><span class="pre">area</span></code></a>(roi)</p></td>
-<td><p>Number of pixels in a segmented region.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.average_intensity" title="flim_tools.morphology.average_intensity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">average_intensity</span></code></a>(roi)</p></td>
-<td><p>The average of pixel intensities within the segmented region.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.eccentricity" title="flim_tools.morphology.eccentricity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eccentricity</span></code></a>(roi)</p></td>
-<td><p>Ratio of the distance between the foci of the ellipse to its major axis length.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.extent" title="flim_tools.morphology.extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extent</span></code></a>(roi)</p></td>
-<td><p>Ratio of the area of the segmented region over the area of the bounding box of the segmented region.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.fractal_dimension_lacunarity" title="flim_tools.morphology.fractal_dimension_lacunarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fractal_dimension_lacunarity</span></code></a>(roi)</p></td>
-<td><p>The squared value of the standard deviation of fractal dimension divided by the mean fractal dimension.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.fractal_dimension_mean" title="flim_tools.morphology.fractal_dimension_mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fractal_dimension_mean</span></code></a>(roi)</p></td>
-<td><p>The mean value of the fractal dimensions of each pixel in a segmented region.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.fractal_dimension_std" title="flim_tools.morphology.fractal_dimension_std"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fractal_dimension_std</span></code></a>(roi)</p></td>
-<td><p>The standard deviation of the fractal dimensions of each pixel in a segmented region.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.integrated_intensity" title="flim_tools.morphology.integrated_intensity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">integrated_intensity</span></code></a>(roi, im_itensity)</p></td>
-<td><p>The sum of the pixel intensities within the segmented region.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.major_axis_length" title="flim_tools.morphology.major_axis_length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">major_axis_length</span></code></a>(roi)</p></td>
-<td><p>Number of pixels on the major axis of the fitted ellipse.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.minor_axis_length" title="flim_tools.morphology.minor_axis_length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minor_axis_length</span></code></a>(roi)</p></td>
-<td><p>Number of pixels on the minor axis of the fitted ellipse.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.mitochondria_morphological_class" title="flim_tools.morphology.mitochondria_morphological_class"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mitochondria_morphological_class</span></code></a>(roi)</p></td>
-<td><p>The punctate, swollen, and networked morphologies.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.orientation" title="flim_tools.morphology.orientation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">orientation</span></code></a>(roi)</p></td>
-<td><p>Angle between the 0th axis (rows) and the major axis of the ellipse that has the same second moments as the region, ranging from -pi/2 to pi/2 counter-clockwise.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.perimeter" title="flim_tools.morphology.perimeter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">perimeter</span></code></a>(roi)</p></td>
-<td><p>Number of pixels in the contour of the segmented region.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.radius_max" title="flim_tools.morphology.radius_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radius_max</span></code></a>(roi[, return_index])</p></td>
-<td><p>The maximum distance of any pixel in the segmented region to the closest background pixel.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.radius_mean" title="flim_tools.morphology.radius_mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radius_mean</span></code></a>(roi)</p></td>
-<td><p>Mean value the distances of all pixels in the segmented region to their closest background pixel.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.radius_median" title="flim_tools.morphology.radius_median"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radius_median</span></code></a>(roi)</p></td>
-<td><p>Median value the distances of all pixels in the segmented region to their closest background pixel.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.solidity" title="flim_tools.morphology.solidity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">solidity</span></code></a>(roi)</p></td>
-<td><p>Ratio of the area of the segmented region over the area of the convex hull of the segmentation.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.regionprops" title="flim_tools.morphology.regionprops"><code class="xref py py-obj docutils literal notranslate"><span class="pre">regionprops</span></code></a>(im_labels, im_intensity)</p></td>
+<td><p>Extended regionprops function adding our own props</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.area">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.area" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of pixels in a segmented region.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – roi of region to copute area</p>
+<dt class="sig sig-object py" id="flim_tools.morphology.regionprops">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">regionprops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_intensity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/regionprops.html#regionprops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.regionprops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extended regionprops function adding our own props</p>
+<p>To see a complete docstring for this function see <a href="#id1"><span class="problematic" id="id2">`skimage.measure.regionprops https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops`_</span></a>.</p>
+<p class="rubric">Notes</p>
+<p>Additional properties that can be accessed as attributes or keys:</p>
+<dl class="simple">
+<dt><strong>radius_max</strong><span class="classifier">float</span></dt><dd><p>The maximum distance of any pixel in the segmented region to the closest background pixel.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>area</strong> – Number of pixels in the mask</p>
+<dt><strong>radius_mean</strong><span class="classifier">float</span></dt><dd><p>Mean value the distances of all pixels in the segmented region to their closest background pixel.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
+<dt><strong>radius_median</strong><span class="classifier">float</span></dt><dd><p>Median value the distances of all pixels in the segmented region to their closest background pixel.</p>
 </dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">skiamge.draw</span> <span class="kn">import</span> <span class="n">ellipse</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">idx_rows</span><span class="p">,</span> <span class="n">idx_cols</span> <span class="o">=</span> <span class="n">ellipse</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">shape_ellipse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">40</span><span class="p">,</span><span class="mi">40</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">shape_ellipse</span><span class="p">[</span><span class="n">idx_rows</span><span class="p">,</span> <span class="n">idx_cols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">area_ellipse</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">area_ellipse</span>
-<span class="go">105</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.average_intensity">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">average_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#average_intensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.average_intensity" title="Permalink to this definition">¶</a></dt>
-<dd><p>The average of pixel intensities within the segmented region.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.eccentricity">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">eccentricity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#eccentricity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.eccentricity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ratio of the distance between the foci of the ellipse to its major axis length.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – ndarray with single roi.</p>
+<dt><strong>intensity_sum</strong></dt><dd><p>The sum of the pixel intensities within the segmented region.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>eccentricity value</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
+<dt><strong>fractal_dimension</strong><span class="classifier">float</span></dt><dd><p>Fractal dimension</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.extent">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">extent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#extent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.extent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ratio of the area of the segmented region over the area of
-the bounding box of the segmented region.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – ndarray with single roi.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>extent ratio value</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.fractal_dimension_lacunarity">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">fractal_dimension_lacunarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_fractal.html#fractal_dimension_lacunarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.fractal_dimension_lacunarity" title="Permalink to this definition">¶</a></dt>
-<dd><p>The squared value of the standard deviation of fractal dimension divided by the mean fractal dimension. Lower value represents a dense pattern while higher values represent more open patterns.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.fractal_dimension_mean">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">fractal_dimension_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_fractal.html#fractal_dimension_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.fractal_dimension_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>The mean value of the fractal dimensions of each pixel in a segmented region. Higher values represent more complex patterns.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.fractal_dimension_std">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">fractal_dimension_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_fractal.html#fractal_dimension_std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.fractal_dimension_std" title="Permalink to this definition">¶</a></dt>
-<dd><p>The standard deviation of the fractal dimensions of each pixel in a segmented region.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.integrated_intensity">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">integrated_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im_itensity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#integrated_intensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.integrated_intensity" title="Permalink to this definition">¶</a></dt>
-<dd><p>The sum of the pixel intensities within the segmented region.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.major_axis_length">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">major_axis_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#major_axis_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.major_axis_length" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of pixels on the major axis of the fitted ellipse.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – ndarray with single roi.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>numbe of pixels in the major axis</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.minor_axis_length">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">minor_axis_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#minor_axis_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.minor_axis_length" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of pixels on the minor axis of the fitted ellipse.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – ndarray with single roi.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>numbe of pixels in the minor axis</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.mitochondria_morphological_class">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">mitochondria_morphological_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#mitochondria_morphological_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.mitochondria_morphological_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>The punctate, swollen, and networked morphologies.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.orientation">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">orientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.orientation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Angle between the 0th axis (rows) and the major axis of the
-ellipse that has the same second moments as the region,
-ranging from -pi/2 to pi/2 counter-clockwise.
-:param roi: ndarray with single roi.
-:type roi: ndarray</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Angle between major axis of ellipse and the x-axis.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.perimeter">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">perimeter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#perimeter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.perimeter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of pixels in the contour of the segmented region.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – ndarray with single roi.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>number of pixels in perimeter.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.radius_max">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">radius_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_distance.html#radius_max"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.radius_max" title="Permalink to this definition">¶</a></dt>
-<dd><p>The maximum distance of any pixel in the segmented region to the closest background pixel.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>roi</strong> (<em>ndarray</em>) – binary roi mask.</p></li>
-<li><p><strong>return_index</strong> (<em>bool</em><em>, </em><em>optional</em>) – return index of pixel where max radius was found. The default is False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Max eucledian distance of roi to background.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If there are multiple, it returns the first instance (see np.argmax)</p>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.radius_mean">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">radius_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_distance.html#radius_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.radius_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mean value the distances of all pixels in the segmented region to their closest background pixel.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – binary roi mask.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>mean distance of all the pixel distances to background</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.radius_median">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">radius_median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_distance.html#radius_median"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.radius_median" title="Permalink to this definition">¶</a></dt>
-<dd><p>Median value the distances of all pixels in the segmented region to their closest background pixel.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – binary roi mask.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>median distance of all the pixels distances to background</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.morphology.solidity">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">solidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/roi_props.html#solidity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.solidity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ratio of the area of the segmented region over the area of
-the convex hull of the segmentation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>roi</strong> (<em>ndarray</em>) – ndarray with single roi.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>solidity value</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-</div>
+</section>
 
 
            </div>

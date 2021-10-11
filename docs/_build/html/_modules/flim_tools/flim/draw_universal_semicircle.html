@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -159,27 +159,20 @@
            <div itemprop="articleBody">
             
   <h1>Source code for flim_tools.flim.draw_universal_semicircle</h1><div class="highlight"><pre>
-<span></span>
-
-<span class="c1"># Dependencies </span>
+<span></span><span class="c1"># Dependencies</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tifffile</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">coll</span>
 <span class="kn">import</span> <span class="nn">pylab</span>
-<span class="c1"># import plotly.graph_objs as go</span>
-<span class="c1"># from plotly.offline import plot</span>
-<span class="c1">#import sdtfile as sdt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">coll</span>
-<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">from</span> <span class="nn">flim_tools.io</span> <span class="kn">import</span> <span class="n">read_asc</span>
 <span class="kn">from</span> <span class="nn">flim_tools.image_processing</span> <span class="kn">import</span> <span class="n">normalize</span>
 <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">convolve</span>
 
-<div class="viewcode-block" id="draw_universal_semicircle"><a class="viewcode-back" href="../../../rest_files/flim.html#flim_tools.flim.draw_universal_semicircle">[docs]</a><span class="k">def</span> <span class="nf">draw_universal_semicircle</span><span class="p">(</span><span class="n">figure</span><span class="p">,</span> <span class="n">laser_angular_frequency</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Phasor Plot&#39;</span><span class="p">,</span>  <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="draw_universal_semicircle"><a class="viewcode-back" href="../../../rest_files/flim.html#flim_tools.flim.draw_universal_semicircle">[docs]</a><span class="k">def</span> <span class="nf">draw_universal_semicircle</span><span class="p">(</span>
+    <span class="n">figure</span><span class="p">,</span> <span class="n">laser_angular_frequency</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Phasor Plot&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Draws the universal semicircle over the give figure.</span>
 
@@ -194,31 +187,33 @@
 <span class="sd">    -------</span>
 <span class="sd">        None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39; get universal semicircle values for this rep rate &#39;&#39;&#39;</span>
-    <span class="n">x_circle</span><span class="p">,</span> <span class="n">y_circle</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">lifetime_labels</span> <span class="o">=</span> <span class="n">universal_semicircle_series</span><span class="p">(</span><span class="n">laser_angular_frequency</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot; get universal semicircle values for this rep rate &quot;&quot;&quot;</span>
+    <span class="n">x_circle</span><span class="p">,</span> <span class="n">y_circle</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">lifetime_labels</span> <span class="o">=</span> <span class="n">universal_semicircle_series</span><span class="p">(</span>
+        <span class="n">laser_angular_frequency</span>
+    <span class="p">)</span>
 
     <span class="c1"># Labels and axis of phasor plot</span>
     <span class="c1"># figure = plt.figure()</span>
     <span class="n">figure</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
     <span class="c1"># add circle and lifetime estimates</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_circle</span><span class="p">,</span> <span class="n">y_circle</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;teal&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;magenta&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_circle</span><span class="p">,</span> <span class="n">y_circle</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;teal&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;type: &#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">lifetime_labels</span><span class="p">),</span> <span class="s1">&#39; labels: &#39;</span><span class="p">,</span> <span class="n">lifetime_labels</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;type: &quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">lifetime_labels</span><span class="p">),</span> <span class="s2">&quot; labels: &quot;</span><span class="p">,</span> <span class="n">lifetime_labels</span><span class="p">)</span>
 
-    <span class="sd">&#39;&#39;&#39; ADD LIFETIME LABELS &#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot; ADD LIFETIME LABELS &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">txt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lifetime_labels</span><span class="p">):</span>
         <span class="c1"># self.ax.annotate(txt, (g[i], s[i]))</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">txt</span><span class="p">,</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
-    
+
 <span class="k">def</span> <span class="nf">universal_semicircle_series</span><span class="p">(</span><span class="n">frequency</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
@@ -249,12 +244,25 @@
     <span class="n">x_circle</span> <span class="o">=</span> <span class="n">x_coord</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y_circle</span> <span class="o">**</span> <span class="mi">2</span>
 
     <span class="n">omega</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">frequency</span>  <span class="c1"># modulation frequency</span>
-    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mf">0.5e-9</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="mf">2e-9</span><span class="p">,</span> <span class="mf">3e-9</span><span class="p">,</span> <span class="mf">4e-9</span><span class="p">,</span> <span class="mf">5e-9</span><span class="p">,</span> <span class="mf">6e-9</span><span class="p">,</span> <span class="mf">7e-9</span><span class="p">,</span> <span class="mf">8e-9</span><span class="p">,</span> <span class="mf">9e-9</span><span class="p">,</span> <span class="mf">10e-9</span><span class="p">])</span>  <span class="c1"># lifetimes in ns</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+        <span class="p">[</span><span class="mf">0.5e-9</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="mf">2e-9</span><span class="p">,</span> <span class="mf">3e-9</span><span class="p">,</span> <span class="mf">4e-9</span><span class="p">,</span> <span class="mf">5e-9</span><span class="p">,</span> <span class="mf">6e-9</span><span class="p">,</span> <span class="mf">7e-9</span><span class="p">,</span> <span class="mf">8e-9</span><span class="p">,</span> <span class="mf">9e-9</span><span class="p">,</span> <span class="mf">10e-9</span><span class="p">]</span>
+    <span class="p">)</span>  <span class="c1"># lifetimes in ns</span>
     <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">omega</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">tau</span><span class="p">))</span>
     <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">omega</span> <span class="o">*</span> <span class="n">tau</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">omega</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">tau</span><span class="p">))</span>
-    <span class="n">lifetime_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0.5ns&#39;</span><span class="p">,</span> <span class="s1">&#39;1ns&#39;</span><span class="p">,</span> <span class="s1">&#39;2ns&#39;</span><span class="p">,</span> <span class="s1">&#39;3ns&#39;</span><span class="p">,</span> <span class="s1">&#39;4ns&#39;</span><span class="p">,</span> <span class="s1">&#39;5ns&#39;</span><span class="p">,</span> <span class="s1">&#39;6ns&#39;</span><span class="p">,</span> <span class="s1">&#39;7ns&#39;</span><span class="p">,</span> <span class="s1">&#39;8ns&#39;</span><span class="p">,</span> <span class="s1">&#39;9ns&#39;</span><span class="p">,</span> <span class="s1">&#39;10ns&#39;</span><span class="p">]</span>
+    <span class="n">lifetime_labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;0.5ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;1ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;2ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;3ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;4ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;5ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;6ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;7ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;8ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;9ns&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;10ns&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="k">return</span> <span class="n">x_circle</span><span class="p">,</span> <span class="n">y_circle</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">lifetime_labels</span>
-
 </pre></div>
 
            </div>

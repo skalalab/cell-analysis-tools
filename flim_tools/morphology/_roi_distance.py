@@ -1,4 +1,5 @@
 from scipy import ndimage
+import numpy as np
 
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.distance_transform_edt.html#scipy.ndimage.distance_transform_edt
 def radius_max(roi, return_index=False):
@@ -26,13 +27,13 @@ def radius_max(roi, return_index=False):
     References
     ----------
     """
-
-    idx_max_value = np.unravel_index(distance.argmax(), distance.shape)
+    distance, indices = ndimage.distance_transform_edt(roi, return_indices=True)
+    idx_max_value = np.unravel_index(distance.argmax(), roi.shape)
 
     if return_index:
         return distance[idx_max_value], idx_max_value
 
-    yield distance[idx_max_value]
+    return distance[idx_max_value]
 
 
 def radius_mean(roi):
@@ -51,7 +52,7 @@ def radius_mean(roi):
 
     """
 
-    yield np.mean(ndimage.distance_transform_edt(roi))
+    return np.mean(ndimage.distance_transform_edt(roi))
 
 
 def radius_median(roi):
@@ -69,7 +70,7 @@ def radius_median(roi):
         median distance of all the pixels distances to background
 
     """
-    yield np.median(ndimage.distance_transform_edt(roi))
+    return np.median(ndimage.distance_transform_edt(roi))
 
 
 if __name__ == "__main__":

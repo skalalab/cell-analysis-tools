@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -159,11 +159,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for flim_tools.metrics.hausdorff_distance</h1><div class="highlight"><pre>
-<span></span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">directed_hausdorff</span>
 <span class="kn">from</span> <span class="nn">.helper</span> <span class="kn">import</span> <span class="n">_validate_array_and_make_bool</span>
-
 
 
 <div class="viewcode-block" id="hausdorff_distance"><a class="viewcode-back" href="../../../rest_files/metrics.html#flim_tools.metrics.hausdorff_distance">[docs]</a><span class="k">def</span> <span class="nf">hausdorff_distance</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt</span><span class="p">):</span>
@@ -187,10 +185,10 @@
 <span class="sd">            index of point contributing to Hausdorff pair in v</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">mask_pred</span> <span class="o">=</span> <span class="n">_validate_array_and_make_bool</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">)</span>
     <span class="n">mask_gt</span> <span class="o">=</span> <span class="n">_validate_array_and_make_bool</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">)</span>
-    
+
     <span class="k">return</span> <span class="n">directed_hausdorff</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt</span><span class="p">)</span></div>
 </pre></div>
 

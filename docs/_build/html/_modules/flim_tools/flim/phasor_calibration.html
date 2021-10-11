@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -159,21 +159,14 @@
            <div itemprop="articleBody">
             
   <h1>Source code for flim_tools.flim.phasor_calibration</h1><div class="highlight"><pre>
-<span></span>
-<span class="c1"># Dependencies </span>
+<span></span><span class="c1"># Dependencies</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tifffile</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">coll</span>
 <span class="kn">import</span> <span class="nn">pylab</span>
-<span class="c1"># import plotly.graph_objs as go</span>
-<span class="c1"># from plotly.offline import plot</span>
-<span class="c1">#import sdtfile as sdt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">zipfile</span>
 <span class="kn">import</span> <span class="nn">collections</span> <span class="k">as</span> <span class="nn">coll</span>
-<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">from</span> <span class="nn">flim_tools.io</span> <span class="kn">import</span> <span class="n">read_asc</span>
 <span class="kn">from</span> <span class="nn">flim_tools.image_processing</span> <span class="kn">import</span> <span class="n">normalize</span>
 <span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">convolve</span>
@@ -182,7 +175,7 @@
 
 
 <div class="viewcode-block" id="phasor_calibration"><a class="viewcode-back" href="../../../rest_files/flim.html#flim_tools.flim.phasor_calibration">[docs]</a><span class="k">def</span> <span class="nf">phasor_calibration</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lifetime</span><span class="p">,</span> <span class="n">timebins</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; Phasor Plot Calibration</span>
+    <span class="sd">&quot;&quot;&quot; Phasor Plot Calibration</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ---------- </span>
@@ -202,20 +195,20 @@
 <span class="sd">    ----</span>
 <span class="sd">        If no timebins or histograms passed then returns angle and phase of</span>
 <span class="sd">        lifetime passed in</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">Calibration</span> <span class="o">=</span> <span class="n">coll</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Calibration&#39;</span><span class="p">,</span> <span class="s1">&#39;angle scaling_factor&#39;</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Calibration</span> <span class="o">=</span> <span class="n">coll</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Calibration&quot;</span><span class="p">,</span> <span class="s2">&quot;angle scaling_factor&quot;</span><span class="p">)</span>
 
     <span class="c1"># calculate idea and real phasors</span>
     <span class="n">ideal_sampl_phasor</span> <span class="o">=</span> <span class="n">ideal_sample_phasor</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lifetime</span><span class="p">)</span>
     <span class="n">real</span> <span class="o">=</span> <span class="n">td_to_fd</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">timebins</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span>
-    
-    <span class="sd">&#39;&#39;&#39; calculate angle offset &#39;&#39;&#39;</span>
-    <span class="n">angle</span> <span class="o">=</span> <span class="n">ideal_sampl_phasor</span><span class="o">.</span><span class="n">angle</span> <span class="o">-</span> <span class="n">real</span><span class="o">.</span><span class="n">angle</span>    
-    
-    <span class="sd">&#39;&#39;&#39; ratio of magnitudes -&gt; ideal/actual &#39;&#39;&#39;</span>
+
+    <span class="sd">&quot;&quot;&quot; calculate angle offset &quot;&quot;&quot;</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">ideal_sampl_phasor</span><span class="o">.</span><span class="n">angle</span> <span class="o">-</span> <span class="n">real</span><span class="o">.</span><span class="n">angle</span>
+
+    <span class="sd">&quot;&quot;&quot; ratio of magnitudes -&gt; ideal/actual &quot;&quot;&quot;</span>
     <span class="n">ratio</span> <span class="o">=</span> <span class="n">ideal_sampl_phasor</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">/</span> <span class="n">real</span><span class="o">.</span><span class="n">magnitude</span>
-    
-    <span class="k">return</span> <span class="n">Calibration</span><span class="p">(</span><span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span>  <span class="n">scaling_factor</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span></div>
+
+    <span class="k">return</span> <span class="n">Calibration</span><span class="p">(</span><span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span> <span class="n">scaling_factor</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

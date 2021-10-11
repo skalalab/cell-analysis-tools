@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -162,6 +162,7 @@
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">.helper</span> <span class="kn">import</span> <span class="n">_validate_array_and_make_bool</span>
 
+
 <div class="viewcode-block" id="total_error"><a class="viewcode-back" href="../../../rest_files/metrics.html#flim_tools.metrics.total_error">[docs]</a><span class="k">def</span> <span class="nf">total_error</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">,</span> <span class="n">weight_fn</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight_fp</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the percent of misclassified pixels on an image. </span>
@@ -191,15 +192,17 @@
     <span class="c1"># convert to bool</span>
     <span class="n">mask_gt</span> <span class="o">=</span> <span class="n">_validate_array_and_make_bool</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">)</span>
     <span class="n">mask_pred</span> <span class="o">=</span> <span class="n">_validate_array_and_make_bool</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">)</span>
-    
+
     <span class="c1"># subtraction operation requires arrays to be int</span>
     <span class="c1"># &gt; 0 then convers then back to bool</span>
-    <span class="n">fp</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask_pred</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">-</span> <span class="n">mask_gt</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="c1"># bool </span>
-    <span class="n">fn</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask_gt</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">-</span> <span class="n">mask_pred</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="c1"># bool</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask_pred</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">-</span> <span class="n">mask_gt</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="c1"># bool</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask_gt</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">-</span> <span class="n">mask_pred</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="c1"># bool</span>
 
     <span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">=</span> <span class="n">mask_gt</span><span class="o">.</span><span class="n">shape</span>
     <span class="c1"># return (np.sum(fn)*weight_fn + np.sum(fp)*weight_fp) / (n_rows * n_cols )</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="o">*</span><span class="n">weight_fn</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span><span class="o">*</span><span class="n">weight_fp</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">n_rows</span> <span class="o">*</span> <span class="n">n_cols</span> <span class="p">)</span><span class="o">*</span><span class="p">((</span><span class="n">weight_fp</span><span class="o">+</span><span class="n">weight_fn</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">*</span> <span class="n">weight_fn</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span> <span class="o">*</span> <span class="n">weight_fp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">n_rows</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">weight_fp</span> <span class="o">+</span> <span class="n">weight_fn</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span></div>
 </pre></div>
 
            </div>

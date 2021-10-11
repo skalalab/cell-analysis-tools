@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -164,6 +164,7 @@
 <span class="kn">from</span> <span class="nn">.helper</span> <span class="kn">import</span> <span class="n">_validate_array_and_make_bool</span>
 <span class="kn">from</span> <span class="nn">flim_tools.metrics</span> <span class="kn">import</span> <span class="n">dice</span>
 
+
 <div class="viewcode-block" id="jaccard"><a class="viewcode-back" href="../../../rest_files/metrics.html#flim_tools.metrics.jaccard">[docs]</a><span class="k">def</span> <span class="nf">jaccard</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates the IoU/jaccard index for a pair of masks. </span>
@@ -184,15 +185,22 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">mask_gt</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">mask_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape mismatch: the shape of the ground truth mask </span><span class="si">{</span><span class="n">mask_gt</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> does not match shape of predicted mask </span><span class="si">{</span><span class="n">mask_pred</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Shape mismatch: the shape of the ground truth mask </span><span class="si">{</span><span class="n">mask_gt</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> does not match shape of predicted mask </span><span class="si">{</span><span class="n">mask_pred</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mask_gt</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mask_pred</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Ground truth mask and predicted mask cannot both be entirely zeros&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Ground truth mask and predicted mask cannot both be entirely zeros&quot;</span>
+        <span class="p">)</span>
 
     <span class="n">mask_gt</span> <span class="o">=</span> <span class="n">_validate_array_and_make_bool</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">)</span>
     <span class="n">mask_pred</span> <span class="o">=</span> <span class="n">_validate_array_and_make_bool</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">mask_gt</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="p">)</span></div>
 </pre></div>
 
            </div>

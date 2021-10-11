@@ -86,7 +86,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
@@ -159,17 +159,12 @@
            <div itemprop="articleBody">
             
   <h1>Source code for flim_tools.image_processing.rgb2gray</h1><div class="highlight"><pre>
-<span></span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">flim_tools.io</span> <span class="kn">import</span> <span class="n">load_sdt_file</span>
 <span class="kn">from</span> <span class="nn">flim_tools.visualization</span> <span class="kn">import</span> <span class="n">compare_images</span>
-
-
-
 <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
 
 
@@ -208,59 +203,57 @@
     <span class="c1"># There are probably more efficient ways to do this with np.reshape/np.squeeze, but for readability this was used:</span>
     <span class="c1">#     - if you are dealing with a larger image set, adjust as needed for a more efficient solution</span>
     <span class="c1"># Creating a set initially and having to check every time we add a new element for whether it is unique is inefficient</span>
-    
+
     <span class="n">tuple_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">mask_rgb</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
             <span class="n">tuple_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">column</span><span class="p">))</span>
-    
+
     <span class="c1"># Convert from list -&gt; set -&gt; list to only keep unique RGB values for lookup table</span>
     <span class="c1"># Benefit of the tuple shows here! Hashable in a set which a numpy array alone wouldn&#39;t be</span>
-    
-    <span class="n">tuple_list</span><span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">tuple_list</span><span class="p">))</span>
-    
+
+    <span class="n">tuple_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">tuple_list</span><span class="p">))</span>
+
     <span class="c1"># Make a dictionary of RGB tuples to int index from 1 to length of unique RGB tuples</span>
     <span class="c1"># Add one to reserve 0 for (0,0,0) and update (0,0,0) at the end to be 0</span>
-    
-    <span class="n">tuple_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">tuple_list</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tuple_list</span><span class="p">))}</span>
-    <span class="n">tuple_dict</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
-    
+
+    <span class="n">tuple_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">tuple_list</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tuple_list</span><span class="p">))}</span>
+    <span class="n">tuple_dict</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+
     <span class="c1"># Generate a numpy of colors and IDs.</span>
     <span class="c1">#   - The colors array will be n x 3 depending on the number of unique RGB values</span>
     <span class="c1">#   - The color_ids array will be n x 1 representing each of the new values for any given RGB value</span>
     <span class="c1">#   - This creates effectively a lookup table for converting a list of RGB values to a grayscale int equivalent</span>
-    
+
     <span class="n">colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">tuple_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
     <span class="n">color_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">tuple_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-    
-    
+
     <span class="c1"># Always prefer 8bit int if we can get away with it for easier viewing in windows platforms.</span>
     <span class="c1">#   - If there are more than 255 distinct values, then use np.uint32 as that is always positive</span>
     <span class="c1">#   and guarantees compatibility with even transparency based RGB codes (#AARRGGBB)</span>
-    
+
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tuple_dict</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">255</span><span class="p">:</span>
         <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span>
-    
+
     <span class="c1"># Initialize output array as the shape of the original image (minus RGB channels) and set everything to 0 initially</span>
     <span class="c1"># Also auto update dtype to be uint8 if possible, otherwise uint32</span>
-    
-    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mask_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mask_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">)</span>
-    
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">mask_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mask_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
     <span class="c1"># Finally, check color of individual pixels in original mask against the color lookup table.</span>
     <span class="c1"># If all 3 RGB values match, then the index and new label of that point are returned</span>
-    
-    <span class="n">label</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mask_rgb</span> <span class="o">==</span> <span class="n">colors</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span>
-    
+
+    <span class="n">label</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">mask_rgb</span> <span class="o">==</span> <span class="n">colors</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+
     <span class="n">unique_colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-    
     <span class="c1"># Index rows and columns to now be the color ID determined above</span>
     <span class="c1"># Length of each of these will be mask.shape[0]*mask.shape[1], and will be automatically reshaped to fit the result array</span>
-    
+
     <span class="n">result</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">color_ids</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
-    
+
     <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
