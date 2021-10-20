@@ -6,26 +6,30 @@ import numpy as np
 import math
 
 
-def dbc(img,s):
-    (width, height) = img.size
+def dbc(img,s): # s is the scaling factor
+    (width, height) = img.shape
     # check width == height
     assert(width == height)
-    pixel = img.load()
+    pixel = img # img.load()
     M = width
     # grid size must be bigger than 2 and least than M/2
-    G = 256
-    assert(s >= 2)
-    assert(s <= M//2)
+    G = 256  # number of gray levels 
+    assert(s >= 2) # half is min scaling factor 
+    assert(s <= M//2) # maximum scaling factor is num of pixels in 1/2 the image
     ngrid = math.ceil(M / s)
-    h = G*(s / M) # box height
+    h = G*(s / M) # box height # gray levels * num of boxes formed by scaling factor
     grid = np.zeros((ngrid,ngrid), dtype='int32')
     
-    for i in range(ngrid):
+    for i in range(ngrid): #iterate through grid pixels
         for j in range(ngrid):
             maxg = 0
             ming = 255
-            for k in range(i*s, min((i+1)*s, M)):
+            
+            # iterate through all pixels in a box
+            # indexes found by multiplying by scaling factor
+            for k in range(i*s, min((i+1)*s, M)): # min is there to boundary check
                 for l in range(j*s, min((j+1)*s, M)):
+                    print(k , l)
                     if pixel[k, l] > maxg:
                         maxg = pixel[k, l]
 
@@ -34,6 +38,7 @@ def dbc(img,s):
                         
             grid[i,j] = math.ceil(maxg/h) - math.ceil(ming/h) + 1
 
+    # sums all numbers in the grid 
     Ns = 0
     for i in range(ngrid):
         for j in range(ngrid):
@@ -78,10 +83,21 @@ def sdbc(img,s):
 
 
 if __name__ == '__main__':
-    path = str(input("Enter path to image:"))
-    image = Image.open(path) # Brodatz/D1.gif
-    image = image.convert('L')
-    (imM, _) = image.size
+    # path = str(input("Enter path to image:"))
+    # image = Image.open(path) # Brodatz/D1.gif
+    # image = image.convert('L')
+    # (imM, _) = image.size
+    
+    from skimage.morphology import disk
+    import numpy as np
+
+    
+    image = disk(20)
+    random_grid = np.random.random(image.shape)
+    
+    im = (image * random_grid * 255).astype(int)
+    image = im
+    (imM, _) = image.shape
     
     # calculate Nr and r
     Nr = []
@@ -118,7 +134,7 @@ if __name__ == '__main__':
     plt.figure(1,figsize=(10,5)).canvas.set_window_title('Fractal Dimension Calculate')
     plt.subplots_adjust(left=0.04,right=0.98)
     plt.subplot(121)
-    plt.title(path)
+    # plt.title(path)
     plt.imshow(image)
     plt.axis('off')
 
