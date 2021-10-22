@@ -80,10 +80,10 @@ def remove_horizontal_vertical_edges(im, disk_size=20, debug=False):
 if __name__ == "__main__":
 
     im = Image.open(
-        r"C:\Users\Nabiki\Desktop\Screenshot 2021-09-15 080238.png".replace("\\", "/")
+        r"scaffold.png".replace("\\", "/")
     )
     im = np.asarray(im)
 
     # plt.imshow(im)
     im = im.sum(axis=2)
-    im_filtered = remove_horizontal_vertical_edges(im)
+    im_filtered = remove_horizontal_vertical_edges(im, debug=True)
