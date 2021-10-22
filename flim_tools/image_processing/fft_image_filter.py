@@ -42,9 +42,11 @@ def remove_horizontal_vertical_edges(im, disk_size=20, debug=False):
     # % create a mask to filter out certain spatial frequencies
     # filter = circ(imsize,20); % pass low freqs near the origin
     selem_disk = disk(disk_size)
-    pad_amount = (im.shape[0] - selem_disk.shape[0]) // 2
+    pad_left = (im.shape[0] - selem_disk.shape[0]) // 2
+    pad_right = int(np.ceil((im.shape[0] - selem_disk.shape[0]) / 2))
+
     filt1 = np.pad(
-        selem_disk, (pad_amount, pad_amount), mode="constant", constant_values=0
+        selem_disk, (pad_left, pad_right), mode="constant", constant_values=0
     )
 
     ##
@@ -86,4 +88,6 @@ if __name__ == "__main__":
 
     # plt.imshow(im)
     im = im.sum(axis=2)
+    # im = im[:,:1018]
+    print(im.shape)
     im_filtered = remove_horizontal_vertical_edges(im, debug=True)
