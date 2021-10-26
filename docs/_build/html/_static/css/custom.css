@@ -1,0 +1,8 @@
+/*
+https://stackoverflow.com/questions/68182085/word-wrap-in-sphinx-autosummary-generated-table
+*/
+
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+  white-space: normal;
+}
