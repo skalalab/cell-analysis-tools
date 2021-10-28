@@ -21,3 +21,5 @@ flim_tools/general_functions/__pycache__/*
 *.pyc
 flim_tools/io/__pycache__/*
 flim_tools/metrics/__pycache__/*
+flim_tools/metrics/__pycache__/*
+flim_tools/io/__pycache__/*

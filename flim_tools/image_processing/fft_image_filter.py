@@ -88,6 +88,6 @@ if __name__ == "__main__":
 
     # plt.imshow(im)
     im = im.sum(axis=2)
-    # im = im[:,:1018]
+    im = im[:,:1018]
     print(im.shape)
     im_filtered = remove_horizontal_vertical_edges(im, debug=True)
