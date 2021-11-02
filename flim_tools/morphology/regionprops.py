@@ -3,7 +3,7 @@ from skimage.measure import regionprops as _regionprops
 from skimage.measure import regionprops_table as _regionprops_table
 from skimage.measure import label
 from numpy.ma import masked_array
-from _roi_distance import radius_max, radius_mean, radius_median
+from ._roi_distance import radius_max, radius_mean, radius_median
 from intensity_sum import intensity_sum
 from fractal_dimension.fractal_dim_gray import fractal_dimension_gray
 from skimage.morphology import label
