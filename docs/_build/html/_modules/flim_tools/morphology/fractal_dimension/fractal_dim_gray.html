@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>flim_tools.morphology.fractal_dimension.fractal_dim_gray &mdash; flim_tools  documentation</title><link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> flim_tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/morphology.html">Morphology</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">flim_tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>flim_tools.morphology.fractal_dimension.fractal_dim_gray</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for flim_tools.morphology.fractal_dimension.fractal_dim_gray</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">pad_to_square</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pads image to a square for fractal dimension method</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    im : ndarray</span>
+<span class="sd">        image in ndarray.</span>
+<span class="sd">    debug : bool, optional</span>
+<span class="sd">        Show debugging information. The default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    im_square : ndarray</span>
+<span class="sd">        image or roi padded to a square.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># pad with zeros to dimension</span>
+    <span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">pad</span> <span class="o">=</span> <span class="s2">&quot;rows&quot;</span> <span class="k">if</span> <span class="n">n_rows</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;cols&quot;</span>
+    
+    <span class="c1">#pad offsets</span>
+    <span class="c1"># pad axis</span>
+    <span class="n">difference</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">n_rows</span><span class="o">-</span> <span class="n">n_cols</span><span class="p">)</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">difference</span> <span class="o">//</span> <span class="mi">2</span> 
+    <span class="n">after</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">difference</span> <span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">pad</span> <span class="o">==</span> <span class="s2">&quot;rows&quot;</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="n">im_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">im</span><span class="p">,((</span><span class="n">before</span><span class="p">,</span><span class="n">after</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> 
+                            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pad</span> <span class="o">==</span> <span class="s2">&quot;cols&quot;</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="n">im_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">im</span><span class="p">,((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="n">before</span><span class="p">,</span><span class="n">after</span><span class="p">)),</span>
+                            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">im_square</span>
+
+
+<div class="viewcode-block" id="fractal_dimension_gray"><a class="viewcode-back" href="../../../../rest_files/morphology.html#flim_tools.morphology.fractal_dimension_gray">[docs]</a><span class="k">def</span> <span class="nf">fractal_dimension_gray</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the fractal dimenison based on the differential box counting method</span>
+<span class="sd">    </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    roi : ndarray</span>
+<span class="sd">        labels image.</span>
+<span class="sd">    intensity : ndarray</span>
+<span class="sd">        intensity image .</span>
+<span class="sd">    mode : str, optional</span>
+<span class="sd">        Choose the differential box counting method</span>
+<span class="sd">        &quot;Standard&quot; will keep intensities in place</span>
+<span class="sd">        &quot;Shifting&quot; will begin box counting method with bottom of </span>
+<span class="sd">        first box at the min grayscale value. The default is &quot;standard&quot;.</span>
+<span class="sd">    debug : bool, optional</span>
+<span class="sd">        Show debugging in formation. The default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    D : float</span>
+<span class="sd">        fractal dimension.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">roi</span> <span class="o">*</span> <span class="n">intensity</span>
+    <span class="c1"># pad to square if needed</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">rows</span> <span class="o">!=</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">pad_to_square</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
+    
+    
+    <span class="p">(</span><span class="n">imM</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    
+    <span class="c1"># calculate Nr and r</span>
+    <span class="n">Nr</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|</span><span class="se">\t</span><span class="s2">Nr</span><span class="se">\t</span><span class="s2">|</span><span class="se">\t</span><span class="s2">r</span><span class="se">\t</span><span class="s2">|S</span><span class="se">\t</span><span class="s2">|&quot;</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">imM</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">nval</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">lnsp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">),</span><span class="n">nval</span><span class="p">)</span>
+    <span class="n">sval</span>  <span class="o">=</span> <span class="n">a</span><span class="o">**</span><span class="n">lnsp</span>
+	
+    <span class="k">for</span> <span class="n">S</span> <span class="ow">in</span> <span class="n">sval</span><span class="p">:</span><span class="c1">#range(2,imM//2,(imM//2-2)//100):</span>
+        <span class="n">Ns</span> <span class="o">=</span> <span class="n">differential_box_counting</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
+        <span class="n">Nr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Ns</span><span class="p">)</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">S</span><span class="o">/</span><span class="n">imM</span>
+        <span class="c1"># r.append(S) # I think this should be R</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;|</span><span class="si">%10d</span><span class="se">\t</span><span class="s2">|</span><span class="si">%10f</span><span class="se">\t</span><span class="s2">|</span><span class="si">%4d</span><span class="se">\t</span><span class="s2">|&quot;</span><span class="o">%</span> <span class="p">(</span><span class="n">Ns</span><span class="p">,</span><span class="n">R</span><span class="p">,</span><span class="n">S</span><span class="p">))</span>
+	
+	
+    <span class="c1"># calculate log(Nr) and log(1/r)    </span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Nr</span><span class="p">))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># search fit error value</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">Sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">Sum</span> <span class="o">+=</span> <span class="p">(</span><span class="n">D</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+        
+    <span class="n">errorfit</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">N</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sum</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="c1"># figure size 10x5 inches</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">set_window_title</span><span class="p">(</span><span class="s1">&#39;Fractal Dimension Calculate&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.04</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="mf">0.98</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+        <span class="c1"># plt.title(path)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>  
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fractal dimension = </span><span class="si">{</span><span class="n">D</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> Fit Error = </span><span class="si">{</span><span class="n">errorfit</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Calculated points&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">D</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Linear fit&#39;</span> <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;log(1/r)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;log(Nr)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+    <span class="k">return</span> <span class="n">D</span></div>
+
+
+<span class="k">def</span> <span class="nf">differential_box_counting</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    differential box counting method for grayscale images</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    im : ndarry</span>
+<span class="sd">        2d image</span>
+<span class="sd">    s : int</span>
+<span class="sd">        scaling factor</span>
+<span class="sd">    mode : string, optional</span>
+<span class="sd">        determines how the boxes will be calculated, </span>
+<span class="sd">        standard differentil box counting method vs </span>
+<span class="sd">        shifting box counting method.</span>
+<span class="sd">        The default is &quot;standard&quot;.</span>
+<span class="sd">    debug : bool, optional</span>
+<span class="sd">        Show intermediate images. The default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Ns : int</span>
+<span class="sd">        number of boxes counted at this scale.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">width</span> <span class="o">==</span> <span class="n">height</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">width</span>
+    <span class="c1"># grid size must be bigger than 2 and least than M/2    </span>
+    <span class="n">G</span> <span class="o">=</span> <span class="mi">256</span> <span class="c1"># range for dtype=np.uint8 # better way?</span>
+    
+    <span class="c1"># these lines are for skimage dtype determination</span>
+    <span class="c1"># they generate a sample image 3x3 to know what</span>
+    <span class="c1"># the return type is</span>
+    <span class="k">if</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    
+    <span class="c1"># error check </span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># scaling factor is min 2</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">M</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># length of image is min 2</span>
+        
+    <span class="n">ngrid</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">/</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">G</span><span class="o">*</span><span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="n">M</span><span class="p">)</span> <span class="c1"># box height</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ngrid</span><span class="p">,</span><span class="n">ngrid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
+    
+    <span class="c1">#iterate through larger grid</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ngrid</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ngrid</span><span class="p">):</span>
+            <span class="n">maxg</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">ming</span> <span class="o">=</span> <span class="mi">255</span>
+            <span class="c1">#iterate through each pixel in sub-grid, the min error bounds </span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="nb">min</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">M</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="nb">min</span><span class="p">((</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">M</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">im</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">maxg</span><span class="p">:</span>
+                        <span class="n">maxg</span> <span class="o">=</span> <span class="n">im</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">im</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">ming</span><span class="p">:</span>
+                        <span class="n">ming</span> <span class="o">=</span> <span class="n">im</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span>
+            
+            <span class="c1"># box counting methods</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;standard&quot;</span><span class="p">:</span>
+                <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">maxg</span><span class="o">/</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">ming</span><span class="o">/</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;shifting&quot;</span><span class="p">:</span>    
+                <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">maxg</span><span class="o">-</span><span class="n">ming</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">h</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mode: </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> scale: </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="n">Ns</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">Ns</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter path to image:&quot;</span><span class="p">))</span>
+    <span class="c1"># make image if nothing passed</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">disk</span>
+        <span class="n">roi</span> <span class="o">=</span> <span class="n">disk</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">roi</span> <span class="o">=</span> <span class="n">roi</span><span class="p">[:</span><span class="mi">4</span><span class="p">,:</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">random_grid</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">intensity</span> <span class="o">=</span> <span class="p">(</span><span class="n">roi</span> <span class="o">*</span> <span class="n">random_grid</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+        <span class="c1"># path = Path(r&quot;./sierpienski_triangle.jpg&quot;)</span>
+        <span class="c1"># path = Path(r&quot;./waves.jpg&quot;)</span>
+        <span class="c1"># path = Path(r&quot;./clouds.jpg&quot;)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;./ocean.jpg&quot;</span><span class="p">)</span>
+        <span class="c1"># path = Path(path)</span>
+        <span class="n">intensity</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c1"># Brodatz/D1.gif</span>
+        <span class="n">intensity</span> <span class="o">=</span> <span class="n">intensity</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+        <span class="c1"># invert, make into abox, and set as binary with uin8 range</span>
+        
+        <span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+        <span class="c1"># image = np.invert(np.asarray(image, dtype=(np.uint8)))</span>
+        <span class="n">im_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">intensity</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">intensity</span> <span class="o">=</span> <span class="n">intensity</span><span class="p">[:</span><span class="n">im_min</span><span class="p">,</span> <span class="p">:</span><span class="n">im_min</span><span class="p">]</span>
+        <span class="c1"># image = ((image &gt; 100).astype(int) * 255).astype(np.uint8)</span>
+        <span class="n">roi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">intensity</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        
+    <span class="c1"># image = image[:, :len(image)//2]</span>
+    <span class="n">fractal_dim</span> <span class="o">=</span> <span class="n">fractal_dimension_gray</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fractal dimension: </span><span class="si">{</span><span class="n">fractal_dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+   
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Skala Lab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

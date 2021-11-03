@@ -1,75 +1,34 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Flim &mdash; flim_tools  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Flim &mdash; flim_tools  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="I/O" href="io.html" />
     <link rel="prev" title="Image Processing" href="image_processing.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> flim_tools
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,19 +36,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
@@ -98,71 +46,30 @@
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">Morphology</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">flim_tools</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Flim</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/rest_files/flim.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="module-flim_tools.flim">
 <span id="flim"></span><h1>Flim<a class="headerlink" href="#module-flim_tools.flim" title="Permalink to this headline">¶</a></h1>
 <p><strong>Functions:</strong></p>
@@ -173,9 +80,9 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.flim.bin_image" title="flim_tools.flim.bin_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_image</span></code></a>(image, bin_factor)</p></td>
-<td><p>This function takes in an image and bins it's histograms</p></td>
+<td><p>This function takes in an image and bins it’s histograms</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.flim.draw_universal_semicircle" title="flim_tools.flim.draw_universal_semicircle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_universal_semicircle</span></code></a>(figure, ...[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.flim.draw_universal_semicircle" title="flim_tools.flim.draw_universal_semicircle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_universal_semicircle</span></code></a>(figure, …[, …])</p></td>
 <td><p>Draws the universal semicircle over the give figure.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.flim.estimate_and_shift_irf" title="flim_tools.flim.estimate_and_shift_irf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">estimate_and_shift_irf</span></code></a>(decay, irf_decay[, debug])</p></td>
@@ -190,7 +97,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.flim.phasor_calibration" title="flim_tools.flim.phasor_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phasor_calibration</span></code></a>(f, lifetime, timebins, counts)</p></td>
 <td><p>Phasor Plot Calibration</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.flim.phasor_to_rectangular_lifetimes_array" title="flim_tools.flim.phasor_to_rectangular_lifetimes_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phasor_to_rectangular_lifetimes_array</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.flim.phasor_to_rectangular_lifetimes_array" title="flim_tools.flim.phasor_to_rectangular_lifetimes_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phasor_to_rectangular_lifetimes_array</span></code></a>(…)</p></td>
 <td><p>Takes in two arrays of angles and magnitudes and converts them to array of g and s points</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.flim.phasor_to_rectangular_point" title="flim_tools.flim.phasor_to_rectangular_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phasor_to_rectangular_point</span></code></a>(angle, magnitude)</p></td>
@@ -205,8 +112,8 @@
 </tbody>
 </table>
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.bin_image">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">bin_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_factor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/bin_image.html#bin_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.bin_image" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.bin_image">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">bin_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">bin_factor</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/bin_image.html#bin_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.bin_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function takes in an image and bins it’s histograms</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -225,8 +132,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.draw_universal_semicircle">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">draw_universal_semicircle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">figure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">laser_angular_frequency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Phasor</span> <span class="pre">Plot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/draw_universal_semicircle.html#draw_universal_semicircle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.draw_universal_semicircle" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.draw_universal_semicircle">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">draw_universal_semicircle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">figure</span></em>, <em class="sig-param"><span class="n">laser_angular_frequency</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">'Phasor Plot'</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/draw_universal_semicircle.html#draw_universal_semicircle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.draw_universal_semicircle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws the universal semicircle over the give figure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -245,8 +152,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.estimate_and_shift_irf">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">estimate_and_shift_irf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">irf_decay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/estimate_and_shift_irf.html#estimate_and_shift_irf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.estimate_and_shift_irf" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.estimate_and_shift_irf">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">estimate_and_shift_irf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">decay</span></em>, <em class="sig-param"><span class="n">irf_decay</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/estimate_and_shift_irf.html#estimate_and_shift_irf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.estimate_and_shift_irf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Estimates shift  given a decay and an IRF.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -271,8 +178,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.ideal_sample_phasor">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">ideal_sample_phasor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lifetime</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/ideal_sample_phasor.html#ideal_sample_phasor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.ideal_sample_phasor" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.ideal_sample_phasor">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">ideal_sample_phasor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">lifetime</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/ideal_sample_phasor.html#ideal_sample_phasor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.ideal_sample_phasor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a phasor for a specific lifetime at a given frequency.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -292,8 +199,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.lifetime_image_to_rectangular_points">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">lifetime_image_to_rectangular_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/lifetime_image_to_rectangular_points.html#lifetime_image_to_rectangular_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.lifetime_image_to_rectangular_points" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.lifetime_image_to_rectangular_points">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">lifetime_image_to_rectangular_points</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/lifetime_image_to_rectangular_points.html#lifetime_image_to_rectangular_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.lifetime_image_to_rectangular_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function takes all the pixels/histograms
 of an image and plots them in the phasor plot</p>
 <dl class="field-list simple">
@@ -319,8 +226,8 @@ points_s - 2d array of s coordinates</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.phasor_calibration">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">phasor_calibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lifetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timebins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/phasor_calibration.html#phasor_calibration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.phasor_calibration" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.phasor_calibration">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">phasor_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">lifetime</span></em>, <em class="sig-param"><span class="n">timebins</span></em>, <em class="sig-param"><span class="n">counts</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/phasor_calibration.html#phasor_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.phasor_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Phasor Plot Calibration</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -347,8 +254,8 @@ lifetime passed in</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.phasor_to_rectangular_lifetimes_array">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">phasor_to_rectangular_lifetimes_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitudes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/phasor_to_rectangular_lifetimes_array.html#phasor_to_rectangular_lifetimes_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.phasor_to_rectangular_lifetimes_array" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.phasor_to_rectangular_lifetimes_array">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">phasor_to_rectangular_lifetimes_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">angles</span></em>, <em class="sig-param"><span class="n">magnitudes</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/phasor_to_rectangular_lifetimes_array.html#phasor_to_rectangular_lifetimes_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.phasor_to_rectangular_lifetimes_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes in two arrays of angles and magnitudes
 and converts them to array of g and s points</p>
 <dl class="field-list simple">
@@ -375,8 +282,8 @@ s - array of s-coordinates (y-coordinates)</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.phasor_to_rectangular_point">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">phasor_to_rectangular_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitude</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/phasor_to_rectangular_point.html#phasor_to_rectangular_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.phasor_to_rectangular_point" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.phasor_to_rectangular_point">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">phasor_to_rectangular_point</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">angle</span></em>, <em class="sig-param"><span class="n">magnitude</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/phasor_to_rectangular_point.html#phasor_to_rectangular_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.phasor_to_rectangular_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets x and y position of phasor in rectangular coordinates</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -396,8 +303,8 @@ s - array of s-coordinates (y-coordinates)</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.rectangular_to_phasor_lifetimes_array">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">rectangular_to_phasor_lifetimes_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/rectangular_to_phasor_lifetimes_array.html#rectangular_to_phasor_lifetimes_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.rectangular_to_phasor_lifetimes_array" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.rectangular_to_phasor_lifetimes_array">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">rectangular_to_phasor_lifetimes_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">g</span></em>, <em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/rectangular_to_phasor_lifetimes_array.html#rectangular_to_phasor_lifetimes_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.rectangular_to_phasor_lifetimes_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes an array(image) of g and s points and
 converts them to angle and magnitude phasor arrays</p>
 <dl class="field-list simple">
@@ -418,8 +325,8 @@ lifetime_magnitudes_array - array of magnitudes for each pixel</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.flim.td_to_fd">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.flim.</span></span><span class="sig-name descname"><span class="pre">td_to_fd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timebins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/td_to_fd.html#td_to_fd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.flim.td_to_fd" title="Permalink to this definition">¶</a></dt>
+<dt id="flim_tools.flim.td_to_fd">
+<code class="sig-prename descclassname">flim_tools.flim.</code><code class="sig-name descname">td_to_fd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">timebins</span></em>, <em class="sig-param"><span class="n">counts</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/flim/td_to_fd.html#td_to_fd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.flim.td_to_fd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Time to frequency domain transformation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -443,50 +350,33 @@ lifetime_magnitudes_array - array of magnitudes for each pixel</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="io.html" class="btn btn-neutral float-right" title="I/O" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="image_processing.html" class="btn btn-neutral float-left" title="Image Processing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="io.html" class="btn btn-neutral float-right" title="I/O" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Skala Lab.
-
-    </p>
+    <p>&#169; Copyright 2021, Skala Lab.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
