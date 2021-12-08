@@ -84,9 +84,9 @@ def regionprops_omi(
     # 12. fad_tau_mean
     # 13. redox_ratio
 
-    
-    im_nadh_tau_mean = (im_nadh_a1 * im_nadh_t1) + (im_nadh_a2*im_nadh_t2)
-    im_fad_tau_mean = (im_fad_a1*im_fad_t1) + (im_fad_a2*im_fad_t2)
+    # convert a1/a2 to percent
+    im_nadh_tau_mean = (im_nadh_a1/100 * im_nadh_t1) + (im_nadh_a2/100 * im_nadh_t2)
+    im_fad_tau_mean = (im_fad_a1/100 * im_fad_t1) + (im_fad_a2/100 * im_fad_t2)
     im_redox_ratio = im_nadh_intensity / im_fad_intensity
     
     
@@ -139,7 +139,7 @@ def regionprops_omi(
         }
     
     dict_omi = {}
-       
+      
     for rp_key in dict_regionprops.keys():#iterate through regionprops
         for region in dict_regionprops[rp_key]: # iterate through rois in regionprops
             pass
