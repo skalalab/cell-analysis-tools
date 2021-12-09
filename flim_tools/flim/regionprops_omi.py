@@ -138,22 +138,22 @@ def regionprops_omi(
          "redox_ratio" : redox_ratio,
         }
     
+    # assemble dictionary of omi parameters
     dict_omi = {}
-      
-    for rp_key in dict_regionprops.keys():#iterate through regionprops
-        for region in dict_regionprops[rp_key]: # iterate through rois in regionprops
+    for rp_key in dict_regionprops.keys():# iterate through each images regionprops
+        for region in dict_regionprops[rp_key]: # iterate through region in regionprops
             pass
-            dict_key_name = f"{image_id}_{region.label}"
+            dict_key_name = f"{image_id}_{region.label}" # generate unique key for region in this image
             if not dict_key_name in dict_omi.keys(): # add key if needed
                 pass
-                dict_omi[dict_key_name] = {} # new dict for label if needed
-                dict_omi[dict_key_name][f"mask_label"] = int(region.label)
+                dict_omi[dict_key_name] = {} # add new dict for label
+                dict_omi[dict_key_name]["mask_label"] = int(region.label) # save label value
             
             dict_omi[dict_key_name][f"{rp_key}_mean"] = region.mean_intensity
             dict_omi[dict_key_name][f"{rp_key}_stdev"] = region.stdev
 
 
-    #dictionary of omi features could be df if we wanted to
+    # dictionary of omi features could be df if we wanted to
     return dict_omi
 #%%
 
