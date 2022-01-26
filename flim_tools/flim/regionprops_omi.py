@@ -93,9 +93,9 @@ def regionprops_omi(
     # how to handle INF values generated in the image
     im_flirr = (im_nadh_a2/100) / (im_fad_a1/100) # bound portions of NADH/FAD
     
-    print("regionprops_omi: currently setting FLIRR INF values to zero")
-    print("remove this message once FLIRR or mask computation has been updated")
-    im_flirr[im_flirr == np.Inf] = 0
+    # print("regionprops_omi: currently setting FLIRR INF values to zero")
+    # print("remove this message once FLIRR or mask computation has been updated")
+    # im_flirr[im_flirr == np.Inf] = 0
     
     def stdev(roi, intensity):
         inverted_roi = np.invert(roi.astype(bool))
