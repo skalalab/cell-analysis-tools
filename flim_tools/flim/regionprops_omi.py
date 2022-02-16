@@ -12,6 +12,7 @@ import numpy as np
 from flim_tools.io import read_asc
 import tifffile
 from pprint import pprint
+from flim_tools.image_processing import normalize
 
 import matplotlib.pylab as plt
 import matplotlib as mpl
@@ -106,14 +107,19 @@ def regionprops_omi(
     # print("remove this message once FLIRR or mask computation has been updated")
     # im_flirr[im_flirr == np.Inf] = 0
     
+    # DEFINE EXTRA PROPERTIES
     def stdev(roi, intensity):
         inverted_roi = np.invert(roi.astype(bool))
         masked_image = ma.masked_array(intensity, mask=inverted_roi)
         return np.std(masked_image)
-          
-    # make sure rois are uniquely labeled, exclude bg
-    #assert len(np.unique(label_image)[1:]) == n_rois, "mask does not have unique labels"
-            
+    
+    def intensity_weighted(roi, intensity):
+        inverted_roi = np.invert(roi.astype(bool))
+        masked_image = ma.masked_array(intensity, mask=inverted_roi)
+        im_normalized = normalize(masked_image)
+        return np.mean(masked_image * im_normalized)
+        
+           
     nadh_intensity = regionprops(label_image, im_nadh_intensity, extra_properties=[stdev])
     nadh_a1 = regionprops(label_image, im_nadh_a1, extra_properties=[stdev])
     nadh_a2 = regionprops(label_image, im_nadh_a2, extra_properties=[stdev])
@@ -165,6 +171,7 @@ def regionprops_omi(
             
             dict_omi[dict_key_name][f"{rp_key}_mean"] = region.mean_intensity
             dict_omi[dict_key_name][f"{rp_key}_stdev"] = region.stdev
+            #dict_omi[dict_key_name][f"{rp_key}_mean_intensity_weighted"] = region.stdev #intensity_weighted
 
     # dictionary of omi features could be df if we wanted to
     return dict_omi
