@@ -89,9 +89,18 @@ def regionprops_omi(
     im_fad_tau_mean = (im_fad_a1/100 * im_fad_t1) + (im_fad_a2/100 * im_fad_t2)
     im_redox_ratio = im_nadh_intensity / im_fad_intensity
     
-    # fluorescence lifetime imaging redox ratio
-    # how to handle INF values generated in the image
-    im_flirr = (im_nadh_a2/100) / (im_fad_a1/100) # bound portions of NADH/FAD
+    # fluorescence lifetime imaging redox ratio aka FLIRR
+    # labels mask image should not include any im_fad_a1 zeros
+    # because it has been revised in main.py.
+    # apply mask then compute to avoid Infinite values
+    labels_inverted= np.invert(label_image.astype(bool))
+    masked_im_fad_a1 = ma.masked_array(im_fad_a1, mask=labels_inverted)
+    masked_im_nadh_a2 = ma.masked_array(im_nadh_a2, mask=labels_inverted)
+    im_flirr = (masked_im_nadh_a2/100) / (masked_im_fad_a1/100) # bound portions of NADH/FAD
+    
+    # plt.imshow(im_nadh_a2)
+    # plt.imshow(im_fad_a1)
+    # plt.show()
     
     # print("regionprops_omi: currently setting FLIRR INF values to zero")
     # print("remove this message once FLIRR or mask computation has been updated")

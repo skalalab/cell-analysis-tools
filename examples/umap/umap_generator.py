@@ -50,9 +50,20 @@ penguin_data = df_data[penguin_cols].values
 scaled_data = StandardScaler().fit_transform(penguin_data)
 
 
-#%%
+#%% LOAD DATA
 
-df_redox_ratio = pd.read_csv("2022_02_08_all_props.csv")
+analysis_type = "whole_cell"
+# analysis_type = "nuclei"
+path_analysis = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-analysis")
+filename = f"2022_02_16_{analysis_type}_all_props.csv"
+
+base_path_output = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-figures")
+
+
+path_figures = base_path_output / analysis_type / "umap"
+path_figures.mkdir(exist_ok=True)
+
+df_redox_ratio = pd.read_csv(path_analysis / filename)
 # (27,35,37,38)
 # df_redox_ratio.iloc[:,35]
 
@@ -72,7 +83,15 @@ list_omi_parameters = [
     'redox_ratio_mean'
     ]
 
-df_data = df_redox_ratio[df_redox_ratio["treatment"] == "0-control"]
+# df_data = df_redox_ratio[df_redox_ratio["treatment"] == "0-control"]
+
+#seahorse regular media
+df_data = df_redox_ratio[df_redox_ratio["experiment"] == "seahorse"]
+df_data = df_data[df_data["media"] == "DMEM"]
+filename_id = "exp_seahorse_media_DMEM"
+
+# seahorse by cell type by inhibitor (also separate by media?)
+
 
 data = df_data[list_omi_parameters].values
 scaled_data = StandardScaler().fit_transform(data)
@@ -95,10 +114,10 @@ hv.extension("bokeh")
 from holoviews import opts
 
 ## additional params
-# hover_vdim = "species_short"
 hover_vdim = "base_name"
-legend_entries = "cell_line"
+legend_entries = "treatment" # "cell_line"
 
+########
 df_data = df_data.copy()
 df_data["umap_x"] = fit_umap.embedding_[:,0]
 df_data["umap_y"] = fit_umap.embedding_[:,1]
@@ -111,11 +130,12 @@ scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdi
                            vdims=vdims, label=entry) for entry in list_entries]
 
 overlay = hv.Overlay(scatter_umaps)
-umap_parameters = f"metric: {reducer.metric} | " \
-                f"n_neighbors: {reducer.n_neighbors} " \
-                    f"distance: {reducer.min_dist}"
+umap_parameters =   f"masks: {analysis_type} | " \
+                    f"metric: {reducer.metric} | " \
+                    f"n_neighbors: {reducer.n_neighbors} | " \
+                    f"distance: {reducer.min_dist} | " \
+                    f"{filename_id}"
                 
-
 overlay.opts(
     opts.Scatter(
         tools=["hover"],
@@ -124,15 +144,18 @@ overlay.opts(
         width=800, 
         height=800),
     opts.Overlay(
-        title=f"UMAP \n {umap_parameters}")       
+        title=f"UMAP \n {umap_parameters}",
+        legend_limit=100,
+        legend_position='right'
+        )       
     )
 
-filename=f"metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist}"
+filename=f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist}"
 path_output = Path(r"C:\Users\Nabiki\Desktop\redox_ratio")
-hv.save(overlay, path_output / f"umap_{filename}.html" )
+hv.save(overlay, path_figures / f"umap_{filename}_{filename_id}.html" )
 
 
-#%% PLOT UMAP EMBEDDINGS DATA 
+    #%% PLOT UMAP EMBEDDINGS DATA 
 
 # umap_embeddings = reducer.fit_transform(data)
 
