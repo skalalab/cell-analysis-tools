@@ -33,7 +33,7 @@ def regionprops_omi(
                     im_fad_t2,
                     ):
     """
-    Takes in labels image as well as nadh and fad images to reuturn
+    Takes in labels image as well as nadh and fad images to return
     mean and stdev of each parameter per roi
 
     Parameters
