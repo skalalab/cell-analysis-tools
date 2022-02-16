@@ -249,3 +249,11 @@ hv.save(overlay, path_output / f"umap_{filename}.html" )
 # plt.title('UMAP projection of the Penguin dataset', fontsize=24)
 # plt.show()
 
+#%%
+
+if __file__ == "__main__":
+    pass
+
+    # load data
+    # setup reducer 
+    # plot data
