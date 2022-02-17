@@ -55,7 +55,7 @@ scaled_data = StandardScaler().fit_transform(penguin_data)
 analysis_type = "whole_cell"
 # analysis_type = "nuclei"
 path_analysis = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-analysis")
-filename = f"2022_02_16_{analysis_type}_all_props.csv"
+filename = f"2022_02_17_{analysis_type}_all_props.csv"
 
 base_path_output = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-figures")
 
@@ -107,11 +107,12 @@ reducer = umap.UMAP(
     )
 
 fit_umap = reducer.fit(scaled_data)
-#%% PLOTTING 
+#%% PLOT UMAP 
 
 import holoviews as hv
 hv.extension("bokeh")
 from holoviews import opts
+import hvplot.pandas
 
 ## additional params
 hover_vdim = "base_name"
@@ -126,33 +127,63 @@ kdims = ["umap_x"]
 vdims = ["umap_y", hover_vdim]
 list_entries = np.unique(df_data[legend_entries])
 
-scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdims, 
-                           vdims=vdims, label=entry) for entry in list_entries]
 
-overlay = hv.Overlay(scatter_umaps)
+
 umap_parameters =   f"masks: {analysis_type} | " \
                     f"metric: {reducer.metric} | " \
                     f"n_neighbors: {reducer.n_neighbors} | " \
                     f"distance: {reducer.min_dist} | " \
                     f"{filename_id}"
-                
-overlay.opts(
-    opts.Scatter(
-        tools=["hover"],
-        muted_alpha=0,
-        aspect="equal",
-        width=800, 
-        height=800),
-    opts.Overlay(
-        title=f"UMAP \n {umap_parameters}",
-        legend_limit=100,
-        legend_position='right'
-        )       
-    )
+                    
+# scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdims, 
+#                            vdims=vdims, label=entry) for entry in list_entries]
 
+# overlay = hv.Overlay(scatter_umaps)
+# overlay.opts(
+#     opts.Scatter(
+#         tools=["hover"],
+#         muted_alpha=0,
+#         aspect="equal",
+#         width=800, 
+#         height=800),
+#     opts.Overlay(
+#         title=f"UMAP \n {umap_parameters}",
+#         legend_limit=100,
+#         legend_position='right'
+#         )       
+#     )
+
+
+           
+                
 filename=f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist}"
-path_output = Path(r"C:\Users\Nabiki\Desktop\redox_ratio")
-hv.save(overlay, path_figures / f"umap_{filename}_{filename_id}.html" )
+
+for cell_line in np.unique(df_data["cell_line"]):
+    pass
+    # hvplot
+    df_data_to_plot = df_data[df_data["cell_line"] == cell_line]
+    overlay = df_data_to_plot.hvplot.scatter(x='umap_x', y='umap_y', 
+                                     by=legend_entries, 
+                                     s=3,
+                                     title=filename,
+                                     aspect="equal",
+                                     hover_cols=["base_name",
+                                                 "treatment",
+                                                 "cell_line",
+                                                 "media"]
+                                     ).opts(
+                                                        width=1600, 
+                                                        height=800,
+                                                        # aspect="equal",
+                                                        legend_opts={"click_policy": "hide"},                                                    
+        )
+                    
+    
+    
+    hvplot.save(overlay, path_figures / f"umap_{filename}_{filename_id}_{cell_line}_hvplot.html")
+
+#holoviews
+# hv.save(overlay, path_figures / f"umap_{filename}_{filename_id}.html" )
 
 
     #%% PLOT UMAP EMBEDDINGS DATA 
