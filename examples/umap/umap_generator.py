@@ -165,7 +165,7 @@ for cell_line in np.unique(df_data["cell_line"]):
     overlay = df_data_to_plot.hvplot.scatter(x='umap_x', y='umap_y', 
                                      by=legend_entries, 
                                      s=3,
-                                     title=filename,
+                                     title=f"{cell_line}  |  {filename}",
                                      aspect="equal",
                                      hover_cols=["base_name",
                                                  "treatment",
