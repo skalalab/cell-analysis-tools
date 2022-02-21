@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 12 12:58:18 2021
-
-@author: Nabiki
-"""
-
 from skimage.measure import regionprops
 from skimage.morphology import label
 import numpy.ma as ma
@@ -17,6 +10,7 @@ from flim_tools.image_processing import normalize
 import matplotlib.pylab as plt
 import matplotlib as mpl
 mpl.rcParams["figure.dpi"] = 300
+import math
 
 #%%
 def regionprops_omi(
@@ -102,10 +96,7 @@ def regionprops_omi(
     masked_im_fad_a1 = ma.masked_array(im_fad_a1, mask=labels_inverted)
     masked_im_nadh_a2 = ma.masked_array(im_nadh_a2, mask=labels_inverted)
     im_flirr = (masked_im_nadh_a2/100) / (masked_im_fad_a1/100) # bound portions of NADH/FAD
-    
-    # plt.imshow(im_nadh_a2)
-    # plt.imshow(im_fad_a1)
-    # plt.show()
+
     
     # print("regionprops_omi: currently setting FLIRR INF values to zero")
     # print("remove this message once FLIRR or mask computation has been updated")
@@ -116,29 +107,24 @@ def regionprops_omi(
         inverted_roi = np.invert(roi.astype(bool))
         masked_image = ma.masked_array(intensity, mask=inverted_roi)
         return np.std(masked_image)
+
+    extra_properties = [stdev]
     
-    def intensity_weighted(roi, intensity):
-        inverted_roi = np.invert(roi.astype(bool))
-        masked_image = ma.masked_array(intensity, mask=inverted_roi)
-        im_normalized = normalize(masked_image)
-        return np.mean(masked_image * im_normalized)
-        
-           
-    nadh_intensity = regionprops(label_image, im_nadh_intensity, extra_properties=[stdev])
-    nadh_a1 = regionprops(label_image, im_nadh_a1, extra_properties=[stdev])
-    nadh_a2 = regionprops(label_image, im_nadh_a2, extra_properties=[stdev])
-    nadh_t1 = regionprops(label_image, im_nadh_t1, extra_properties=[stdev])
-    nadh_t2 = regionprops(label_image, im_nadh_t2, extra_properties=[stdev])
-    nadh_tau_mean = regionprops(label_image, im_nadh_tau_mean, extra_properties=[stdev])
-    fad_intensity = regionprops(label_image, im_fad_intensity, extra_properties=[stdev])
-    fad_a1 = regionprops(label_image, im_fad_a1, extra_properties=[stdev])
-    fad_a2 = regionprops(label_image, im_fad_a2, extra_properties=[stdev])
-    fad_t1 = regionprops(label_image, im_fad_t1, extra_properties=[stdev])
-    fad_t2 = regionprops(label_image, im_fad_t2, extra_properties=[stdev])
-    fad_tau_mean = regionprops(label_image, im_fad_tau_mean, extra_properties=[stdev])
-    redox_ratio = regionprops(label_image, im_redox_ratio, extra_properties=[stdev])
-    flirr = regionprops(label_image, im_flirr, extra_properties=[stdev])
-    
+    # EQUALLY WEIGHTED PARAMETERS
+    nadh_intensity = regionprops(label_image, im_nadh_intensity, extra_properties=extra_properties)
+    nadh_a1 = regionprops(label_image, im_nadh_a1, extra_properties=extra_properties)
+    nadh_a2 = regionprops(label_image, im_nadh_a2, extra_properties=extra_properties)
+    nadh_t1 = regionprops(label_image, im_nadh_t1, extra_properties=extra_properties)
+    nadh_t2 = regionprops(label_image, im_nadh_t2, extra_properties=extra_properties)
+    nadh_tau_mean = regionprops(label_image, im_nadh_tau_mean, extra_properties=extra_properties)
+    fad_intensity = regionprops(label_image, im_fad_intensity, extra_properties=extra_properties)
+    fad_a1 = regionprops(label_image, im_fad_a1, extra_properties=extra_properties)
+    fad_a2 = regionprops(label_image, im_fad_a2, extra_properties=extra_properties)
+    fad_t1 = regionprops(label_image, im_fad_t1, extra_properties=extra_properties)
+    fad_t2 = regionprops(label_image, im_fad_t2, extra_properties=extra_properties)
+    fad_tau_mean = regionprops(label_image, im_fad_tau_mean, extra_properties=extra_properties)
+    redox_ratio = regionprops(label_image, im_redox_ratio, extra_properties=extra_properties)
+    flirr = regionprops(label_image, im_flirr, extra_properties=extra_properties)
 
     dict_regionprops = {
         "nadh_intensity" : nadh_intensity,
@@ -157,25 +143,110 @@ def regionprops_omi(
         "flirr" : flirr
         }
     
-    # TODO exclude bg roi, although i think regionprops is already doing this
-    # for region in nadh_intensity:
-    #     plt.imshow(region.image)
-    #     plt.show()
+
         
+     # image_lifetime * image_intensity pixels /image_intensity.max() * (np.sum(roi_intensity)/ num_pixels)  
     # assemble dictionary of omi parameters
     dict_omi = {}
     for rp_key in dict_regionprops.keys():# iterate through each images regionprops
         for region in dict_regionprops[rp_key]: # iterate through region in regionprops
             pass
             dict_key_name = f"{image_id}_{region.label}" # generate unique key for region in this image
-            if not dict_key_name in dict_omi.keys(): # add key if needed
+            if not dict_key_name in dict_omi.keys(): # add region dict if needed
                 pass
-                dict_omi[dict_key_name] = {} # add new dict for label
+                dict_omi[dict_key_name] = {} # add new dict for this label
                 dict_omi[dict_key_name]["mask_label"] = int(region.label) # save label value
             
+            # save equally weighted parameters
             dict_omi[dict_key_name][f"{rp_key}_mean"] = region.mean_intensity
             dict_omi[dict_key_name][f"{rp_key}_stdev"] = region.stdev
-            #dict_omi[dict_key_name][f"{rp_key}_mean_intensity_weighted"] = region.stdev #intensity_weighted
+                
+            ### COMPUTE INTENSITY WEIGHTED VALUES
+            list_valid_intensity_weights = [
+                        "nadh_a1", 
+                        "nadh_a2",
+                        "nadh_t1", 
+                        "nadh_t2",
+                        "nadh_tau_mean",
+                        "fad_a1",
+                        "fad_a2",
+                        "fad_t1",
+                        "fad_t2",
+                        "fad_tau_mean"
+                    ]
+
+                    
+            # Compute the intensity weighted values
+            print(f"{rp_key=}")
+            if rp_key in list_valid_intensity_weights: # one of the valid lifetime images
+                
+                # select proper intensity image to weigh by
+                if "fad" in rp_key:
+                    im_intensity_region = [r for r in fad_intensity if r.label == region.label][0] # should be one region
+                    
+                elif "nadh" in rp_key:
+                    im_intensity_region = [r for r in nadh_intensity if r.label == region.label][0] # should be one region
+                
+                # gather other things needed for intensity weighte
+                binary = region.image
+                inverted_binary = np.invert(binary)
+                
+                im_lifetime_masked = ma.masked_array(region.intensity_image, mask=inverted_binary)
+                im_intensity_masked = ma.masked_array(im_intensity_region.intensity_image, mask=inverted_binary)
+
+                
+                im_intensity_weighted = (im_lifetime_masked * im_intensity_masked) / np.sum(im_intensity_masked)
+                intensity_weighted_mean = np.sum(im_lifetime_masked * im_intensity_masked) / np.sum(im_intensity_masked)
+                
+                 # https://stackoverflow.com/questions/2413522/weighted-standard-deviation-in-numpy
+                def weighted_avg_and_std(values, weights):
+                    """
+                    Return the weighted average and standard deviation.
+                    values, weights -- Numpy ndarrays with the same shape.
+                    """
+                    average = np.average(values, weights=weights)
+                    # Fast and numerically precise:
+                    variance = np.average((values-average)**2, weights=weights)
+                    return (average, math.sqrt(variance))
+                
+                weighted_mean, weighted_stdev = weighted_avg_and_std(im_lifetime_masked, im_intensity_masked)
+                print(f"{weighted_mean=} | {intensity_weighted_mean=}")
+                assert weighted_mean ==intensity_weighted_mean
+                    
+                # save values
+                dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_mean"] = intensity_weighted_mean
+                dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_stdev"] = weighted_stdev
+
+                fig, ax = plt.subplots(1,4, figsize=(10,5))
+                
+                fig.suptitle(f"{rp_key}")
+                # original intensity
+                ax[0].set_title(f"intensity\n total photons: {np.sum(im_intensity_masked)}")
+                ax[0].imshow(im_intensity_masked)
+                ax[0].set_axis_off()
+                
+                # binary
+                ax[1].set_title("binary")
+                ax[1].imshow(binary)
+                ax[1].set_axis_off()
+                
+                # equally weighted 
+                ax[2].set_title(f"equally weighted \n "\
+                                f'mean: {dict_omi[dict_key_name][f"{rp_key}_mean"]:.3f} \n' \
+                                f'stdev : {dict_omi[dict_key_name][f"{rp_key}_stdev"]:.3f}' \
+                                    )
+                ax[2].imshow(im_lifetime_masked)
+                ax[2].set_axis_off()
+                
+                # intensity weighted
+                ax[3].set_title(f"intensity weighted lifetime \n"\
+                                f'mean: {dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_mean"]:.3f} \n' \
+                                f'stdev: {dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_stdev"]:.3f}'
+                                )
+                ax[3].imshow(im_intensity_weighted)
+                ax[3].set_axis_off()
+                plt.show()
+
 
     # dictionary of omi features could be df if we wanted to
     return dict_omi
@@ -205,11 +276,12 @@ if __name__ == "__main__":
 #%%
 
     omi_props = regionprops_omi(
+        image_id="test_image",
         label_image = load_image(Path(test_dict.mask_cell)),
         im_nadh_intensity = load_image(Path(test_dict.nadh_photons)),
-        im_nadh_a1 = load_image(Path(test_dict.nadh_a1)), 
-        im_nadh_a2 = load_image(Path(test_dict.nadh_a2)), 
-        im_nadh_t1 = load_image(Path(test_dict.nadh_t1)), 
+        im_nadh_a1 = load_image(Path(test_dict.nadh_a1)),
+        im_nadh_a2 = load_image(Path(test_dict.nadh_a2)),
+        im_nadh_t1 = load_image(Path(test_dict.nadh_t1)),
         im_nadh_t2 = load_image(Path(test_dict.nadh_t2)),
         im_fad_intensity = load_image(Path(test_dict.fad_photons)),
         im_fad_a1 = load_image(Path(test_dict.fad_a1)),
