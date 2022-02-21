@@ -94,7 +94,7 @@ for cell_line in list_cell_lines: #iterate throug the cell lines
     
     import holoviews as hv
     hv.extension("bokeh")
-    # from holoviews import opts
+    from holoviews import opts
     import hvplot.pandas
     
     ## additional params
@@ -116,38 +116,40 @@ for cell_line in list_cell_lines: #iterate throug the cell lines
                         f"distance: {reducer.min_dist} | " \
                         f"{filename_id}"
                         
-    # scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdims, 
-    #                            vdims=vdims, label=entry) for entry in list_entries]
+    scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdims, 
+                                vdims=vdims, label=entry) for entry in list_entries]
     
-    # overlay = hv.Overlay(scatter_umaps)
-    # overlay.opts(
-    #     opts.Scatter(
-    #         tools=["hover"],
-    #         muted_alpha=0,
-    #         aspect="equal",
-    #         width=800, 
-    #         height=800),
-    #     opts.Overlay(
-    #         title=f"UMAP \n {umap_parameters}",
-    #         legend_limit=100,
-    #         legend_position='right'
-    #         )       
-    #     )
+    overlay = hv.Overlay(scatter_umaps)
+    overlay.opts(
+        opts.Scatter(
+            
+               tools=["hover"],
+            muted_alpha=0,
+            aspect="equal",
+            width=800, 
+            height=800),
+        opts.Overlay(
+            title=f"UMAP \n {umap_parameters}",
+               legend_opts={"click_policy": "hide"},
+            legend_limit=100,
+            legend_position='right'
+            )       
+        )
 
                               
     filename=f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist}"
 
     # hvplot
     overlay = df_data.hvplot.scatter(x='umap_x', y='umap_y', 
-                                     by=legend_entries, 
-                                     s=6,
-                                     title=f"{cell_line}  |  {filename}",
-                                     aspect="equal",
-                                     hover_cols=["base_name",
-                                                 "treatment",
-                                                 "cell_line",
-                                                 "media"]
-                                     ).opts(
+                                      by=legend_entries, 
+                                      s=6,
+                                      title=f"{cell_line}  |  {filename}",
+                                      aspect="equal",
+                                      hover_cols=["base_name",
+                                                  "treatment",
+                                                  "cell_line",
+                                                  "media"]
+                                      ).opts(
                                                         width=1600, 
                                                         height=800,
                                                         # aspect="equal",
