@@ -123,15 +123,14 @@ for cell_line in list_cell_lines: #iterate throug the cell lines
     overlay.opts(
         opts.Scatter(
             
-               tools=["hover"],
+            tools=["hover"],
             muted_alpha=0,
             aspect="equal",
-            width=800, 
+            width=1600, 
             height=800),
         opts.Overlay(
             title=f"UMAP \n {umap_parameters}",
-               legend_opts={"click_policy": "hide"},
-            legend_limit=100,
+            legend_opts={"click_policy": "hide"},
             legend_position='right'
             )       
         )
@@ -139,27 +138,29 @@ for cell_line in list_cell_lines: #iterate throug the cell lines
                               
     filename=f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist}"
 
-    # hvplot
-    overlay = df_data.hvplot.scatter(x='umap_x', y='umap_y', 
-                                      by=legend_entries, 
-                                      s=6,
-                                      title=f"{cell_line}  |  {filename}",
-                                      aspect="equal",
-                                      hover_cols=["base_name",
-                                                  "treatment",
-                                                  "cell_line",
-                                                  "media"]
-                                      ).opts(
-                                                        width=1600, 
-                                                        height=800,
-                                                        # aspect="equal",
-                                                        legend_opts={"click_policy": "hide"},                                                    
-        )
-                        
-    hvplot.save(overlay, path_figures / f"umap_{filename}_{filename_id}_{cell_line}_hvplot.html")
+    #holoviews
+    hv.save(overlay, path_figures / f"umap_{filename}_{filename_id}_{cell_line}.html" )
 
-#holoviews
-# hv.save(overlay, path_figures / f"umap_{filename}_{filename_id}.html" )
+    # hvplot
+    # overlay = df_data.hvplot.scatter(x='umap_x', y='umap_y', 
+    #                                   by=legend_entries, 
+    #                                   s=10,
+    #                                   title=f"{cell_line}  |  {filename}",
+    #                                   aspect="equal",
+    #                                   hover_cols=["base_name",
+    #                                               "treatment",
+    #                                               "cell_line",
+    #                                               "media"]
+    #                                   ).opts(
+    #                                                     width=1600, 
+    #                                                     height=800,
+    #                                                     # aspect="equal",
+    #                                                     legend_opts={"click_policy": "hide"},                                                    
+    #     )
+                        
+    # hvplot.save(overlay, path_figures / f"umap_{filename}_{filename_id}_{cell_line}_hvplot.html")
+
+
 
     #%% PLOT UMAP EMBEDDINGS DATA 
 
