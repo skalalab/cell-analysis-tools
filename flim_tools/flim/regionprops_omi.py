@@ -216,36 +216,37 @@ def regionprops_omi(
                 # save values
                 dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_mean"] = intensity_weighted_mean
                 dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_stdev"] = weighted_stdev
-
-                fig, ax = plt.subplots(1,4, figsize=(10,5))
                 
-                fig.suptitle(f"{rp_key}")
-                # original intensity
-                ax[0].set_title(f"intensity\n total photons: {np.sum(im_intensity_masked)}")
-                ax[0].imshow(im_intensity_masked)
-                ax[0].set_axis_off()
-                
-                # binary
-                ax[1].set_title("binary")
-                ax[1].imshow(binary)
-                ax[1].set_axis_off()
-                
-                # equally weighted 
-                ax[2].set_title(f"equally weighted \n "\
-                                f'mean: {dict_omi[dict_key_name][f"{rp_key}_mean"]:.3f} \n' \
-                                f'stdev : {dict_omi[dict_key_name][f"{rp_key}_stdev"]:.3f}' \
+                if region.label == 10:
+                    fig, ax = plt.subplots(1,4, figsize=(10,3))
+                    
+                    fig.suptitle(f"{rp_key}")
+                    # original intensity
+                    ax[0].set_title(f"intensity\n total photons: {np.sum(im_intensity_masked)}")
+                    ax[0].imshow(im_intensity_masked)
+                    ax[0].set_axis_off()
+                    
+                    # binary
+                    ax[1].set_title("binary")
+                    ax[1].imshow(binary)
+                    ax[1].set_axis_off()
+                    
+                    # equally weighted 
+                    ax[2].set_title(f"equally weighted \n "\
+                                    f'mean: {dict_omi[dict_key_name][f"{rp_key}_mean"]:.3f} \n' \
+                                    f'stdev : {dict_omi[dict_key_name][f"{rp_key}_stdev"]:.3f}' \
+                                        )
+                    ax[2].imshow(im_lifetime_masked)
+                    ax[2].set_axis_off()
+                    
+                    # intensity weighted
+                    ax[3].set_title(f"intensity weighted lifetime \n"\
+                                    f'mean: {dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_mean"]:.3f} \n' \
+                                    f'stdev: {dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_stdev"]:.3f}'
                                     )
-                ax[2].imshow(im_lifetime_masked)
-                ax[2].set_axis_off()
-                
-                # intensity weighted
-                ax[3].set_title(f"intensity weighted lifetime \n"\
-                                f'mean: {dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_mean"]:.3f} \n' \
-                                f'stdev: {dict_omi[dict_key_name][f"{rp_key}_intensity_weighted_stdev"]:.3f}'
-                                )
-                ax[3].imshow(im_intensity_weighted)
-                ax[3].set_axis_off()
-                plt.show()
+                    ax[3].imshow(im_intensity_weighted)
+                    ax[3].set_axis_off()
+                    plt.show()
 
 
     # dictionary of omi features could be df if we wanted to
