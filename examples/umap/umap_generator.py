@@ -72,75 +72,96 @@ list_cell_lines = np.unique(df_media_subset["cell_line"])
 
 #%%
 
-for cell_line in list_cell_lines: #iterate throug the cell lines
+for cell_line in list_cell_lines[:]: #iterate throug the cell lines
     pass
+
+    dict_params = list(ParameterGrid(
+        {
+            "metric" : ["euclidean", "cosine", "manhattan"],
+            "n_neighbors" : np.arange(15,100,step=20),
+            "min_dist" : np.arange(0.1,1.0, step=0.3)
+         }
+        )   
+    )
+    
+    ## make dirs for this cell line
+    path_figures_cell_line = path_figures / f"{cell_line}"
+    path_figures_cell_line.mkdir(exist_ok=True)
+    
     df_data = df_media_subset[df_media_subset["cell_line"] == cell_line]
     
     data = df_data[list_omi_parameters].values
     scaled_data = StandardScaler().fit_transform(data)
     ##%% FIT UMAP 
     
-    # reducer = umap.UMAP()
-    reducer = umap.UMAP(
-            n_neighbors=15,
-            min_dist=0.1,
-            n_components=2,
-            metric='euclidean',
-            random_state=0
-        )
     
-    fit_umap = reducer.fit(scaled_data)
-    ##%% PLOT UMAP 
+    for params in dict_params:
+        pass
+        # reducer = umap.UMAP()
+        reducer = umap.UMAP(
+                # n_neighbors=15,
+                # min_dist=0.1,   
+                # metric='euclidean',
+                n_neighbors=params["n_neighbors"],
+                min_dist=params["min_dist"],   
+                metric=params["metric"],
+                n_components=2,
+                random_state=0
+            )
+        
+        fit_umap = reducer.fit(scaled_data)
+        ##%% PLOT UMAP 
+        
+        import holoviews as hv
+        hv.extension("bokeh")
+        from holoviews import opts
+        # import hvplot.pandas
+        
+        ## additional params
+        hover_vdim = "base_name"
+        legend_entries = "treatment" # "cell_line"
+        
+        ########
+        df_data = df_data.copy()
+        df_data["umap_x"] = fit_umap.embedding_[:,0]
+        df_data["umap_y"] = fit_umap.embedding_[:,1]
+        
+        kdims = ["umap_x"]
+        vdims = ["umap_y", hover_vdim]
+        list_entries = np.unique(df_data[legend_entries])
+        
+        umap_parameters =   f"masks: {analysis_type} | " \
+                            f"metric: {reducer.metric} | " \
+                            f"n_neighbors: {reducer.n_neighbors} | " \
+                            f"distance: {reducer.min_dist:.2f} | " \
+                            f"{filename_id}"
+                            
+        scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdims, 
+                                    vdims=vdims, label=entry) for entry in list_entries]
+        
+        overlay = hv.Overlay(scatter_umaps)
+        overlay.opts(
+            opts.Scatter(
+                
+                tools=["hover"],
+                muted_alpha=0,
+                aspect="equal",
+                width=1600, 
+                height=800),
+            opts.Overlay(
+                title=f"UMAP \n {umap_parameters}",
+                legend_opts={"click_policy": "hide"},
+                legend_position='right'
+                )       
+            )
     
-    import holoviews as hv
-    hv.extension("bokeh")
-    from holoviews import opts
-    import hvplot.pandas
+                                  
+        filename=f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist:.2f}"
     
-    ## additional params
-    hover_vdim = "base_name"
-    legend_entries = "treatment" # "cell_line"
-    
-    ########
-    df_data = df_data.copy()
-    df_data["umap_x"] = fit_umap.embedding_[:,0]
-    df_data["umap_y"] = fit_umap.embedding_[:,1]
-    
-    kdims = ["umap_x"]
-    vdims = ["umap_y", hover_vdim]
-    list_entries = np.unique(df_data[legend_entries])
-    
-    umap_parameters =   f"masks: {analysis_type} | " \
-                        f"metric: {reducer.metric} | " \
-                        f"n_neighbors: {reducer.n_neighbors} | " \
-                        f"distance: {reducer.min_dist} | " \
-                        f"{filename_id}"
-                        
-    scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdims, 
-                                vdims=vdims, label=entry) for entry in list_entries]
-    
-    overlay = hv.Overlay(scatter_umaps)
-    overlay.opts(
-        opts.Scatter(
-            
-            tools=["hover"],
-            muted_alpha=0,
-            aspect="equal",
-            width=1600, 
-            height=800),
-        opts.Overlay(
-            title=f"UMAP \n {umap_parameters}",
-            legend_opts={"click_policy": "hide"},
-            legend_position='right'
-            )       
-        )
+        #holoviews
+        hv.save(overlay, path_figures_cell_line / f"umap_{filename}_{filename_id}_{cell_line}.html" )
 
-                              
-    filename=f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist}"
-
-    #holoviews
-    hv.save(overlay, path_figures / f"umap_{filename}_{filename_id}_{cell_line}.html" )
-
+#%%
     # hvplot
     # overlay = df_data.hvplot.scatter(x='umap_x', y='umap_y', 
     #                                   by=legend_entries, 
