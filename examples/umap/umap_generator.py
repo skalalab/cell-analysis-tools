@@ -10,6 +10,7 @@ import seaborn as sns
 # import pandas as pd
 from sklearn.model_selection import ParameterGrid
 from pathlib import Path
+from tqdm import tqdm
 #%% From Tiffany
 # I asked how to select clusters that aren't "forced"  
 
@@ -33,7 +34,7 @@ from pathlib import Path
 analysis_type = "whole_cell"
 # analysis_type = "nuclei"
 path_analysis = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-analysis")
-filename = f"2022_02_17_{analysis_type}_all_props.csv"
+filename = f"2022_02_28_{analysis_type}_all_props.csv"
 
 base_path_output = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-figures")
 
@@ -62,13 +63,23 @@ list_omi_parameters = [
 
 # df_data = df_redox_ratio[df_redox_ratio["treatment"] == "0-control"]
 
-# seahorse regular media
-filename_id = "exp_seahorse_media_DMEM"
-df_exp_subset = df_redox_ratio[df_redox_ratio["experiment"] == "seahorse"]
-df_media_subset = df_exp_subset[df_exp_subset["media"] == "DMEM"]
+#%% seahorse regular media
+# filename_id = "exp_seahose_media_DMEM"
+# df_exp_subset = df_redox_ratio[df_redox_ratio["experiment"] == "glucose"]
+# df_media_subset = df_exp_subset[df_exp_subset["media"] == "DMEM"]
 
-list_cell_lines = np.unique(df_media_subset["cell_line"])
+# list_cell_lines = np.unique(df_media_subset["cell_line"])
 
+#%% glucose
+filename_id = "exp_glucose"
+experiment = "glucose"
+df_exp_subset = df_redox_ratio[df_redox_ratio["experiment"] == experiment]
+# df_media_subset = df_exp_subset[df_exp_subset["media"] == "DMEM"]
+
+list_cell_lines = np.unique(df_exp_subset["cell_line"])
+
+path_figures_exp = path_figures / experiment
+path_figures_exp.mkdir(exist_ok=True)
 
 #%%
 
@@ -85,17 +96,17 @@ for cell_line in list_cell_lines[:]: #iterate throug the cell lines
     )
     
     ## make dirs for this cell line
-    path_figures_cell_line = path_figures / f"{cell_line}"
+    path_figures_cell_line = path_figures_exp / f"{cell_line}"
     path_figures_cell_line.mkdir(exist_ok=True)
     
-    df_data = df_media_subset[df_media_subset["cell_line"] == cell_line]
+    df_data = df_exp_subset[df_exp_subset["cell_line"] == cell_line]
     
     data = df_data[list_omi_parameters].values
     scaled_data = StandardScaler().fit_transform(data)
     ##%% FIT UMAP 
     
     
-    for params in dict_params:
+    for params in tqdm(dict_params):
         pass
         # reducer = umap.UMAP()
         reducer = umap.UMAP(
@@ -149,7 +160,7 @@ for cell_line in list_cell_lines[:]: #iterate throug the cell lines
                 width=1600, 
                 height=800),
             opts.Overlay(
-                title=f"UMAP \n {umap_parameters}",
+                title=f"UMAP | {cell_line} \n {umap_parameters}",
                 legend_opts={"click_policy": "hide"},
                 legend_position='right'
                 )       
