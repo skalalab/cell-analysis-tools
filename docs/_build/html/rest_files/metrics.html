@@ -4,17 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Metrics &mdash; flim_tools  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Metrics &mdash; flim_tools  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
@@ -71,7 +72,7 @@
            <div itemprop="articleBody">
              
   <section id="module-flim_tools.metrics">
-<span id="metrics"></span><h1>Metrics<a class="headerlink" href="#module-flim_tools.metrics" title="Permalink to this headline">¶</a></h1>
+<span id="metrics"></span><h1>Metrics<a class="headerlink" href="#module-flim_tools.metrics" title="Permalink to this headline"></a></h1>
 <p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -91,17 +92,17 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.metrics.percent_content_captured" title="flim_tools.metrics.percent_content_captured"><code class="xref py py-obj docutils literal notranslate"><span class="pre">percent_content_captured</span></code></a>(mask_a, mask_b)</p></td>
 <td><p>Computes the content of mask_a captured in mask_b and returns it as a percent.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.metrics.total_error" title="flim_tools.metrics.total_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_error</span></code></a>(mask_gt, mask_pred[, weight_fn, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.metrics.total_error" title="flim_tools.metrics.total_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_error</span></code></a>(mask_gt, mask_pred[, weight_fn, ...])</p></td>
 <td><p>Computes the percent of misclassified pixels on an image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.metrics.two_user_dice_similarity" title="flim_tools.metrics.two_user_dice_similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">two_user_dice_similarity</span></code></a>(mask_gt1, mask_gt2, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.metrics.two_user_dice_similarity" title="flim_tools.metrics.two_user_dice_similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">two_user_dice_similarity</span></code></a>(mask_gt1, mask_gt2, ...)</p></td>
 <td><p>Variation on average_relative_performance but areas are added in the denominator</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
-<dt id="flim_tools.metrics.dice">
-<code class="sig-prename descclassname">flim_tools.metrics.</code><code class="sig-name descname">dice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">im1</span></em>, <em class="sig-param"><span class="n">im2</span></em>, <em class="sig-param"><span class="n">empty_score</span><span class="o">=</span><span class="default_value">1.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/dice.html#dice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.metrics.dice" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.metrics.dice">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">dice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/dice.html#dice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.dice" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the dice coefficient/F1 score, a measure of average similarity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -130,8 +131,8 @@ identical if <cite>im1</cite> and <cite>im2</cite> are switched.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.metrics.hausdorff_distance">
-<code class="sig-prename descclassname">flim_tools.metrics.</code><code class="sig-name descname">hausdorff_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mask_pred</span></em>, <em class="sig-param"><span class="n">mask_gt</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/hausdorff_distance.html#hausdorff_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.metrics.hausdorff_distance" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.metrics.hausdorff_distance">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">hausdorff_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/hausdorff_distance.html#hausdorff_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.hausdorff_distance" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates the Hausdorff distance for a given image, provided a ground truth. Both arrays must have the same number of columns.
 see <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html</a>
 :param mask_pred: predicted segmentation mask
@@ -151,8 +152,8 @@ see <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.metrics.jaccard">
-<code class="sig-prename descclassname">flim_tools.metrics.</code><code class="sig-name descname">jaccard</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mask_gt</span></em>, <em class="sig-param"><span class="n">mask_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/jaccard.html#jaccard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.metrics.jaccard" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.metrics.jaccard">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">jaccard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/jaccard.html#jaccard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.jaccard" title="Permalink to this definition"></a></dt>
 <dd><p>Calculates the IoU/jaccard index for a pair of masks.</p>
 <p>Logic is implemented to require images of the same size.</p>
 <dl class="field-list simple">
@@ -172,8 +173,8 @@ see <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.metrics.percent_content_captured">
-<code class="sig-prename descclassname">flim_tools.metrics.</code><code class="sig-name descname">percent_content_captured</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mask_a</span></em>, <em class="sig-param"><span class="n">mask_b</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/percent_content_captured.html#percent_content_captured"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.metrics.percent_content_captured" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.metrics.percent_content_captured">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">percent_content_captured</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/percent_content_captured.html#percent_content_captured"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.percent_content_captured" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the content of mask_a captured in mask_b and returns it as a percent. (A intersect B)/A
 # From the paper <cite>Mitohacker &lt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7642274/&gt;</cite></p>
 <dl class="field-list simple">
@@ -193,8 +194,8 @@ see <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.metrics.total_error">
-<code class="sig-prename descclassname">flim_tools.metrics.</code><code class="sig-name descname">total_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mask_gt</span></em>, <em class="sig-param"><span class="n">mask_pred</span></em>, <em class="sig-param"><span class="n">weight_fn</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">weight_fp</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/total_error.html#total_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.metrics.total_error" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.metrics.total_error">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">total_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/total_error.html#total_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.total_error" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the percent of misclassified pixels on an image.
 In the case where one is more important than the
 other, a weighted average may be used: c0FP + c1FN
@@ -218,8 +219,8 @@ other, a weighted average may be used: c0FP + c1FN
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.metrics.two_user_dice_similarity">
-<code class="sig-prename descclassname">flim_tools.metrics.</code><code class="sig-name descname">two_user_dice_similarity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mask_gt1</span></em>, <em class="sig-param"><span class="n">mask_gt2</span></em>, <em class="sig-param"><span class="n">mask_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/two_user_dice_similarity.html#two_user_dice_similarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.metrics.two_user_dice_similarity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.metrics.two_user_dice_similarity">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">two_user_dice_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/two_user_dice_similarity.html#two_user_dice_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.two_user_dice_similarity" title="Permalink to this definition"></a></dt>
 <dd><p>Variation on average_relative_performance but areas are added in the
 denominator</p>
 <dl class="field-list simple">

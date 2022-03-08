@@ -4,17 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I/O &mdash; flim_tools  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>I/O &mdash; flim_tools  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
@@ -71,7 +72,7 @@
            <div itemprop="articleBody">
              
   <section id="module-flim_tools.io">
-<span id="i-o"></span><h1>I/O<a class="headerlink" href="#module-flim_tools.io" title="Permalink to this headline">¶</a></h1>
+<span id="i-o"></span><h1>I/O<a class="headerlink" href="#module-flim_tools.io" title="Permalink to this headline"></a></h1>
 <p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -91,8 +92,8 @@
 </tbody>
 </table>
 <dl class="py function">
-<dt id="flim_tools.io.load_sdt_data">
-<code class="sig-prename descclassname">flim_tools.io.</code><code class="sig-name descname">load_sdt_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/io/load_sdt.html#load_sdt_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.io.load_sdt_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.io.load_sdt_data">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.io.</span></span><span class="sig-name descname"><span class="pre">load_sdt_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/io/load_sdt.html#load_sdt_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.io.load_sdt_data" title="Permalink to this definition"></a></dt>
 <dd><p>Loads the data of an SDT file, reshaping the output is necessary as this
 outputs a 1d array</p>
 <p>e.g.
@@ -115,8 +116,8 @@ An image of length 33554432 should be reshaped to (2 ch, 256,256,256)
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.io.load_sdt_file">
-<code class="sig-prename descclassname">flim_tools.io.</code><code class="sig-name descname">load_sdt_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/io/load_sdt.html#load_sdt_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.io.load_sdt_file" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.io.load_sdt_file">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.io.</span></span><span class="sig-name descname"><span class="pre">load_sdt_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/io/load_sdt.html#load_sdt_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.io.load_sdt_file" title="Permalink to this definition"></a></dt>
 <dd><p>load a new sdt file
 :param file_path: path to the sdt file
 :type file_path: string</p>
@@ -128,8 +129,8 @@ An image of length 33554432 should be reshaped to (2 ch, 256,256,256)
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.io.read_asc">
-<code class="sig-prename descclassname">flim_tools.io.</code><code class="sig-name descname">read_asc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/io/read_asc.html#read_asc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.io.read_asc" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.io.read_asc">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.io.</span></span><span class="sig-name descname"><span class="pre">read_asc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/io/read_asc.html#read_asc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.io.read_asc" title="Permalink to this definition"></a></dt>
 <dd><p>Reads in an asc file into an array</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
