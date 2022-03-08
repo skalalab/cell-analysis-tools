@@ -4,17 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Morphology &mdash; flim_tools  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>Morphology &mdash; flim_tools  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +37,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
@@ -70,7 +71,7 @@
            <div itemprop="articleBody">
              
   <section id="module-flim_tools.morphology">
-<span id="morphology"></span><h1>Morphology<a class="headerlink" href="#module-flim_tools.morphology" title="Permalink to this headline">¶</a></h1>
+<span id="morphology"></span><h1>Morphology<a class="headerlink" href="#module-flim_tools.morphology" title="Permalink to this headline"></a></h1>
 <p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -78,7 +79,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.fractal_dimension_gray" title="flim_tools.morphology.fractal_dimension_gray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fractal_dimension_gray</span></code></a>(roi, intensity[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.morphology.fractal_dimension_gray" title="flim_tools.morphology.fractal_dimension_gray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fractal_dimension_gray</span></code></a>(roi, intensity[, ...])</p></td>
 <td><p>Computes the fractal dimenison based on the differential box counting method</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.morphology.regionprops" title="flim_tools.morphology.regionprops"><code class="xref py py-obj docutils literal notranslate"><span class="pre">regionprops</span></code></a>(label_image[, intensity_image])</p></td>
@@ -87,8 +88,8 @@
 </tbody>
 </table>
 <dl class="py function">
-<dt id="flim_tools.morphology.fractal_dimension_gray">
-<code class="sig-prename descclassname">flim_tools.morphology.</code><code class="sig-name descname">fractal_dimension_gray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">roi</span></em>, <em class="sig-param"><span class="n">intensity</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'standard'</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/fractal_dimension/fractal_dim_gray.html#fractal_dimension_gray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.morphology.fractal_dimension_gray" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.morphology.fractal_dimension_gray">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">fractal_dimension_gray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'standard'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/fractal_dimension/fractal_dim_gray.html#fractal_dimension_gray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.fractal_dimension_gray" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the fractal dimenison based on the differential box counting method</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -112,8 +113,8 @@ first box at the min grayscale value. The default is “standard”.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="flim_tools.morphology.regionprops">
-<code class="sig-prename descclassname">flim_tools.morphology.</code><code class="sig-name descname">regionprops</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label_image</span></em>, <em class="sig-param"><span class="n">intensity_image</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/regionprops.html#regionprops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#flim_tools.morphology.regionprops" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="flim_tools.morphology.regionprops">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">regionprops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/morphology/regionprops.html#regionprops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.morphology.regionprops" title="Permalink to this definition"></a></dt>
 <dd><p>Extended regionprops function adding our own props</p>
 <p>To see a complete docstring for this function see regionprops skimage.</p>
 <p class="rubric">Notes</p>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>flim_tools.image_processing.normalize &mdash; flim_tools  documentation</title>
+  <title>flim_tools.image_processing.fill_and_label_rois &mdash; flim_tools  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -59,7 +59,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>flim_tools.image_processing.normalize</li>
+      <li>flim_tools.image_processing.fill_and_label_rois</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -68,24 +68,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for flim_tools.image_processing.normalize</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="normalize"><a class="viewcode-back" href="../../../rest_files/image_processing.html#flim_tools.image_processing.normalize">[docs]</a><span></span><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">im</span><span class="p">):</span>
+  <h1>Source code for flim_tools.image_processing.fill_and_label_rois</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="k">as</span> <span class="nn">ndi</span>
+
+
+<div class="viewcode-block" id="fill_and_label_rois"><a class="viewcode-back" href="../../../rest_files/image_processing.html#flim_tools.image_processing.fill_and_label_rois">[docs]</a><span class="k">def</span> <span class="nf">fill_and_label_rois</span><span class="p">(</span><span class="n">curr_nuclei</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Normalizes an image to 0 and 1 by subtrating min value and </span>
-<span class="sd">    dividing by new max value.</span>
-<span class="sd">    </span>
+<span class="sd">    Fills and labels ROI outlines using unique ints for each region.</span>
+
 <span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    im : array-like</span>
-<span class="sd">        intensity image.</span>
+<span class="sd">    ---------- </span>
+<span class="sd">    param curr_nucelei : ndarray</span>
+<span class="sd">        Current image to process</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    array-like</span>
-<span class="sd">        array normalized to 0 and 1.</span>
+<span class="sd">    output : ndarray </span>
+<span class="sd">        ROIs filled and labeled with unique int representations</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">im</span> <span class="o">-</span> <span class="n">im</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">im</span><span class="o">.</span><span class="n">min</span><span class="p">())</span></div>
+
+    <span class="k">return</span> <span class="n">ndi</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">ndi</span><span class="o">.</span><span class="n">binary_fill_holes</span><span class="p">(</span><span class="n">curr_nuclei</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
 </pre></div>
 
            </div>
