@@ -26,7 +26,7 @@ def regionprops_omi(
                     im_fad_a2: np.ndarray,
                     im_fad_t1: np.ndarray,
                     im_fad_t2 : np.ndarray,
-                    other_props : list
+                    other_props : list = None
                     ) -> dict:
     """
     Takes in labels image as well as nadh and fad images to return
@@ -89,6 +89,9 @@ def regionprops_omi(
     masked_im_fad_intensity = ma.masked_array(im_fad_intensity, mask=labels_inverted)
     masked_im_nadh_intensity = ma.masked_array(im_nadh_intensity, mask=labels_inverted)
     im_redox_ratio = masked_im_nadh_intensity / masked_im_fad_intensity
+    im_redox_ratio_norm = masked_im_nadh_intensity / (masked_im_fad_intensity + masked_im_nadh_intensity)
+
+    
     
     # fluorescence lifetime imaging redox ratio aka FLIRR
     # labels mask image should not include any im_fad_a1 zeros
@@ -127,6 +130,8 @@ def regionprops_omi(
     fad_t2 = regionprops(label_image, im_fad_t2, extra_properties=extra_properties)
     fad_tau_mean = regionprops(label_image, im_fad_tau_mean, extra_properties=extra_properties)
     redox_ratio = regionprops(label_image, im_redox_ratio, extra_properties=extra_properties)
+    redox_ratio_norm = regionprops(label_image, im_redox_ratio_norm, extra_properties=extra_properties)
+
     flirr = regionprops(label_image, im_flirr, extra_properties=extra_properties)
 
 
@@ -144,6 +149,7 @@ def regionprops_omi(
         "fad_t2" : fad_t2,
         "fad_tau_mean" : fad_tau_mean,
         "redox_ratio" : redox_ratio,
+        "redox_ratio_norm" : redox_ratio_norm,
         "flirr" : flirr
         }
     
@@ -246,7 +252,7 @@ def regionprops_omi(
                 #     plt.show()
                 
     # ADD OTHER MASK REGIONPROP VALUES
-    if len(other_props) != 0:
+    if other_props is not None and len(other_props) != 0:
         for region in mask_props: # iterate through region in regionprops
             pass
             dict_key_name = f"{image_id}_{region.label}" # generate unique key for region in this image
