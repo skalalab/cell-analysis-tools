@@ -26,6 +26,8 @@ def regionprops_omi(
                     im_fad_a2: np.ndarray,
                     im_fad_t1: np.ndarray,
                     im_fad_t2 : np.ndarray,
+                    im_nadh_chi : np.ndarray = None,
+                    im_fad_chi : np.ndarray = None,
                     other_props : list = None
                     ) -> dict:
     """
@@ -112,10 +114,19 @@ def regionprops_omi(
         masked_image = ma.masked_array(intensity, mask=inverted_roi)
         return np.std(masked_image)
 
-    extra_properties = [stdev]
+    
+    def chi_median(roi, intensity):
+        inverted_roi = np.invert(roi.astype(bool))
+        masked_image = ma.masked_array(intensity, mask=inverted_roi)
+        # plt.imshow(masked_image, vmax=1.5)
+        return ma.median(masked_image) # np.median looks at masked values
+    
+    extra_properties = [stdev, chi_median]
+
     
     # EQUALLY WEIGHTED PARAMETERS
     mask_props = regionprops(label_image) #
+    
     
     nadh_intensity = regionprops(label_image, im_nadh_intensity, extra_properties=extra_properties)
     nadh_a1 = regionprops(label_image, im_nadh_a1, extra_properties=extra_properties)
@@ -131,7 +142,6 @@ def regionprops_omi(
     fad_tau_mean = regionprops(label_image, im_fad_tau_mean, extra_properties=extra_properties)
     redox_ratio = regionprops(label_image, im_redox_ratio, extra_properties=extra_properties)
     redox_ratio_norm = regionprops(label_image, im_redox_ratio_norm, extra_properties=extra_properties)
-
     flirr = regionprops(label_image, im_flirr, extra_properties=extra_properties)
 
 
@@ -153,6 +163,15 @@ def regionprops_omi(
         "flirr" : flirr
         }
     
+    # chi square optional values
+    bool_has_chi_images = False
+    if im_nadh_chi is not None and im_fad_chi is not None:
+        bool_has_chi_images = True
+        nadh_chi = regionprops(label_image, im_nadh_chi, extra_properties=extra_properties)
+        fad_chi = regionprops(label_image, im_fad_chi, extra_properties=extra_properties)
+        dict_regionprops["nadh_chi"] = nadh_chi # add regionprops 
+        dict_regionprops["fad_chi"] = fad_chi # add regionprops 
+    
     # assemble dictionary of omi parameters
     dict_omi = {}
     for rp_key in dict_regionprops.keys():# iterate through each images regionprops
@@ -165,9 +184,14 @@ def regionprops_omi(
                 dict_omi[dict_key_name]["mask_label"] = int(region.label) # save label value
             
             # save equally weighted parameters
+            # print(f"{rp_key=}{dict_key_name=}")
             dict_omi[dict_key_name][f"{rp_key}_mean"] = region.mean_intensity
             dict_omi[dict_key_name][f"{rp_key}_stdev"] = region.stdev
             
+            if bool_has_chi_images and rp_key == "nadh_chi" or rp_key == "fad_chi":
+                dict_omi[dict_key_name][f"{rp_key}_median"] = region.chi_median
+                
+                
             ### COMPUTE INTENSITY WEIGHTED VALUES
             list_valid_intensity_weights = [
                         "nadh_a1", 
