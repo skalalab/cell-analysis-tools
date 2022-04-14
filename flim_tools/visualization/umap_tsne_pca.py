@@ -9,19 +9,20 @@ def compute_umap(data_values: np.ndarray,
         min_dist : float=0.1,
         n_neighbors : int=15,
         metric : str='euclidean',
-         ) -> pd.DataFrame:
+         **kwargs) -> pd.DataFrame:
     
         reducer = umap.UMAP(
                 n_neighbors=n_neighbors,
                 min_dist=min_dist,   
                 metric=metric,
                 n_components=2,
-                random_state=0
+                random_state=0,
+                **kwargs
             )
         fit_umap = reducer.fit_transform(data_values)
         df_umap = pd.DataFrame(fit_umap, columns=["umap_x",
                                                   "umap_y"])
-        return df_umap
+        return df_umap, reducer
 #%% PCA
 
 from sklearn.decomposition import PCA
