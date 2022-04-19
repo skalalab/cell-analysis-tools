@@ -95,24 +95,24 @@ if __name__ == "__main__":
     
     x, y = make_classification(
     n_classes=2, 
-    n_features=13, # e.g. omi parameters
+    n_features=10, # e.g. omi parameters
     n_samples=1000,
-    random_state=1)
+    random_state=0)
     
     list_features = [
-        'nadh_intensity_mean',
+        # 'nadh_intensity_mean',
         'nadh_a1_mean',  
         'nadh_a2_mean',
         'nadh_t1_mean',  
         'nadh_t2_mean',
         'nadh_tau_mean_mean', 
-        'fad_intensity_mean',  
+        # 'fad_intensity_mean',  
         'fad_a1_mean',
         'fad_a2_mean',  
         'fad_t1_mean',
         'fad_t2_mean',  
         'fad_tau_mean_mean',
-        'redox_ratio_mean'
+        # 'redox_ratio_mean'
         ]
     
     df_data = pd.DataFrame(x, columns=list_features)

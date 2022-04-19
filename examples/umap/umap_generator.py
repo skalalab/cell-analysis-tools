@@ -1,4 +1,4 @@
-###UMAP Coordinate calculations
+#%% UMAP Coordinate calculations
 
 #Loads in all required dependencies
 import numpy as np
@@ -11,6 +11,12 @@ import seaborn as sns
 from sklearn.model_selection import ParameterGrid
 from pathlib import Path
 from tqdm import tqdm
+
+import matplotlib.pylab as plt
+import matplotlib as mpl
+mpl.rcParams["figure.dpi"] = 300
+plt.imshow(np.zeros((512,512)))
+plt.show()
 #%% From Tiffany
 # I asked how to select clusters that aren't "forced"  
 
