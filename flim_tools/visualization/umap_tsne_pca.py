@@ -33,7 +33,7 @@ def compute_pca(data_values: np.ndarray, n_components: int=2)-> pd.DataFrame:
     df_pca = pd.DataFrame(data = principal_components,
                   columns = ['principal component 1', 
                              'principal component 2'])
-    return df_pca
+    return df_pca, pca
 
 #%% tSNE
 
@@ -52,7 +52,7 @@ def compute_tsne(data_values: np.ndarray,
     principal_components = tsne.fit_transform(data_values)
     df_tsne = pd.DataFrame(data = principal_components
                  , columns = ['tsne_1', 'tsne_2'])
-    return df_tsne
+    return df_tsne, tsne
 
 
 #%% plot data 
@@ -121,15 +121,15 @@ if __name__ == "__main__":
 
 
     # umap
-    df_umap = compute_umap(scaled_data)
+    df_umap , reducer_umap = compute_umap(scaled_data)
     plot_data(df_umap, labels=y, title="UMAP")
     
     # tsne
-    df_tsne = compute_tsne(scaled_data)
+    df_tsne, reducer_tsne = compute_tsne(scaled_data)
     plot_data(df_tsne, labels=y, title="t-SNE")
     
     # pca
-    df_pca = compute_pca(scaled_data)
+    df_pca, reducer_pca = compute_pca(scaled_data)
     plot_data(df_pca, labels=y, title="Principal Component Analysis")
 
 
