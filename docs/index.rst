@@ -19,6 +19,7 @@ This library contains many functions used for processing and analysing flim data
    rest_files/flim
    rest_files/io
    rest_files/morphology
+   rest_files/visualization
 
 Indices and tables
 ==================

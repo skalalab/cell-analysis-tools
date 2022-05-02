@@ -1,16 +1,47 @@
 import matplotlib.pylab as plt
 
 
-def image_show(image, nrows=1, ncols=1):  # , cmap='gray'
-    fig, ax = plt.subplots(nrows=nrows, ncols=ncols, figsize=(10, 10))
+def image_show(image):
+    """
+
+    Parameters
+    ----------
+    image : ndarray
+        image to show.
+
+    Returns
+    -------
+    None.
+
+    """
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(10, 10))
     ax.imshow(image)  # , cmap='gray'
     ax.axis("off")
     plt.show()
     return fig, ax
 
 
-def compare_images(im1, title1, im2, title2, figsize=(10, 5)):
-
+def compare_images(im1, title1, im2, title2, figsize=(10, 5))->None:
+    """
+     
+        Parameters
+        ----------
+        im1 : np.ndarray
+            image 1.
+        title1 : str
+            title for image 1.
+        im2 : np.ndarray
+            image 2.
+        title2 : str
+            title for image 2.
+        figsize : TYPE, optional
+            size of figure. The default is (10, 5).
+    
+        Returns
+        -------
+        None.
+    
+    """
     fig, ax = plt.subplots(1, 2, figsize=figsize)
     ax[0].title.set_text(title1)
     ax[0].imshow(im1)

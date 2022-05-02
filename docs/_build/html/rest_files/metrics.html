@@ -45,6 +45,7 @@
 <li class="toctree-l1"><a class="reference internal" href="flim.html">Flim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">I/O</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 </ul>
 
         </div>
@@ -82,6 +83,12 @@
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.metrics.dice" title="flim_tools.metrics.dice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dice</span></code></a>(im1, im2[, empty_score])</p></td>
 <td><p>Computes the dice coefficient/F1 score, a measure of average similarity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.metrics.h_index" title="flim_tools.metrics.h_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">h_index</span></code></a>(list_distributions)</p></td>
+<td><p>Computes the h-index given a mixture of ditributions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.metrics.h_index_single_weighted" title="flim_tools.metrics.h_index_single_weighted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">h_index_single_weighted</span></code></a>(list_distributions)</p></td>
+<td><p>Computes the single weighted h-index given a mixture of ditributions.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.metrics.hausdorff_distance" title="flim_tools.metrics.hausdorff_distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hausdorff_distance</span></code></a>(mask_pred, mask_gt)</p></td>
 <td><p>Calculates the Hausdorff distance for a given image, provided a ground truth.</p></td>
@@ -128,6 +135,49 @@
 <p>The order of inputs for <cite>dice</cite> is irrelevant. The result will be
 identical if <cite>im1</cite> and <cite>im2</cite> are switched.</p>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.metrics.h_index">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">h_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_distributions</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/flim_tools/metrics/h_index/h_index.html#h_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.h_index" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the h-index given a mixture of ditributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>list_distributions</strong> (<em>list</em>) – List of np.arrays containing estimated subdistributions</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – calculated H-index</p></li>
+<li><p><em>.. note::</em></p></li>
+<li><p><em>—–</em></p></li>
+<li><p><em>When comparing H-index between datasets be sure to set the n_components</em></p></li>
+<li><p><em>paramter of the GaussianMixtureModel to the same value.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p><a class="reference external" href="http://www.microscopist.co.uk/wp-content/uploads/2021/06/FLIM-review.pdf">http://www.microscopist.co.uk/wp-content/uploads/2021/06/FLIM-review.pdf</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.metrics.h_index_single_weighted">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">h_index_single_weighted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_distributions</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/flim_tools/metrics/h_index/h_index.html#h_index_single_weighted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.h_index_single_weighted" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the single weighted h-index given a mixture of ditributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>list_distributions</strong> (<em>list</em>) – List of np.arrays containing estimated subdistributions</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>calculated H-index</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>When comparing H-index between datasets be sure to set the n_components
+paramter of the GaussianMixtureModel to the same value.</p>
 </dd></dl>
 
 <dl class="py function">

@@ -9,10 +9,37 @@ from skimage.color import label2rgb
 import numpy as np
 
 
-def compare_orig_mask_gt_pred(im, mask_gt, mask_pred, title=""):
+def compare_orig_mask_gt_pred(im : np.ndarray, 
+                              mask_gt : np.ndarray, 
+                              mask_pred : np.ndarray, 
+                              title : str="") -> None:
+    """
+    Simple function for comparing oringal image and ground truth image
+
+
+    Parameters
+    ----------
+    im : np.ndarray
+        original image.
+    mask_gt : np.ndarray
+        ground truth image.
+    mask_pred : np.ndarray
+        predicted mask.
+    title : str, optional
+        title of the plot, usually the origina filename. The default is "".
+
+    Returns
+    -------
+    None
+        function only just plots data.
+
+    """
     alpha = 0.5
     im_overlay = label2rgb(
-        mask_pred, normalize(im), bg_label=0, alpha=alpha, image_alpha=1, kind="overlay"
+        mask_pred, normalize(im), 
+        bg_label=0, 
+        alpha=alpha, 
+        image_alpha=1, kind="overlay"
     )
 
     fig, ax = plt.subplots(2, 3, figsize=(10, 7))
@@ -52,7 +79,6 @@ def compare_orig_mask_gt_pred(im, mask_gt, mask_pred, title=""):
 
 if __name__ == "__main__":
 
-    from flim_tools.visualization import compare_orig_mask_gt_pred
     import numpy as np
 
     im = np.random.rand(40, 40)

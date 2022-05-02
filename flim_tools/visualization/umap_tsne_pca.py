@@ -6,16 +6,33 @@ import numpy as np
 
 import umap
 def compute_umap(data_values: np.ndarray,
-        min_dist : float=0.1,
-        n_neighbors : int=15,
-        metric : str='euclidean',
          **kwargs) -> pd.DataFrame:
+        '''
+        Parameters
+        ----------
+        data_values : np.ndarray
+            array of values to input into the reducer. Rows should be roi values,
+            columns are features
+        random_state : int, optional
+            allows consistent initialization of reducer. The default is 0.
+        **kwargs : dict
+            additional parameters can be passed in here for the reducer.
+        
+        Returns
+        -------
+        df_umap : pd.DataFrame
+            DataFrame containing umap embeddings.
+        reducer : Object
+            umap reducer object.
+            
+        .. note::
+            See the umap-learn documentation for default and additional parameters
+            `https://umap-learn.readthedocs.io/en/latest/api.html <https://umap-learn.readthedocs.io/en/latest/api.html>`_
+            
+        
+        '''
     
         reducer = umap.UMAP(
-                n_neighbors=n_neighbors,
-                min_dist=min_dist,   
-                metric=metric,
-                n_components=2,
                 random_state=0,
                 **kwargs
             )
@@ -27,8 +44,30 @@ def compute_umap(data_values: np.ndarray,
 
 from sklearn.decomposition import PCA
 
-def compute_pca(data_values: np.ndarray, n_components: int=2)-> pd.DataFrame:
-    pca = PCA(n_components=n_components)
+def compute_pca(data_values: np.ndarray, 
+                n_components: int=2,
+                **kwargs)-> pd.DataFrame:
+    """
+    Computes PCA given input data
+
+    Parameters
+    ----------
+    data_values : np.ndarray
+        array of values to input into the reducer. Rows should be roi values,
+        columns are features
+    n_components : int, optional
+        number of components for the PCA. The default is 2.
+
+    Returns
+    -------
+    df_pca : pd.DataFrame
+        Dataframe containing the components of the PCA.
+    pca : Object
+        PCA reducer object.
+
+    """
+    pca = PCA(n_components=n_components,
+              **kwargs)
     principal_components = pca.fit_transform(data_values)
     df_pca = pd.DataFrame(data = principal_components,
                   columns = ['principal component 1', 
@@ -39,19 +78,40 @@ def compute_pca(data_values: np.ndarray, n_components: int=2)-> pd.DataFrame:
 
 from sklearn import manifold
 
-def compute_tsne(data_values: np.ndarray,
+def compute_tsne(data_values: np.ndarray,       
          n_components : int=2,
          init : str='pca',
-         random_state: int=0)->np.ndarray:
-    # data values should already be normalized
-    
+         random_state: int=0,
+         **kwargs)->np.ndarray:
+
+    """
+    Computes t-distributed stochastic neighbor embedding. 
+
+    Parameters
+    ----------
+    data_values : np.ndarray
+        array of values to input into the reducer. Rows should be roi values,
+        columns are features.
+    random_state : int, optional
+        allows consistent initialization of reducer. The default is 0.
+
+    Returns
+    -------
+    df_tsne : pd.DataFrame
+        Dataframe containing the embeddings of tsne.
+    tsne : Object
+        tsne reducer object.
+
+    """
+
     tsne = manifold.TSNE(n_components=n_components, 
                          init=init,
                          random_state=random_state,
-                         )
+                         **kwargs)
     principal_components = tsne.fit_transform(data_values)
     df_tsne = pd.DataFrame(data = principal_components
                  , columns = ['tsne_1', 'tsne_2'])
+    
     return df_tsne, tsne
 
 
@@ -121,7 +181,7 @@ if __name__ == "__main__":
 
 
     # umap
-    df_umap , reducer_umap = compute_umap(scaled_data)
+    df_umap , reducer_umap = compute_umap(scaled_data, metric='manhattan')
     plot_data(df_umap, labels=y, title="UMAP")
     
     # tsne
