@@ -7,17 +7,21 @@
 flim_tools's documentation
 ======================================
 
-This library contains many functions used for processing and analysing flim datasets.
+This library contains many relevant functions used for  pre-processing, processing 
+analysing and summarizing flim images.
+
+
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   rest_files/metrics
-   rest_files/image_processing
+    
    rest_files/flim
+   rest_files/image_processing
    rest_files/io
+   rest_files/metrics
    rest_files/morphology
    rest_files/visualization
 

@@ -22,11 +22,11 @@ def h_index(list_distributions) -> float:
     float
         calculated H-index
         
-    .. note::
-    -----
+    Notes
+    -----    
     When comparing H-index between datasets be sure to set the n_components
     paramter of the GaussianMixtureModel to the same value.
-    
+       
     References
     ----------
     http://www.microscopist.co.uk/wp-content/uploads/2021/06/FLIM-review.pdf
@@ -126,6 +126,7 @@ if __name__ == "__main__":
     
     ## plot one two three distributions
     n_components = 3 
+    
     plt.title(f"Distributions \nGaussian Mixture Model components : {n_components} ")
     
 

@@ -14,7 +14,7 @@ mpl.rcParams["figure.dpi"] = 300
 
 def remove_horizontal_vertical_edges(im, disk_size=20, debug=False):
     """ This function removes horizontal or vertical edges in the image. Designed for removing grid patterns in
-    PDMS scaffolds during time lapse imaging 
+    PDMS scaffolds during time lapse imaging. 
 
     Parameters
     ----------
@@ -27,7 +27,7 @@ def remove_horizontal_vertical_edges(im, disk_size=20, debug=False):
 
     Returns
     -------
-    ndarray
+    np.ndarray
         filtered image with grid pattern removed
     """
 

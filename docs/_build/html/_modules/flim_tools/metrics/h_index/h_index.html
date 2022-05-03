@@ -37,10 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/visualization.html">Visualization</a></li>
 </ul>
@@ -94,11 +94,11 @@
 <span class="sd">    float</span>
 <span class="sd">        calculated H-index</span>
 <span class="sd">        </span>
-<span class="sd">    .. note::</span>
-<span class="sd">    -----</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----    </span>
 <span class="sd">    When comparing H-index between datasets be sure to set the n_components</span>
 <span class="sd">    paramter of the GaussianMixtureModel to the same value.</span>
-<span class="sd">    </span>
+<span class="sd">       </span>
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
 <span class="sd">    http://www.microscopist.co.uk/wp-content/uploads/2021/06/FLIM-review.pdf</span>
@@ -197,7 +197,11 @@
     <span class="c1">#%% COMBINE DISTRIBUTIONS AND COMPUTE WEIGHTED AND SINGLY WEIGHTED H-INDEX</span>
     
     <span class="c1">## plot one two three distributions</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distributions&quot;</span><span class="p">)</span>
+    <span class="n">n_components</span> <span class="o">=</span> <span class="mi">3</span> 
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distributions </span><span class="se">\n</span><span class="s2">Gaussian Mixture Model components : </span><span class="si">{</span><span class="n">n_components</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+    
+
     
     <span class="k">for</span> <span class="n">num_dist</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span> <span class="c1">#slide in dist </span>
         <span class="k">pass</span>
@@ -215,7 +219,7 @@
         <span class="c1"># https://towardsdatascience.com/gaussian-mixture-model-clusterization-how-to-select-the-number-of-components-clusters-553bef45f6e4</span>
         <span class="c1"># https://stats.stackexchange.com/questions/139163/selecting-the-number-of-mixtures-hidden-states-latent-variables</span>
         <span class="c1"># https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set</span>
-        <span class="n">gauss</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">gauss</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">gauss</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">all_data</span><span class="p">)</span>
         
         <span class="n">list_fit_dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">label</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
@@ -251,12 +255,12 @@
         <span class="c1">#############</span>
           
         <span class="n">h_index_value</span> <span class="o">=</span> <span class="n">h_index</span><span class="p">(</span><span class="n">list_fit_dist</span><span class="p">)</span>
-        <span class="n">h_index_single_weighted</span> <span class="o">=</span> <span class="n">h_index_single_weighted_</span><span class="p">(</span><span class="n">list_fit_dist</span><span class="p">)</span>
+        <span class="n">h_index_single_weighted_value</span> <span class="o">=</span> <span class="n">h_index_single_weighted</span><span class="p">(</span><span class="n">list_fit_dist</span><span class="p">)</span>
         
         <span class="c1">#plot pdf</span>
         <span class="n">pdf_combined</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">list_subdists</span><span class="p">]</span>
         <span class="n">pdf_combined_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pdf_combined</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf_combined_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;dist </span><span class="si">{</span><span class="n">num_dist</span><span class="si">}</span><span class="s2"> | Hi: </span><span class="si">{</span><span class="n">h_index_value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> | wHi: ()&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf_combined_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;dist </span><span class="si">{</span><span class="n">num_dist</span><span class="si">}</span><span class="s2"> | Hi: </span><span class="si">{</span><span class="n">h_index_value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> | wHi: </span><span class="si">{</span><span class="n">h_index_single_weighted_value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 

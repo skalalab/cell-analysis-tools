@@ -34,7 +34,6 @@ def read_asc(path):
 
 if __name__ == "__main__":
 
-    from flim_tools.io import read_asc
 
     ### test loading ASC files
     test_files = Path("./test_files")

@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Flim" href="flim.html" />
-    <link rel="prev" title="Metrics" href="metrics.html" /> 
+    <link rel="next" title="I/O" href="io.html" />
+    <link rel="prev" title="Flim" href="flim.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,10 +40,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="flim.html">Flim</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 </ul>
@@ -72,9 +72,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-flim_tools.image_processing">
-<span id="image-processing"></span><h1>Image Processing<a class="headerlink" href="#module-flim_tools.image_processing" title="Permalink to this headline"></a></h1>
-<p><strong>Functions:</strong></p>
+  <section id="image-processing">
+<h1>Image Processing<a class="headerlink" href="#image-processing" title="Permalink to this headline"></a></h1>
+<p>Collection of image processing algorithms and techniques that could be used
+and widely applied to many of our datasets.</p>
+<span class="target" id="module-flim_tools.image_processing"></span><p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -220,7 +222,7 @@ dividing by new max value.</p>
 <dt class="sig sig-object py" id="flim_tools.image_processing.remove_horizontal_vertical_edges">
 <span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">remove_horizontal_vertical_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/fft_image_filter.html#remove_horizontal_vertical_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.remove_horizontal_vertical_edges" title="Permalink to this definition"></a></dt>
 <dd><p>This function removes horizontal or vertical edges in the image. Designed for removing grid patterns in
-PDMS scaffolds during time lapse imaging</p>
+PDMS scaffolds during time lapse imaging.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -233,7 +235,7 @@ PDMS scaffolds during time lapse imaging</p>
 <dd class="field-even"><p>filtered image with grid pattern removed</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -254,7 +256,7 @@ The resulting array should automatically upscale from 8-bit integer if needed (&
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mask_rgb</strong> (<em>np.ndarray</em>) – DESCRIPTION.</p></li>
+<li><p><strong>mask_rgb</strong> (<em>np.ndarray</em>) – rgb image.</p></li>
 <li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable debugging output. The default is False.</p></li>
 </ul>
 </dd>
@@ -316,8 +318,8 @@ The resulting array should automatically upscale from 8-bit integer if needed (&
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="metrics.html" class="btn btn-neutral float-left" title="Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="flim.html" class="btn btn-neutral float-right" title="Flim" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="flim.html" class="btn btn-neutral float-left" title="Flim" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="io.html" class="btn btn-neutral float-right" title="I/O" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

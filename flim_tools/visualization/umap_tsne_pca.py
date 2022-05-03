@@ -79,8 +79,6 @@ def compute_pca(data_values: np.ndarray,
 from sklearn import manifold
 
 def compute_tsne(data_values: np.ndarray,       
-         n_components : int=2,
-         init : str='pca',
          random_state: int=0,
          **kwargs)->np.ndarray:
 
@@ -104,8 +102,7 @@ def compute_tsne(data_values: np.ndarray,
 
     """
 
-    tsne = manifold.TSNE(n_components=n_components, 
-                         init=init,
+    tsne = manifold.TSNE(
                          random_state=random_state,
                          **kwargs)
     principal_components = tsne.fit_transform(data_values)

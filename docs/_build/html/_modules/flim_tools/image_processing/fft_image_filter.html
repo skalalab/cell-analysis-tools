@@ -37,10 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/visualization.html">Visualization</a></li>
 </ul>
@@ -86,7 +86,7 @@
 
 <div class="viewcode-block" id="remove_horizontal_vertical_edges"><a class="viewcode-back" href="../../../rest_files/image_processing.html#flim_tools.image_processing.remove_horizontal_vertical_edges">[docs]</a><span class="k">def</span> <span class="nf">remove_horizontal_vertical_edges</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">disk_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This function removes horizontal or vertical edges in the image. Designed for removing grid patterns in</span>
-<span class="sd">    PDMS scaffolds during time lapse imaging </span>
+<span class="sd">    PDMS scaffolds during time lapse imaging. </span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -99,7 +99,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    ndarray</span>
+<span class="sd">    np.ndarray</span>
 <span class="sd">        filtered image with grid pattern removed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

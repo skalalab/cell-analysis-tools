@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Image Processing" href="image_processing.html" />
-    <link rel="prev" title="flim_tools’s documentation" href="../index.html" /> 
+    <link rel="next" title="Morphology" href="morphology.html" />
+    <link rel="prev" title="I/O" href="io.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,10 +40,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 </ul>
@@ -102,9 +102,6 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.metrics.total_error" title="flim_tools.metrics.total_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_error</span></code></a>(mask_gt, mask_pred[, weight_fn, ...])</p></td>
 <td><p>Computes the percent of misclassified pixels on an image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.metrics.two_user_dice_similarity" title="flim_tools.metrics.two_user_dice_similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">two_user_dice_similarity</span></code></a>(mask_gt1, mask_gt2, ...)</p></td>
-<td><p>Variation on average_relative_performance but areas are added in the denominator</p></td>
-</tr>
 </tbody>
 </table>
 <dl class="py function">
@@ -146,16 +143,15 @@ identical if <cite>im1</cite> and <cite>im2</cite> are switched.</p>
 <dd class="field-odd"><p><strong>list_distributions</strong> (<em>list</em>) – List of np.arrays containing estimated subdistributions</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><em>float</em> – calculated H-index</p></li>
-<li><p><em>.. note::</em></p></li>
-<li><p><em>—–</em></p></li>
-<li><p><em>When comparing H-index between datasets be sure to set the n_components</em></p></li>
-<li><p><em>paramter of the GaussianMixtureModel to the same value.</em></p></li>
-</ul>
-</p>
+<dd class="field-even"><p>calculated H-index</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>When comparing H-index between datasets be sure to set the n_components
+paramter of the GaussianMixtureModel to the same value.</p>
 <p class="rubric">References</p>
 <p><a class="reference external" href="http://www.microscopist.co.uk/wp-content/uploads/2021/06/FLIM-review.pdf">http://www.microscopist.co.uk/wp-content/uploads/2021/06/FLIM-review.pdf</a></p>
 </dd></dl>
@@ -248,8 +244,8 @@ see <a class="reference external" href="https://docs.scipy.org/doc/scipy/referen
 <span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">total_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/total_error.html#total_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.total_error" title="Permalink to this definition"></a></dt>
 <dd><p>Computes the percent of misclassified pixels on an image.
 In the case where one is more important than the
-other, a weighted average may be used: c0FP + c1FN
-<a class="reference external" href="https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou">https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou</a></p>
+other, a weighted average may be used: c0FP + c1FN</p>
+<p>‘<a class="reference external" href="https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou">https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou</a> &lt;<a class="reference external" href="https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou">https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou</a>&gt;’_</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -268,36 +264,14 @@ other, a weighted average may be used: c0FP + c1FN
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="flim_tools.metrics.two_user_dice_similarity">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.metrics.</span></span><span class="sig-name descname"><span class="pre">two_user_dice_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_gt1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/metrics/two_user_dice_similarity.html#two_user_dice_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.metrics.two_user_dice_similarity" title="Permalink to this definition"></a></dt>
-<dd><p>Variation on average_relative_performance but areas are added in the
-denominator</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mask_gt1</strong> (<em>ndarray</em>) – ground truth mask 1.</p></li>
-<li><p><strong>mask_gt2</strong> (<em>ndarray</em>) – ground truth mask 2.</p></li>
-<li><p><strong>mask_predicted</strong> (<em>ndarray</em>) – predicted mask.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dice score</strong> – two user average performance score, dice like.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../index.html" class="btn btn-neutral float-left" title="flim_tools’s documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="image_processing.html" class="btn btn-neutral float-right" title="Image Processing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="io.html" class="btn btn-neutral float-left" title="I/O" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="morphology.html" class="btn btn-neutral float-right" title="Morphology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

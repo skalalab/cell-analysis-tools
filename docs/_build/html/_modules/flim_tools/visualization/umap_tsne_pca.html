@@ -37,10 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/visualization.html">Visualization</a></li>
 </ul>
@@ -151,8 +151,6 @@
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">manifold</span>
 
 <div class="viewcode-block" id="compute_tsne"><a class="viewcode-back" href="../../../rest_files/visualization.html#flim_tools.visualization.compute_tsne">[docs]</a><span class="k">def</span> <span class="nf">compute_tsne</span><span class="p">(</span><span class="n">data_values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>       
-         <span class="n">n_components</span> <span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-         <span class="n">init</span> <span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;pca&#39;</span><span class="p">,</span>
          <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 
@@ -176,8 +174,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">tsne</span> <span class="o">=</span> <span class="n">manifold</span><span class="o">.</span><span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span> 
-                         <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
+    <span class="n">tsne</span> <span class="o">=</span> <span class="n">manifold</span><span class="o">.</span><span class="n">TSNE</span><span class="p">(</span>
                          <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
                          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">principal_components</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_values</span><span class="p">)</span>

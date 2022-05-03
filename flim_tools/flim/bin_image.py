@@ -13,14 +13,14 @@ from scipy.signal import convolve
 
 def bin_image(image, bin_factor):
     """
-    This function takes in an image and bins it's histograms
-    
+    This function takes in an lifetime image and bins 
+    the decays of its histogram
     
     Parameters
     ----------
 
     image : ndarray
-        image to bin, must be a 3d array of shape(t,x,y)
+        image to bin, must be a 3d array of shape(x,y,t)
     bin_size : int
         pixel radius(including diagonals) of bins to create
     

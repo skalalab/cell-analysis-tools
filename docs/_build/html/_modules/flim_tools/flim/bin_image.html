@@ -37,10 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/visualization.html">Visualization</a></li>
 </ul>
@@ -85,14 +85,14 @@
 
 <div class="viewcode-block" id="bin_image"><a class="viewcode-back" href="../../../rest_files/flim.html#flim_tools.flim.bin_image">[docs]</a><span class="k">def</span> <span class="nf">bin_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">bin_factor</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function takes in an image and bins it&#39;s histograms</span>
-<span class="sd">    </span>
+<span class="sd">    This function takes in an lifetime image and bins </span>
+<span class="sd">    the decays of its histogram</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 
 <span class="sd">    image : ndarray</span>
-<span class="sd">        image to bin, must be a 3d array of shape(t,x,y)</span>
+<span class="sd">        image to bin, must be a 3d array of shape(x,y,t)</span>
 <span class="sd">    bin_size : int</span>
 <span class="sd">        pixel radius(including diagonals) of bins to create</span>
 <span class="sd">    </span>

@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Morphology" href="morphology.html" />
-    <link rel="prev" title="Flim" href="flim.html" /> 
+    <link rel="next" title="Metrics" href="metrics.html" />
+    <link rel="prev" title="Image Processing" href="image_processing.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,10 +40,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 </ul>
@@ -81,17 +81,38 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.io.load_sdt_data" title="flim_tools.io.load_sdt_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sdt_data</span></code></a>(filepath)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.io.load_image" title="flim_tools.io.load_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_image</span></code></a>(path)</p></td>
+<td><p>Detects the extension and loads image accordingly if its a tif/tiff or an asc</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.io.load_sdt_data" title="flim_tools.io.load_sdt_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sdt_data</span></code></a>(filepath)</p></td>
 <td><p>Loads the data of an SDT file, reshaping the output is necessary as this outputs a 1d array</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.io.load_sdt_file" title="flim_tools.io.load_sdt_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sdt_file</span></code></a>(file_path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.io.load_sdt_file" title="flim_tools.io.load_sdt_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sdt_file</span></code></a>(file_path)</p></td>
 <td><p>load a new sdt file :param file_path: path to the sdt file :type file_path: string</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.io.read_asc" title="flim_tools.io.read_asc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_asc</span></code></a>(path)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.io.read_asc" title="flim_tools.io.read_asc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_asc</span></code></a>(path)</p></td>
 <td><p>Reads in an asc file into an array</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.io.load_image">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.io.</span></span><span class="sig-name descname"><span class="pre">load_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.PurePath</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/flim_tools/io/load_image.html#load_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.io.load_image" title="Permalink to this definition"></a></dt>
+<dd><p>Detects the extension and loads image accordingly
+if its a tif/tiff or an asc</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>pathlib path</em><em> or </em><em>str</em>) – path to the image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>array containig image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.io.load_sdt_data">
 <span class="sig-prename descclassname"><span class="pre">flim_tools.io.</span></span><span class="sig-name descname"><span class="pre">load_sdt_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/io/load_sdt.html#load_sdt_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.io.load_sdt_data" title="Permalink to this definition"></a></dt>
@@ -152,8 +173,8 @@ An image of length 33554432 should be reshaped to (2 ch, 256,256,256)
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="flim.html" class="btn btn-neutral float-left" title="Flim" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="morphology.html" class="btn btn-neutral float-right" title="Morphology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="image_processing.html" class="btn btn-neutral float-left" title="Image Processing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="metrics.html" class="btn btn-neutral float-right" title="Metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -7,7 +7,8 @@ def total_error(mask_gt, mask_pred, weight_fn=1, weight_fp=1):
     Computes the percent of misclassified pixels on an image. 
     In the case where one is more important than the 
     other, a weighted average may be used: c0FP + c1FN
-    https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou
+    
+    'https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou <https://stats.stackexchange.com/questions/273537/f1-dice-score-vs-iou>'_
 
     
     Parameters

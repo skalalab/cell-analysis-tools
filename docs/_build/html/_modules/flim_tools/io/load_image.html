@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>flim_tools.metrics.two_user_dice_similarity &mdash; flim_tools  documentation</title>
+  <title>flim_tools.io.load_image &mdash; flim_tools  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -37,10 +37,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/morphology.html">Morphology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/visualization.html">Visualization</a></li>
 </ul>
@@ -60,7 +60,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>flim_tools.metrics.two_user_dice_similarity</li>
+      <li>flim_tools.io.load_image</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -69,40 +69,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for flim_tools.metrics.two_user_dice_similarity</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">.helper</span> <span class="kn">import</span> <span class="n">_validate_array_and_make_bool</span>
+  <h1>Source code for flim_tools.io.load_image</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">.read_asc</span> <span class="kn">import</span> <span class="n">read_asc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">tifffile</span>
 
-
-<div class="viewcode-block" id="two_user_dice_similarity"><a class="viewcode-back" href="../../../rest_files/metrics.html#flim_tools.metrics.two_user_dice_similarity">[docs]</a><span class="k">def</span> <span class="nf">two_user_dice_similarity</span><span class="p">(</span><span class="n">mask_gt1</span><span class="p">,</span> <span class="n">mask_gt2</span><span class="p">,</span> <span class="n">mask_pred</span><span class="p">):</span>
+<div class="viewcode-block" id="load_image"><a class="viewcode-back" href="../../../rest_files/io.html#flim_tools.io.load_image">[docs]</a><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">path</span> <span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePath</span><span class="p">])</span><span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Variation on average_relative_performance but areas are added in the</span>
-<span class="sd">    denominator</span>
+<span class="sd">    Detects the extension and loads image accordingly</span>
+<span class="sd">    if its a tif/tiff or an asc</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    mask_gt1 : ndarray</span>
-<span class="sd">        ground truth mask 1.</span>
-<span class="sd">    mask_gt2 : ndarray</span>
-<span class="sd">        ground truth mask 2.</span>
-<span class="sd">    mask_predicted : ndarray</span>
-<span class="sd">        predicted mask.</span>
+<span class="sd">    path : pathlib path or str</span>
+<span class="sd">        path to the image.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    dice score: float</span>
-<span class="sd">        two user average performance score, dice like.</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        array containig image.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># from above but add mask areas as above</span>
-    <span class="c1"># ((Mito Catcher vs. User 1 + Mito Catcher vs. User 2)/(User 1 vs. User 2))</span>
-
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt1</span><span class="p">))</span>
-        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_pred</span><span class="p">,</span> <span class="n">mask_gt2</span><span class="p">))</span>
-    <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_gt1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_gt2</span><span class="p">)</span>
-    <span class="p">)</span>  <span class="c1"># sum areas</span></div>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">PurePath</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">pass</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.asc&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">read_asc</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.tiff&quot;</span><span class="p">,</span> <span class="s2">&quot;.tif&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
