@@ -103,14 +103,12 @@ def visualize_dictionary(dict_entry, extra_entries=[], remove_entries=[], channe
     for entry in remove_entries:
         entries.remove(entry)
 
-    
     rows = 3
     cols = 5
     fig, ax = plt.subplots(rows, cols, figsize=(20,12))
     filename_image = Path(dict_entry['nadh_photons']).stem
     dataset_dir = str(Path(dict_entry['nadh_photons']).parent).split("\\",5)[5]
     fig.suptitle(f"{filename_image} \n {dataset_dir}")
-    
     
     for pos, key in enumerate(entries):
         pass
@@ -263,7 +261,6 @@ if __name__ == "__main__":
     pass
 #%% Load dictionary and compute the regionprops omi parameters
 
-
     HERE = Path(__file__).absolute().resolve().parent
     # path_dataset = Path(r"C:\Users\econtrerasguzman\Desktop\development\flim_tools\examples\example_data\redox_ratio")
     # path_output = Path(r"C:\Users\econtrerasguzman\Desktop\development\flim_tools\examples\regionprops_omi\outputs") 
@@ -285,7 +282,7 @@ if __name__ == "__main__":
     
     analysis_type = "whole_cell"
     
-    for dict_path in list_path_csv_image_sets[:1]:
+    for dict_path in list_path_csv_image_sets[:1]: # iterate through csv files
         pass
         print(f"processing: {dict_path.stem}")
         df_image_set = pd.read_csv(dict_path)
@@ -295,7 +292,7 @@ if __name__ == "__main__":
         # df_all_dicts = df_image_set if df_all_dicts is None else df_all_dicts.append(df_image_set)
         
         # iterate through rows(image sets) in dataframe,
-        for base_name, row_data in tqdm(list(df_image_set.iterrows())): # [69:70]
+        for base_name, row_data in tqdm(list(df_image_set.iterrows())): # iterate through sets in csv file
             pass
         
             # load mask based on analysis type
@@ -347,7 +344,7 @@ if __name__ == "__main__":
             # finally export 
             df.to_csv(path_output / "features" / f"features_{base_name}_{analysis_type}.csv")
 
-#%% Aggregate into a single dataframe
+#%% Aggregates all features into a single dataframe
 
     path_output_props = path_output / "summary"
     list_path_features_csv = list((path_output/ "features").glob("*.csv"))
