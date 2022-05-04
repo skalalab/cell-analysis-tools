@@ -108,9 +108,9 @@ def regionprops_omi(
     masked_im_nadh_a2 = ma.masked_array(im_nadh_a2, mask=labels_inverted)
     im_flirr = (masked_im_nadh_a2/100) / (masked_im_fad_a1/100) # bound portions of NADH/FAD
     
-    if im_flirr.any() == np.INF:
+    if im_flirr.any() == np.inf:
         print("regionprops_omi: INF values found in FLIRR image, they will be set to zero")
-        im_flirr[im_flirr == np.Inf] = 0
+        im_flirr[im_flirr == np.inf] = 0
     
     # define extra functions for properties
     def stdev(roi, intensity):
