@@ -25,3 +25,4 @@ flim_tools/metrics/__pycache__/*
 flim_tools/io/__pycache__/*
 .vscode/*
 .vscode/settings.json
+examples/regionprops_omi/outputs/summary/*
