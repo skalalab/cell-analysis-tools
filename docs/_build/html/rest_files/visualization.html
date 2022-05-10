@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualization &mdash; flim_tools  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Morphology" href="morphology.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> flim_tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="morphology.html">Morphology</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualization</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">flim_tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Visualization</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/rest_files/visualization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-flim_tools.visualization">
+<span id="visualization"></span><h1>Visualization<a class="headerlink" href="#module-flim_tools.visualization" title="Permalink to this headline"></a></h1>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.visualization.compare_images" title="flim_tools.visualization.compare_images"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compare_images</span></code></a>(im1, title1, im2, title2[, ...])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param im1</dt>
+<dd class="field-odd"><p>image 1.</p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.visualization.compare_orig_mask_gt_pred" title="flim_tools.visualization.compare_orig_mask_gt_pred"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compare_orig_mask_gt_pred</span></code></a>(im, mask_gt, mask_pred)</p></td>
+<td><p>Simple function for comparing oringal image and ground truth image</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.visualization.compute_pca" title="flim_tools.visualization.compute_pca"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_pca</span></code></a>(data_values[, n_components])</p></td>
+<td><p>Computes PCA given input data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.visualization.compute_tsne" title="flim_tools.visualization.compute_tsne"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_tsne</span></code></a>(data_values[, random_state])</p></td>
+<td><p>Computes t-distributed stochastic neighbor embedding.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.visualization.compute_umap" title="flim_tools.visualization.compute_umap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_umap</span></code></a>(data_values, **kwargs)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param data_values</dt>
+<dd class="field-odd"><p>array of values to input into the reducer. Rows should be roi values,</p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.visualization.image_show" title="flim_tools.visualization.image_show"><code class="xref py py-obj docutils literal notranslate"><span class="pre">image_show</span></code></a>(image)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param image</dt>
+<dd class="field-odd"><p>image to show.</p>
+</dd>
+</dl>
+</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.visualization.compare_images">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.visualization.</span></span><span class="sig-name descname"><span class="pre">compare_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">im2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">5)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/flim_tools/visualization/image_viewers.html#compare_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.visualization.compare_images" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im1</strong> (<em>np.ndarray</em>) – image 1.</p></li>
+<li><p><strong>title1</strong> (<em>str</em>) – title for image 1.</p></li>
+<li><p><strong>im2</strong> (<em>np.ndarray</em>) – image 2.</p></li>
+<li><p><strong>title2</strong> (<em>str</em>) – title for image 2.</p></li>
+<li><p><strong>figsize</strong> (<em>TYPE</em><em>, </em><em>optional</em>) – size of figure. The default is (10, 5).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.visualization.compare_orig_mask_gt_pred">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.visualization.</span></span><span class="sig-name descname"><span class="pre">compare_orig_mask_gt_pred</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_gt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/flim_tools/visualization/image_viewers.html#compare_orig_mask_gt_pred"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.visualization.compare_orig_mask_gt_pred" title="Permalink to this definition"></a></dt>
+<dd><p>Simple function for comparing oringal image and ground truth image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>im</strong> (<em>np.ndarray</em>) – original image.</p></li>
+<li><p><strong>mask_gt</strong> (<em>np.ndarray</em>) – ground truth image.</p></li>
+<li><p><strong>mask_pred</strong> (<em>np.ndarray</em>) – predicted mask.</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – title of the plot, usually the origina filename. The default is “”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>function only just plots data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.visualization.compute_pca">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.visualization.</span></span><span class="sig-name descname"><span class="pre">compute_pca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="../_modules/flim_tools/visualization/umap_tsne_pca.html#compute_pca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.visualization.compute_pca" title="Permalink to this definition"></a></dt>
+<dd><p>Computes PCA given input data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_values</strong> (<em>np.ndarray</em>) – array of values to input into the reducer. Rows should be roi values,
+columns are features</p></li>
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>optional</em>) – number of components for the PCA. The default is 2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df_pca</strong> (<em>pd.DataFrame</em>) – Dataframe containing the components of the PCA.</p></li>
+<li><p><strong>pca</strong> (<em>Object</em>) – PCA reducer object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.visualization.compute_tsne">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.visualization.</span></span><span class="sig-name descname"><span class="pre">compute_tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/flim_tools/visualization/umap_tsne_pca.html#compute_tsne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.visualization.compute_tsne" title="Permalink to this definition"></a></dt>
+<dd><p>Computes t-distributed stochastic neighbor embedding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_values</strong> (<em>np.ndarray</em>) – array of values to input into the reducer. Rows should be roi values,
+columns are features.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>optional</em>) – allows consistent initialization of reducer. The default is 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df_tsne</strong> (<em>pd.DataFrame</em>) – Dataframe containing the embeddings of tsne.</p></li>
+<li><p><strong>tsne</strong> (<em>Object</em>) – tsne reducer object.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.visualization.compute_umap">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.visualization.</span></span><span class="sig-name descname"><span class="pre">compute_umap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="reference internal" href="../_modules/flim_tools/visualization/umap_tsne_pca.html#compute_umap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.visualization.compute_umap" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_values</strong> (<em>np.ndarray</em>) – array of values to input into the reducer. Rows should be roi values,
+columns are features</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>optional</em>) – allows consistent initialization of reducer. The default is 0.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – additional parameters can be passed in here for the reducer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df_umap</strong> (<em>pd.DataFrame</em>) – DataFrame containing umap embeddings.</p></li>
+<li><p><strong>reducer</strong> (<em>Object</em>) – umap reducer object.</p></li>
+<li><p><em>.. note::</em> – See the umap-learn documentation for default and additional parameters
+<a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/api.html">https://umap-learn.readthedocs.io/en/latest/api.html</a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.visualization.image_show">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.visualization.</span></span><span class="sig-name descname"><span class="pre">image_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/visualization/image_viewers.html#image_show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.visualization.image_show" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>ndarray</em>) – image to show.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="morphology.html" class="btn btn-neutral float-left" title="Morphology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Skala Lab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

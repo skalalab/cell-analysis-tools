@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>flim_tools.metrics.h_index.h_index &mdash; flim_tools  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> flim_tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/visualization.html">Visualization</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">flim_tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>flim_tools.metrics.h_index.h_index</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for flim_tools.metrics.h_index.h_index</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+
+<span class="c1">#%%</span>
+<div class="viewcode-block" id="h_index"><a class="viewcode-back" href="../../../../rest_files/metrics.html#flim_tools.metrics.h_index">[docs]</a><span class="k">def</span> <span class="nf">h_index</span><span class="p">(</span><span class="n">list_distributions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes the h-index given a mixture of ditributions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list_distributions : list</span>
+<span class="sd">        List of np.arrays containing estimated subdistributions</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        calculated H-index</span>
+<span class="sd">        </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----    </span>
+<span class="sd">    When comparing H-index between datasets be sure to set the n_components</span>
+<span class="sd">    paramter of the GaussianMixtureModel to the same value.</span>
+<span class="sd">       </span>
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    http://www.microscopist.co.uk/wp-content/uploads/2021/06/FLIM-review.pdf</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">median_overall</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">list_distributions</span><span class="p">))</span>
+    
+    <span class="c1"># compute running sum</span>
+    <span class="n">running_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">distribution</span> <span class="ow">in</span> <span class="n">list_distributions</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span><span class="n">list_distributions</span><span class="p">)))</span><span class="c1"># proportion of subpopulation</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span> <span class="o">-</span> <span class="n">median_overall</span><span class="p">)</span><span class="c1"># distance between median of subpop and overall med</span>
+        <span class="n">running_sum</span> <span class="o">+=</span> <span class="n">d</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">running_sum</span></div>
+
+<span class="c1">#%%</span>
+
+<div class="viewcode-block" id="h_index_single_weighted"><a class="viewcode-back" href="../../../../rest_files/metrics.html#flim_tools.metrics.h_index_single_weighted">[docs]</a><span class="k">def</span> <span class="nf">h_index_single_weighted</span><span class="p">(</span><span class="n">list_distributions</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes the single weighted h-index given a mixture of ditributions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list_distributions : list</span>
+<span class="sd">        List of np.arrays containing estimated subdistributions</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        calculated H-index</span>
+<span class="sd">        </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    When comparing H-index between datasets be sure to set the n_components</span>
+<span class="sd">    paramter of the GaussianMixtureModel to the same value.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">median_overall</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">list_distributions</span><span class="p">))</span>
+    
+    <span class="c1"># compute running sum</span>
+    <span class="n">running_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">distribution</span> <span class="ow">in</span> <span class="n">list_distributions</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span><span class="n">list_distributions</span><span class="p">)))</span><span class="c1"># proportion of subpopulation</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span> <span class="o">-</span> <span class="n">median_overall</span><span class="p">)</span><span class="c1"># distance between median of subpop and overall med</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span>
+        <span class="n">running_sum</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">+</span> <span class="n">d</span> <span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">running_sum</span></div>
+    
+<span class="c1">#%%</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+   <span class="c1">#%% GENERATE DISTRIBUTIONS FOR TESTING </span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+    <span class="c1">#distributions to create</span>
+    <span class="n">list_dist_params</span> <span class="o">=</span> <span class="p">[</span>
+       <span class="c1">#(mean, std)</span>
+        <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+        <span class="p">]</span>
+    
+    <span class="n">dist_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">list_distributions</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">dist_params</span> <span class="ow">in</span> <span class="n">list_dist_params</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">dist_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">dist_params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">list_distributions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        <span class="n">dist_all</span> <span class="o">=</span> <span class="n">dist_all</span> <span class="o">+</span> <span class="n">dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+    <span class="c1"># plot dataset</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distributions&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">dist</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">list_distributions</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">pass</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;dist </span><span class="si">{</span><span class="n">pos</span><span class="si">}</span><span class="s2"> | mean: </span><span class="si">{</span><span class="n">dist</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">}</span><span class="s2"> | stdev: </span><span class="si">{</span><span class="n">dist</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dist_all</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;all distributions&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;probability&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1">## try out function</span>
+    <span class="c1">#generate random values</span>
+    <span class="n">list_dist_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">list_distributions</span><span class="p">]</span>
+    
+    <span class="n">list_dist_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="c1"># h_index_value = h_index(list_distributions)</span>
+    <span class="c1"># print(h_index_value)</span>
+    
+    <span class="c1">#%% COMBINE DISTRIBUTIONS AND COMPUTE WEIGHTED AND SINGLY WEIGHTED H-INDEX</span>
+    
+    <span class="c1">## plot one two three distributions</span>
+    <span class="n">n_components</span> <span class="o">=</span> <span class="mi">3</span> 
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distributions </span><span class="se">\n</span><span class="s2">Gaussian Mixture Model components : </span><span class="si">{</span><span class="n">n_components</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+    
+
+    
+    <span class="k">for</span> <span class="n">num_dist</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span> <span class="c1">#slide in dist </span>
+        <span class="k">pass</span>
+        <span class="n">list_subdists</span> <span class="o">=</span> <span class="n">list_distributions</span><span class="p">[:</span><span class="n">num_dist</span><span class="p">]</span>
+        
+        <span class="c1"># compute h_index</span>
+        <span class="n">list_subdists_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">dist</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">dist</span> <span class="ow">in</span> <span class="n">list_subdists</span><span class="p">]</span>
+        
+        <span class="c1"># compute gaussiam mixture model </span>
+        <span class="n">all_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">list_subdists_values</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># plt.hist(all_data, histtype=&quot;step&quot;)</span>
+        <span class="c1"># plt.show()</span>
+        
+        <span class="c1"># fit data into gaussian mixtures</span>
+        <span class="c1"># https://towardsdatascience.com/gaussian-mixture-model-clusterization-how-to-select-the-number-of-components-clusters-553bef45f6e4</span>
+        <span class="c1"># https://stats.stackexchange.com/questions/139163/selecting-the-number-of-mixtures-hidden-states-latent-variables</span>
+        <span class="c1"># https://en.wikipedia.org/wiki/Determining_the_number_of_clusters_in_a_data_set</span>
+        <span class="n">gauss</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">gauss</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">all_data</span><span class="p">)</span>
+        
+        <span class="n">list_fit_dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">all_data</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">label</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
+        
+        <span class="c1">## GAUSSIAN MIXTURE MODEL</span>
+        
+        <span class="c1"># plt.title(f&quot;histogram of fit data | fixed GMM | components: {len(np.unique(labels))}&quot;)</span>
+        <span class="c1"># for list_data in list_fit_dist:</span>
+        <span class="c1">#     plt.hist(list_data, bins=100, histtype=&#39;step&#39;, label=f&#39;mean: {np.mean(list_data):.3f} | weight:{(len(list_data)/len(all_data)):.2f}&#39;)</span>
+        <span class="c1">#     plt.ylabel(&quot;count&quot;)</span>
+        <span class="c1">#     plt.xlabel(&quot;value&quot;)</span>
+        <span class="c1"># plt.legend()</span>
+        <span class="c1"># plt.show()</span>
+        
+        <span class="c1">##### BAYESIAN GAUSSIAN MIXTURE MODEL</span>
+        
+        <span class="c1"># from sklearn.mixture import BayesianGaussianMixture</span>
+        <span class="c1"># bgmm = BayesianGaussianMixture(n_components=4,</span>
+        <span class="c1">#                                max_iter=1000</span>
+        <span class="c1">#                             )</span>
+        <span class="c1"># model_labels = bgmm.fit_predict(all_data)</span>
+        <span class="c1"># list_fit_dist = [np.asarray(all_data[model_labels == label]).flatten() for label in np.unique(model_labels)]</span>
+        
+        <span class="c1"># plt.title(f&quot;histogram of fit data Bayesian | components: {len(np.unique(model_labels))} &quot;)</span>
+        <span class="c1"># for idx, list_data in enumerate(list_fit_dist):</span>
+        <span class="c1">#     pass</span>
+        <span class="c1">#     plt.hist(list_data, bins=100, histtype=&#39;step&#39;, label=f&#39;{idx} | {np.mean(list_data):.3f} | weight:{(len(list_data)/len(all_data)):.2f}&#39;)</span>
+        <span class="c1">#     plt.ylabel(&quot;count&quot;)</span>
+        <span class="c1">#     plt.xlabel(&quot;value&quot;)</span>
+        <span class="c1"># plt.legend()</span>
+        <span class="c1"># plt.show()</span>
+        
+        <span class="c1">#############</span>
+          
+        <span class="n">h_index_value</span> <span class="o">=</span> <span class="n">h_index</span><span class="p">(</span><span class="n">list_fit_dist</span><span class="p">)</span>
+        <span class="n">h_index_single_weighted_value</span> <span class="o">=</span> <span class="n">h_index_single_weighted</span><span class="p">(</span><span class="n">list_fit_dist</span><span class="p">)</span>
+        
+        <span class="c1">#plot pdf</span>
+        <span class="n">pdf_combined</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">list_subdists</span><span class="p">]</span>
+        <span class="n">pdf_combined_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pdf_combined</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf_combined_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;dist </span><span class="si">{</span><span class="n">num_dist</span><span class="si">}</span><span class="s2"> | Hi: </span><span class="si">{</span><span class="n">h_index_value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> | wHi: </span><span class="si">{</span><span class="n">h_index_single_weighted_value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    
+    
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Skala Lab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -27,7 +27,7 @@ def rgb2gray(mask_rgb, debug=False):
     Parameters
     ----------
     mask_rgb : np.ndarray
-        DESCRIPTION.
+        rgb image.
     debug : bool, optional
         Enable debugging output. The default is False.
 

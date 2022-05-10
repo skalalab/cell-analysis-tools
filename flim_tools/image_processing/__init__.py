@@ -6,6 +6,7 @@ from .kmeans_threshold import kmeans_threshold
 from .rgb2labels import rgb2labels
 from .rgb2gray import rgb2gray
 from .fft_image_filter import remove_horizontal_vertical_edges
+from .fill_and_label_rois import fill_and_label_rois
 
 
 __all__ = [
@@ -17,4 +18,5 @@ __all__ = [
     "rgb2labels",
     "rgb2gray",
     "remove_horizontal_vertical_edges",
+    "fill_and_label_rois"
 ]

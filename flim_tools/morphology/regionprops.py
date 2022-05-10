@@ -3,15 +3,17 @@ from skimage.measure import regionprops as _regionprops
 from skimage.measure import regionprops_table as _regionprops_table
 from skimage.measure import label
 from numpy.ma import masked_array
-from _roi_distance import radius_max, radius_mean, radius_median
-from intensity_sum import intensity_sum
-from fractal_dimension.fractal_dim_gray import fractal_dimension_gray
+
+from .roi_distance import radius_max, radius_mean, radius_median
+from .intensity_sum import intensity_sum
+from .fractal_dimension.fractal_dim_gray import fractal_dimension_gray
+
 from skimage.morphology import label
 
 def regionprops(label_image, intensity_image=None):
     """ Extended regionprops function adding our own props    
     
-    To see a complete docstring for this function see `skimage.measure.regionprops https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops`_.
+    To see a complete docstring for this function see regionprops skimage.
 
     Notes
     -----
@@ -92,3 +94,5 @@ if __name__ == "__main__":
                                               "radius_median",
                                               "fractal_dimension_gray",
                                              ])
+
+

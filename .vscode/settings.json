@@ -2,5 +2,7 @@
     "restructuredtext.confPath": "${workspaceFolder}\\docs",
     "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe",
     "restructuredtext.linter.disabled": true,
-    "restructuredtext.languageServer.disabled": true
+    "restructuredtext.languageServer.disabled": true,
+    "esbonio.server.enabled": false,
+    "esbonio.sphinx.confDir": "c:\\Users\\Nabiki\\Desktop\\development\\flim_tools\\docs"
 }

@@ -1,72 +1,32 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>flim_tools.morphology.regionprops &mdash; flim_tools  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> flim_tools
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,103 +34,58 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/image_processing.html">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../rest_files/morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_files/visualization.html">Visualization</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">flim_tools</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>flim_tools.morphology.regionprops</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for flim_tools.morphology.regionprops</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">regionprops</span> <span class="k">as</span> <span class="n">_regionprops</span>
+<span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">regionprops_table</span> <span class="k">as</span> <span class="n">_regionprops_table</span>
 <span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">label</span>
 <span class="kn">from</span> <span class="nn">numpy.ma</span> <span class="kn">import</span> <span class="n">masked_array</span>
-<span class="kn">from</span> <span class="nn">._fractal_dimension</span> <span class="kn">import</span> <span class="n">fractal_dimension_lacunarity</span><span class="p">,</span> <span class="n">fractal_dimension_mean</span><span class="p">,</span> <span class="n">fractal_dimension_std</span>
-<span class="kn">from</span> <span class="nn">._roi_distance</span> <span class="kn">import</span> <span class="n">radius_max</span><span class="p">,</span> <span class="n">radius_mean</span><span class="p">,</span> <span class="n">radius_median</span>
 
+<span class="kn">from</span> <span class="nn">.roi_distance</span> <span class="kn">import</span> <span class="n">radius_max</span><span class="p">,</span> <span class="n">radius_mean</span><span class="p">,</span> <span class="n">radius_median</span>
+<span class="kn">from</span> <span class="nn">.intensity_sum</span> <span class="kn">import</span> <span class="n">intensity_sum</span>
+<span class="kn">from</span> <span class="nn">.fractal_dimension.fractal_dim_gray</span> <span class="kn">import</span> <span class="n">fractal_dimension_gray</span>
 
-<div class="viewcode-block" id="regionprops"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.regionprops">[docs]</a><span class="k">def</span> <span class="nf">regionprops</span><span class="p">(</span><span class="n">im_labels</span><span class="p">,</span> <span class="n">im_intensity</span><span class="p">):</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">label</span>
+
+<div class="viewcode-block" id="regionprops"><a class="viewcode-back" href="../../../rest_files/morphology.html#flim_tools.morphology.regionprops">[docs]</a><span class="k">def</span> <span class="nf">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Extended regionprops function adding our own props    </span>
 <span class="sd">    </span>
-<span class="sd">    To see a complete docstring for this function see `skimage.measure.regionprops https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops`_.</span>
+<span class="sd">    To see a complete docstring for this function see regionprops skimage.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -185,44 +100,30 @@
 <span class="sd">    **intensity_sum**</span>
 <span class="sd">        The sum of the pixel intensities within the segmented region.</span>
 <span class="sd">    **fractal_dimension** : float</span>
-<span class="sd">        Fractal dimension</span>
+<span class="sd">        Fractal dimension, differential box counting method implementation</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_regionprops</span><span class="p">(</span><span class="n">im_labels</span><span class="p">,</span> <span class="n">im_intensity</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="p">(</span>
-        <span class="n">fractal_dimension_mean</span><span class="p">,</span>
-        <span class="n">fractal_dimension_std</span><span class="p">,</span>
-        <span class="n">fractal_dimension_lacunarity</span><span class="p">,</span>
+    <span class="k">return</span> <span class="n">_regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">intensity_image</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="p">(</span>
         <span class="n">radius_mean</span><span class="p">,</span>
         <span class="n">radius_median</span><span class="p">,</span>
         <span class="n">radius_max</span><span class="p">,</span>
         <span class="n">intensity_sum</span><span class="p">,</span>
+        <span class="n">fractal_dimension_gray</span>
         <span class="p">)</span>
     <span class="p">)</span></div>
 
-<span class="k">def</span> <span class="nf">intensity_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roi</span><span class="p">,</span> <span class="n">im_itensity</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The sum of the pixel intensities within the segmented region.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">roi_inverted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">.</span><span class="n">invert</span><span class="p">()</span>
-    <span class="n">roi_masked</span> <span class="o">=</span> <span class="n">masked_array</span><span class="p">(</span><span class="n">im_itensity</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">roi_inverted</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">roi_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">mitochondria_morphological_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roi</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The punctate, swollen, and networked morphologies.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span> 
+<span class="k">def</span> <span class="nf">regionprops_table</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">intensity_image</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
 
-<span class="c1"># Fractal dimension</span>
-<span class="c1"># mean </span>
-    <span class="c1">#**fractal_dimension_mean** : float</span>
-    <span class="c1">#         the mean fractal dimension was computed to measure the level of mitochondrial complexity at the whole-cell level</span>
-    <span class="c1">#**fractal_dimension_std** : float</span>
-    <span class="c1">#         The mean fractal dimension was computed to measure the level of mitochondrial complexity at the whole-cell level </span>
-    <span class="c1"># ** Fractal Dimension Lacunarity     </span>
-    <span class="c1"># The squared value of the standard deviation of fractal dimension divided by the mean fractal dimension. Lower value represents a dense pattern while higher values represent more open patterns.</span>
-    <span class="c1"># Mitochondria Morphological Class -- The punctate, swollen, and networked morphologies.</span>
+        <span class="k">return</span> <span class="n">_regionprops_table</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">intensity_image</span><span class="o">=</span><span class="n">intensity_image</span><span class="p">,</span> 
+                                    <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">radius_mean</span><span class="p">,</span>
+        <span class="n">radius_median</span><span class="p">,</span>
+        <span class="n">radius_max</span><span class="p">,</span>
+        <span class="n">intensity_sum</span><span class="p">,</span>
+        <span class="n">fractal_dimension_gray</span>
+        <span class="p">)</span>
+    <span class="p">)</span> 
 
 
 
@@ -231,7 +132,7 @@
     <span class="kn">from</span> <span class="nn">skimage.draw</span> <span class="kn">import</span> <span class="n">ellipse</span>
     <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="c1"># import numpy as np</span>
 
     <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
 
@@ -239,51 +140,61 @@
     <span class="n">shape_ellipse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
     <span class="n">shape_ellipse</span><span class="p">[</span><span class="n">idx_rows</span><span class="p">,</span> <span class="n">idx_cols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+      
+    <span class="n">intensity</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">shape_ellipse</span>
+    <span class="n">intensity</span> <span class="o">=</span> <span class="n">intensity</span> <span class="o">*</span> <span class="mi">255</span>
+
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">shape_ellipse</span> <span class="o">=</span> <span class="n">shape_ellipse</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">shape_ellipse</span><span class="p">)</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="n">regionprops_table</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> 
+                              <span class="n">intensity</span><span class="p">,</span>
+                              <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;major_axis_length&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;minor_axis_length&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;eccentricity&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;orientation&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;solidity&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;extent&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;perimeter&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;radius_max&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;radius_mean&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;radius_median&quot;</span><span class="p">,</span>
+                                              <span class="s2">&quot;fractal_dimension_gray&quot;</span><span class="p">,</span>
+                                             <span class="p">])</span>
+
+
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Skala Lab.
-
-    </p>
+    <p>&#169; Copyright 2021, Skala Lab.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

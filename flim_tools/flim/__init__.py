@@ -7,8 +7,8 @@ from .phasor_calibration import phasor_calibration
 from .phasor_to_rectangular_lifetimes_array import phasor_to_rectangular_lifetimes_array
 from .phasor_to_rectangular_point import phasor_to_rectangular_point
 from .rectangular_to_phasor_lifetimes_array import rectangular_to_phasor_lifetimes_array
-from .rectangular_to_phasor_point import rectangular_to_phasor_point
 from .td_to_fd import td_to_fd
+from .regionprops_omi import regionprops_omi
 
 __all__ = [
     "bin_image",
@@ -20,6 +20,6 @@ __all__ = [
     "phasor_to_rectangular_lifetimes_array",
     "phasor_to_rectangular_point",
     "rectangular_to_phasor_lifetimes_array",
-    "rectangular_to_phasor_point",
     "td_to_fd",
+    "regionprops_omi"
 ]

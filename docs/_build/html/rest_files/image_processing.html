@@ -1,75 +1,35 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Image Processing &mdash; flim_tools  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Flim" href="flim.html" />
-    <link rel="prev" title="Metrics" href="metrics.html" /> 
+    <link rel="next" title="I/O" href="io.html" />
+    <link rel="prev" title="Flim" href="flim.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> flim_tools
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,95 +37,46 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="flim.html">Flim</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Image Processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">flim_tools</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Image Processing</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/rest_files/image_processing.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <section id="module-flim_tools.image_processing">
-<span id="image-processing"></span><h1>Image Processing<a class="headerlink" href="#module-flim_tools.image_processing" title="Permalink to this headline">¶</a></h1>
-<p><strong>Functions:</strong></p>
+             
+  <section id="image-processing">
+<h1>Image Processing<a class="headerlink" href="#image-processing" title="Permalink to this headline"></a></h1>
+<p>Collection of image processing algorithms and techniques that could be used
+and widely applied to many of our datasets.</p>
+<span class="target" id="module-flim_tools.image_processing"></span><p><strong>Functions:</strong></p>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -178,29 +89,32 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.bin_3d" title="flim_tools.image_processing.bin_3d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_3d</span></code></a>(im, bin_size[, stride, pad_value, debug])</p></td>
 <td><p>Bins a 3d array along 3rd dimension, usually timebins in flim images (x,y,t).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.kmeans_threshold" title="flim_tools.image_processing.kmeans_threshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kmeans_threshold</span></code></a>(im, k, n_brightest_clusters)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.fill_and_label_rois" title="flim_tools.image_processing.fill_and_label_rois"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fill_and_label_rois</span></code></a>(curr_nuclei)</p></td>
+<td><p>Fills and labels ROI outlines using unique ints for each region.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.kmeans_threshold" title="flim_tools.image_processing.kmeans_threshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kmeans_threshold</span></code></a>(im, k, n_brightest_clusters)</p></td>
 <td><p>Given an image, this function will apply k-means clustering and return the mask that includes the n brightest clusters :param im: intensity image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.normalize" title="flim_tools.image_processing.normalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize</span></code></a>(im)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.normalize" title="flim_tools.image_processing.normalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize</span></code></a>(im)</p></td>
 <td><p>Normalizes an image to 0 and 1 by subtrating min value and dividing by new max value.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.remove_horizontal_vertical_edges" title="flim_tools.image_processing.remove_horizontal_vertical_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_horizontal_vertical_edges</span></code></a>(im[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.remove_horizontal_vertical_edges" title="flim_tools.image_processing.remove_horizontal_vertical_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_horizontal_vertical_edges</span></code></a>(im[, ...])</p></td>
 <td><p>This function removes horizontal or vertical edges in the image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.rgb2gray" title="flim_tools.image_processing.rgb2gray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rgb2gray</span></code></a>(mask_rgb[, debug])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.rgb2gray" title="flim_tools.image_processing.rgb2gray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rgb2gray</span></code></a>(mask_rgb[, debug])</p></td>
 <td><p># RGB to Grayscale ## Code logic: - Essentially, read in mask only image (not composite) and figure out unique tuples that represent singular RGB values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.rgb2labels" title="flim_tools.image_processing.rgb2labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rgb2labels</span></code></a>(im[, debug])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.rgb2labels" title="flim_tools.image_processing.rgb2labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rgb2labels</span></code></a>(im[, debug])</p></td>
 <td><p>Converts a 3ch rgb mask image into a 1ch uint16 mask image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.sum_pool_3d" title="flim_tools.image_processing.sum_pool_3d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sum_pool_3d</span></code></a>(im, bin_size[, stride, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.sum_pool_3d" title="flim_tools.image_processing.sum_pool_3d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sum_pool_3d</span></code></a>(im, bin_size[, stride, ...])</p></td>
 <td><p>Sums the pixel intensity by a given kernel, reducing output image dimensions.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.bin_2d">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">bin_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/bin_2d.html#bin_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.bin_2d" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">bin_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/bin_2d.html#bin_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.bin_2d" title="Permalink to this definition"></a></dt>
 <dd><p>Bins a 2d array by a square kernel length (bin_size*2 + 1).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -224,7 +138,7 @@ kernel = bin_size + 1 + bin_size</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.bin_3d">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">bin_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/bin_3d.html#bin_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.bin_3d" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">bin_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/bin_3d.html#bin_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.bin_3d" title="Permalink to this definition"></a></dt>
 <dd><p>Bins a 3d array along 3rd dimension, usually timebins in flim images (x,y,t).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -247,8 +161,25 @@ kernel = bin_size + 1 + bin_size</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.image_processing.fill_and_label_rois">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">fill_and_label_rois</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curr_nuclei</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/fill_and_label_rois.html#fill_and_label_rois"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.fill_and_label_rois" title="Permalink to this definition"></a></dt>
+<dd><p>Fills and labels ROI outlines using unique ints for each region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>curr_nucelei</strong> (<em>param</em>) – Current image to process</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>output</strong> – ROIs filled and labeled with unique int representations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.kmeans_threshold">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">kmeans_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_brightest_clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/kmeans_threshold.html#kmeans_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.kmeans_threshold" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">kmeans_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_brightest_clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/kmeans_threshold.html#kmeans_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.kmeans_threshold" title="Permalink to this definition"></a></dt>
 <dd><p>Given an image, this function will apply k-means clustering and return the mask that
 includes the n brightest clusters
 :param im: intensity image.
@@ -271,7 +202,7 @@ includes the n brightest clusters
 
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.normalize">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/normalize.html#normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.normalize" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/normalize.html#normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.normalize" title="Permalink to this definition"></a></dt>
 <dd><p>Normalizes an image to 0 and 1 by subtrating min value and
 dividing by new max value.</p>
 <dl class="field-list simple">
@@ -289,9 +220,9 @@ dividing by new max value.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.remove_horizontal_vertical_edges">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">remove_horizontal_vertical_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/fft_image_filter.html#remove_horizontal_vertical_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.remove_horizontal_vertical_edges" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">remove_horizontal_vertical_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/fft_image_filter.html#remove_horizontal_vertical_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.remove_horizontal_vertical_edges" title="Permalink to this definition"></a></dt>
 <dd><p>This function removes horizontal or vertical edges in the image. Designed for removing grid patterns in
-PDMS scaffolds during time lapse imaging</p>
+PDMS scaffolds during time lapse imaging.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -304,14 +235,14 @@ PDMS scaffolds during time lapse imaging</p>
 <dd class="field-even"><p>filtered image with grid pattern removed</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.rgb2gray">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">rgb2gray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/rgb2gray.html#rgb2gray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.rgb2gray" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">rgb2gray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/rgb2gray.html#rgb2gray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.rgb2gray" title="Permalink to this definition"></a></dt>
 <dd><p># RGB to Grayscale
 ## Code logic:
 - Essentially, read in mask only image (not composite) and figure out unique tuples that represent singular RGB values.
@@ -325,7 +256,7 @@ The resulting array should automatically upscale from 8-bit integer if needed (&
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mask_rgb</strong> (<em>np.ndarray</em>) – DESCRIPTION.</p></li>
+<li><p><strong>mask_rgb</strong> (<em>np.ndarray</em>) – rgb image.</p></li>
 <li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable debugging output. The default is False.</p></li>
 </ul>
 </dd>
@@ -340,7 +271,7 @@ The resulting array should automatically upscale from 8-bit integer if needed (&
 
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.rgb2labels">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">rgb2labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/rgb2labels.html#rgb2labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.rgb2labels" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">rgb2labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/rgb2labels.html#rgb2labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.rgb2labels" title="Permalink to this definition"></a></dt>
 <dd><p>Converts a 3ch rgb mask image into a 1ch uint16 mask image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -360,7 +291,7 @@ The resulting array should automatically upscale from 8-bit integer if needed (&
 
 <dl class="py function">
 <dt class="sig sig-object py" id="flim_tools.image_processing.sum_pool_3d">
-<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">sum_pool_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/sum_pool_3d.html#sum_pool_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.sum_pool_3d" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">sum_pool_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/flim_tools/image_processing/sum_pool_3d.html#sum_pool_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.sum_pool_3d" title="Permalink to this definition"></a></dt>
 <dd><p>Sums the pixel intensity by a given kernel, reducing output image dimensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -385,50 +316,33 @@ The resulting array should automatically upscale from 8-bit integer if needed (&
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="flim.html" class="btn btn-neutral float-right" title="Flim" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="metrics.html" class="btn btn-neutral float-left" title="Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="flim.html" class="btn btn-neutral float-left" title="Flim" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="io.html" class="btn btn-neutral float-right" title="I/O" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Skala Lab.
-
-    </p>
+    <p>&#169; Copyright 2021, Skala Lab.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
