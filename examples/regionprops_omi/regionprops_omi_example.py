@@ -267,7 +267,6 @@ if __name__ == "__main__":
  
     path_dataset = HERE.parent / "example_data/redox_ratio"
     path_output = HERE.parent / "regionprops_omi/outputs/"
- 
     
     df, incomplete = load_data_create_dict(path_dataset=path_dataset, path_output=(path_output / "dictionaries"))
     
