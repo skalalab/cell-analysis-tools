@@ -13,8 +13,6 @@ import matplotlib.pylab as plt
 import matplotlib as mpl
 mpl.rcParams["figure.dpi"] = 300
 import math
-import numba
-
 
 #%%
 def regionprops_omi(
