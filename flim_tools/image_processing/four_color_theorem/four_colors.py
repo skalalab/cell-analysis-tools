@@ -11,9 +11,25 @@ from scipy.ndimage import label
 from pprint import pprint
 from collections import OrderedDict
 
-def four_color_theorem(mask):
+def four_color_theorem(mask : np.ndarray) -> np.ndarray:
+    """
+    Converts a n-labeled image to an up to 4 color image.
+
+    Parameters
+    ----------
+    mask : np.ndarray
+        labeled mask with unique rois.
+
+    Returns
+    -------
+    four_color_mask : np.ndarray
+        returns a labeled image that uses up to 4 colors.
+    solution_nodes : dict
+        dictionary of {value : color} for each unique roi value
+
+    """
     
-    ## Generate Agencency Matrix
+    ### Generate Agencency Matrix
     id_nodes = list(np.unique(mask))
     id_nodes.remove(0) # remove bg
     dict_nodes_key_roi_value = {}
@@ -52,42 +68,44 @@ def four_color_theorem(mask):
         # dict increase degree
         dict_nodes_key_roi_value[roi_value]['degree'] = len(nodes_neighbors)
                 
-    # sort dictionary by largest to smallest degree 
+    ### Sort dictionary by largest to smallest degree
+    # this will color regions with many neighbors first
     sorted_nodes = sorted(dict_nodes_key_roi_value.items(), key=lambda item: item[1]['degree'], reverse=True)
     nodes = OrderedDict(sorted_nodes)
         
-    # select colors starting largest degree rois
-    solution_nodes={}
+    # Main Algorithm
+    solution_nodes={} # roi_value : color
     for roi_value in nodes.keys(): # iterate through roi_values
       pass
-      # get list of colors in current roi, choose current color
+      # get list of colors in current roi, choose current color for roi
       list_roi_colors = nodes[roi_value]['colors']
       curr_color = list_roi_colors[0]
-      solution_nodes[roi_value] =  curr_color# set solutions 
+      solution_nodes[roi_value] =  curr_color # set solutions 
       
       # get adjacency matrix to compare color against neighbors
       adjacent_nodes = adjacency_matrix[nodes[roi_value]['adj_mat_idx']] # get adj_matrix row at this index
       
-      for pos in range(len(adjacent_nodes)): # iterate through each row in adj matrix
+      # iterate through each row/neighbor in adj matrix
+      for pos in range(len(adjacent_nodes)): 
           pass
-      
-          # if it's a neighbor and it has the color in it's list, remove it for that neighbor
+          # if it's a neighbor and it has the color in it's list, remove it for that neighbors list
           adj_node_idx = dict_nodes_key_idx[pos]
           if adjacent_nodes[pos]==1 and (curr_color in nodes[adj_node_idx]['colors']):
               nodes[adj_node_idx]['colors'].remove(curr_color)
     
     # create array to store solution
     four_color_mask = np.zeros_like(mask)
+    
+    # convert from color to an intensity value for each color
     for roi_value in solution_nodes:
         pass
-        
         # convert color to intensity
         if solution_nodes[roi_value] == 'b' : value = 50
         elif solution_nodes[roi_value] == 'c' : value = 100 
         elif solution_nodes[roi_value] == 'm' : value = 150 
         elif solution_nodes[roi_value] == 'y' : value = 255 
     
-        # change roi value
+        # change roi color to value
         four_color_mask[mask == roi_value] = value
     
     return four_color_mask, solution_nodes
@@ -102,11 +120,11 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(1,2, figsize=(10,5))
     
     ax[0].set_axis_off()
-    ax[0].set_title("original mask")
+    ax[0].set_title(f"original mask \n unique rois: {len(np.unique(mask))-1}")
     ax[0].imshow(mask)
     
     ax[1].set_axis_off()
-    ax[1].set_title("four color mask")
+    ax[1].set_title(f"four color mask \n unique rois: {len(np.unique(four_color_mask))-1}")
     ax[1].imshow(four_color_mask)
     
     plt.imshow(four_color_mask) 

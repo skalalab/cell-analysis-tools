@@ -7,6 +7,8 @@ from .rgb2labels import rgb2labels
 from .rgb2gray import rgb2gray
 from .fft_image_filter import remove_horizontal_vertical_edges
 from .fill_and_label_rois import fill_and_label_rois
+from .four_color_theorem.four_colors import four_color_theorem
+from .four_color_theorem.four_color_theorem_to_unique_values import four_color_to_unique
 
 
 __all__ = [
@@ -18,5 +20,7 @@ __all__ = [
     "rgb2labels",
     "rgb2gray",
     "remove_horizontal_vertical_edges",
-    "fill_and_label_rois"
+    "fill_and_label_rois",
+    "four_color_theorem",
+    "four_color_to_unique"
 ]
