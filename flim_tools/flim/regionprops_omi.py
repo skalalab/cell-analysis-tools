@@ -39,31 +39,31 @@ def regionprops_omi(
 
     Parameters
     ----------
-    label_image : ndarray
-        labeled mask image.
-    im_nadh_intensity : ndarray
-        nadh intensity image.
-    im_nadh_a1 : ndarray
-        nadh alpha1 image.
-    im_nadh_a2 : ndarray
-        nadh alpha2 image .
-    im_nadh_t1 : ndarray
-        nadh tau 1 lifetime, short .
-    im_nadh_t2 : ndarray
-        nadh tau 2 lifetime, long.
-    im_fad_intensity : ndarray
-        nadh intensty image. 
-    im_fad_a1 : ndarray
-        fad alpha 1 image. 
-    im_fad_a2 : ndarray
-        fad alpha 2 image. 
-    im_fad_t1 : ndarray
-        fad tau 1 lifetime, long. 
-    im_fad_t2 : ndarray
-        fad tau 2 lifetime, short.
-    other_props : list
-        string list of additional parameters to compute on the binary mask
-        see skimage regionprops for list of attributes 
+        label_image : ndarray
+            labeled mask image.
+        im_nadh_intensity : ndarray
+            nadh intensity image.
+        im_nadh_a1 : ndarray
+            nadh alpha1 image.
+        im_nadh_a2 : ndarray
+            nadh alpha2 image .
+        im_nadh_t1 : ndarray
+            nadh tau 1 lifetime, short .
+        im_nadh_t2 : ndarray
+            nadh tau 2 lifetime, long.
+        im_fad_intensity : ndarray
+            nadh intensty image. 
+        im_fad_a1 : ndarray
+            fad alpha 1 image. 
+        im_fad_a2 : ndarray
+            fad alpha 2 image. 
+        im_fad_t1 : ndarray
+            fad tau 1 lifetime, long. 
+        im_fad_t2 : ndarray
+            fad tau 2 lifetime, short.
+        other_props : list
+            string list of additional parameters to compute on the binary mask
+            see skimage regionprops for list of attributes 
     
     .. note::
         See `https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops <https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops>`_

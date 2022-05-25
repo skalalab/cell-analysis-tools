@@ -110,13 +110,15 @@ if __name__ == "__main__":
 
     # plot feature importances
     array_importances = rf_random.best_estimator_.feature_importances_
+    plt.figure(figsize=(10,10))
     for feature, importance in zip(list_features, array_importances):
         pass
         plt.bar(feature, importance)
         plt.xticks(rotation=90)
         plt.xlabel("features")
         plt.ylabel("percent")
-    plt.title("Feature Importance")
+    plt.tight_layout()
+    plt.title("Feature Importance | Random Forest ")
     plt.show()
     
     #%% SVM
@@ -145,6 +147,7 @@ if __name__ == "__main__":
     
     # plot feature importances
     array_importances = clfSV.best_estimator_.coef_.squeeze()
+    plt.figure(figsize=(10,10))
     for feature, importance in zip(list_features, array_importances):
         pass
         plt.bar(feature, abs(importance))
@@ -152,6 +155,8 @@ if __name__ == "__main__":
         plt.xlabel("features")
         plt.ylabel("coefficient")
     plt.title("Feature Importance | SVM")
+    plt.figure(figsize=(10,10))
+    plt.tight_layout()
     plt.show()
 
     #%% Logistic Regression Classification 
@@ -180,6 +185,7 @@ if __name__ == "__main__":
 
     # plot feature importances
     array_importances = clfLR.best_estimator_.coef_.squeeze()
+    plt.figure(figsize=(10,10))
     for feature, importance in zip(list_features, array_importances):
         pass
         plt.bar(feature, abs(importance))
@@ -192,13 +198,15 @@ if __name__ == "__main__":
     #%% PLOT ALL ESTIMATORS 
         
     #Generates roc curve to compare performance of all 3 classifiers based on their optimized parameters
+    plt.figure(figsize=(15,15))
     plt.plot(fprSV, tprSV, "r", label=f'Linear SVM, AUC:{roc_auc_score(y_test, SVraw_decision_scores):.5f}')
     plt.plot(fprRF, tprRF, "g", label=f'Random Forest, AUC:{roc_auc_score(y_test, rf_raw_decision_scores[:,1]):.5f}')
     plt.plot(fprLR, tprLR, "y", label=f'Logistic Regression, AUC:{roc_auc_score(y_test, lr_raw_decision_scores):.5f}')
     plt.plot([0,1],[0,1], "k--", label='Random Guess')
     plt.xlabel("false positive rate")
     plt.ylabel("true positive rate")
-    plt.legend(loc="best")
+    plt.legend(loc="lower right")
     plt.title("ROC curve")
+    plt.show()
     # plt.savefig('ROC curve by day_ALL.png') #saves tif of ROC curves
   
