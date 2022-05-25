@@ -1,7 +1,6 @@
 ### flim_tools
 
 A library for loading, processing and summarizing flim data.
-* [Google doc with Examples](https://drive.google.com/drive/u/1/folders/1zs7mldSh5F2iK90yndzoV3uSMhRc9Cw6?ths=true)
 
 ---
 #### Dependencies
@@ -26,7 +25,7 @@ To install this library change directory to the root of the flim_tools folder th
 you should then be able to import it into your script
 
 
-`import flim_tools as ft`
+`import flim_tools`
 
 --- 
 ### Summarizing your data
