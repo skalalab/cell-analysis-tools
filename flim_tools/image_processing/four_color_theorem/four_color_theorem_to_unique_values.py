@@ -32,17 +32,17 @@ def four_color_to_unique(mask : np.ndarray, debug: bool=False) -> np.ndarray:
 
     """
     # determine unique labels and exclude bg(0)
-    list_unique_values = list(np.unique(mask_fc))
+    list_unique_values = list(np.unique(mask))
     list_unique_values.remove(0) # remove bg
     
     # label counter and placeholder array
     roi_counter = 1
-    inter_mask = np.zeros_like(mask_fc)
+    inter_mask = np.zeros_like(mask)
     
     # iterate through 4 color labels
     for value in list_unique_values:
         pass
-        temp_mask = np.array(mask_fc==value, dtype=np.uint16)
+        temp_mask = np.array(mask==value, dtype=np.uint16)
         
         # TODO exclude these next lines, specific to Gina's masks!
         labels, _ = label(temp_mask)
