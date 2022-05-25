@@ -25,7 +25,7 @@ To install this library change directory to the root of the flim_tools folder th
 you should then be able to import it into your script
 
 
-`import flim_tools as ft`
+`import flim_tools`
 
 --- 
 ### Summarizing your data
