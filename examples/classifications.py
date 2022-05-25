@@ -16,6 +16,10 @@ from sklearn.model_selection import train_test_split, GridSearchCV, ShuffleSplit
 from sklearn.metrics import roc_curve, roc_auc_score
 import matplotlib.pyplot as plt
 import pandas as pd
+
+
+import seaborn as sns
+
 import numpy as np
 
 import matplotlib.pylab as plt
@@ -184,6 +188,7 @@ if __name__ == "__main__":
     fprLR, tprLR, thresLR = roc_curve(y_test, lr_raw_decision_scores, pos_label = 1)
 
     # plot feature importances
+    # https://scikit-learn.org/stable/auto_examples/ensemble/plot_forest_importances.html
     array_importances = clfLR.best_estimator_.coef_.squeeze()
     plt.figure(figsize=(10,10))
     for feature, importance in zip(list_features, array_importances):
@@ -195,6 +200,65 @@ if __name__ == "__main__":
     plt.title("Feature Importance | Linear Regression")
     plt.show()
 
+
+    # ROC curves 
+    # https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html#sphx-glr-auto-examples-model-selection-plot-roc-py
+#%% SVM
+
+
+    ## Support Vector Machine Classification 
+    print('SVM Classification')
+    
+    
+    #Initializes a linear support vector machine classifier
+    svc = SVC(kernel = "linear", probability = True)
+    
+    #Provides the bounds of classifier parameters to iterate through to optimize classifier performance
+    params_grid = {'C': [10 ** k for k in range(-3, 4)]}
+    
+    
+    #Exhaustively searches over specific parameter range  for  best estimator for classification on training data with default 5-fold cross validation
+    clfSV = GridSearchCV(svc, params_grid)
+    clfSV.fit(x_train, y_train)
+    
+    print("Best parameters set found on development set:")
+    print(clfSV.best_params_)
+          
+          
+    print(f"Accuracy on the test set with raw data: {clfSV.score(x_test, y_test):.5f}")
+    
+    #Determines decision function from classification (how far away each point is from hyperplane separating classes and to which side of hyperplane [class] the point belongs)       
+    SVraw_decision_scores = clfSV.decision_function(x_test)
+    #Determines false positive rate and true positive rate for plotting ROC curves
+    fprSV, tprSV, thresSV = roc_curve(y_test, SVraw_decision_scores, pos_label = 1)
+    
+    #%% LOGISTIC REGRESSION
+    
+        #Logistic Regression Classification 
+    print("Logistic Regression Classification")
+    
+    #Initializes a logistic regression classifier  
+    lrc = LogisticRegression()
+    
+    #Provides the bounds of classifier parameters to iterate through to optimize classifier performance
+    param_lrc = {'penalty': ['l2'],
+                  'C': np.logspace(-4,4,20),
+                  'solver':['newton-cg', 'lbfgs','sag','saga']}
+    
+          
+    #Exhaustively searches over specific parameter range  for  best estimator for classification on training data with default 5-fold cross validation      
+    clfLR = GridSearchCV(estimator = LogisticRegression(), param_grid = param_lrc, cv = 3)
+    clfLR.fit(x_train, y_train)
+          
+          
+    print(clfLR.best_params_)
+    print(f"Accuracy on the test set with raw data: {clfLR.score(x_test, y_test):.5f}")
+    
+    #Determines decision function from classification (how far away each point is from hyperplane separating classes and to which side of hyperplane [class] the point belongs)      
+    lr_raw_decision_scores = clfLR.decision_function(x_test)
+    #Determines false positive rate and true positive rate for plotting ROC curves
+    fprLR, tprLR, thresLR = roc_curve(y_test, lr_raw_decision_scores, pos_label = 1)
+    
     #%% PLOT ALL ESTIMATORS 
         
     #Generates roc curve to compare performance of all 3 classifiers based on their optimized parameters
@@ -207,6 +271,7 @@ if __name__ == "__main__":
     plt.ylabel("true positive rate")
     plt.legend(loc="lower right")
     plt.title("ROC curve")
+
     plt.show()
     # plt.savefig('ROC curve by day_ALL.png') #saves tif of ROC curves
   

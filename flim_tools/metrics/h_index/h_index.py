@@ -1,3 +1,4 @@
+#%%
 import numpy as np
 
 from scipy.stats import norm
@@ -39,7 +40,7 @@ def h_index(list_distributions) -> float:
     for distribution in list_distributions:
         pass
         p = len(distribution) / np.sum(list(map(len,list_distributions)))# proportion of subpopulation
-        d = np.abs(np.median(distribution) - median_overall)# distance between median of subpop and overall med
+        d = np.abs(np.mean(distribution) - median_overall)# distance between median of subpop and overall med
         running_sum += d * p * np.log(p)
     return -running_sum
 
@@ -65,15 +66,17 @@ def h_index_single_weighted(list_distributions)->float:
     paramter of the GaussianMixtureModel to the same value.
 
     '''
-    median_overall = np.median(np.concatenate(list_distributions))
+    median_overall = np.mean(np.concatenate(list_distributions))
     
     # compute running sum
     running_sum = 0
     for distribution in list_distributions:
         pass
         p = len(distribution) / np.sum(list(map(len,list_distributions)))# proportion of subpopulation
-        d = np.abs(np.median(distribution) - median_overall)# distance between median of subpop and overall med
+        d = np.abs(np.mean(distribution) - median_overall)# distance between median of subpop and overall med
         sigma = np.std(distribution)
+        rng = np.random.default_rng(seed=1)
+        im = rng.random((128,128)) 
         running_sum += (1 - (p * np.log(p + 1))) * (sigma + d )
         
     return running_sum
@@ -88,10 +91,19 @@ if __name__ == "__main__":
     list_dist_params = [
        #(mean, std)
         (20,4),
-        (30,6),
-        (50,20),
-        (50,10),
+        (20,6),
+        (20,10),
+        (20,10),
+        # (20,4),
+        # (30,6),
+        # (50,20),
+        # (50,10),
         ]
+    
+    # list_dist_params = [
+    #    #(mean, std)
+    
+    #     ]
     
     dist_all = np.zeros_like(x)
     list_distributions = []
@@ -125,12 +137,11 @@ if __name__ == "__main__":
     #%% COMBINE DISTRIBUTIONS AND COMPUTE WEIGHTED AND SINGLY WEIGHTED H-INDEX
     
     ## plot one two three distributions
-    n_components = 3 
+    n_components = 3
     
     plt.title(f"Distributions \nGaussian Mixture Model components : {n_components} ")
     
 
-    
     for num_dist in np.arange(start=1, stop=5): #slide in dist 
         pass
         list_subdists = list_distributions[:num_dist]
@@ -191,7 +202,4 @@ if __name__ == "__main__":
         plt.plot(x, pdf_combined_values, label=f"dist {num_dist} | Hi: {h_index_value:.2f} | wHi: {h_index_single_weighted_value:.2f}")
     plt.legend()
     plt.show()
-
-    
-    
-    
+# %%
