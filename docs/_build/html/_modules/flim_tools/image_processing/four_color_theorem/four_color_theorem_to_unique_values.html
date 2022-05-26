@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>flim_tools.image_processing.four_color_theorem.four_color_theorem_to_unique_values &mdash; flim_tools  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> flim_tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/visualization.html">Visualization</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">flim_tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>flim_tools.image_processing.four_color_theorem.four_color_theorem_to_unique_values</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for flim_tools.image_processing.four_color_theorem.four_color_theorem_to_unique_values</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="kn">import</span> <span class="nn">tifffile</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="p">(</span><span class="n">dilation</span><span class="p">,</span> 
+                                <span class="n">disk</span><span class="p">,</span> 
+                                <span class="n">binary_closing</span><span class="p">,</span> 
+                                <span class="n">remove_small_objects</span><span class="p">,</span>
+                                <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">regionprops</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">label</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<div class="viewcode-block" id="four_color_to_unique"><a class="viewcode-back" href="../../../../rest_files/image_processing.html#flim_tools.image_processing.four_color_to_unique">[docs]</a><span class="k">def</span> <span class="nf">four_color_to_unique</span><span class="p">(</span><span class="n">mask</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts an n-label image into a </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mask : np.ndarray</span>
+<span class="sd">        labeled mask.</span>
+<span class="sd">    debug : bool, optional</span>
+<span class="sd">        show output re-labeled mask. The default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output_mask : np.ndarray</span>
+<span class="sd">        Mask relabeled to have unique roi values for each connected component</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># determine unique labels and exclude bg(0)</span>
+    <span class="n">list_unique_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">mask_fc</span><span class="p">))</span>
+    <span class="n">list_unique_values</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># remove bg</span>
+    
+    <span class="c1"># label counter and placeholder array</span>
+    <span class="n">roi_counter</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">inter_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mask_fc</span><span class="p">)</span>
+    
+    <span class="c1"># iterate through 4 color labels</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">list_unique_values</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="n">temp_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mask_fc</span><span class="o">==</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+        
+        <span class="c1"># TODO exclude these next lines, specific to Gina&#39;s masks!</span>
+        <span class="n">labels</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">temp_mask</span><span class="p">)</span>
+        
+        <span class="n">unique_labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+        <span class="n">unique_labels</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">roi_value</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
+            <span class="n">inter_mask</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">roi_counter</span>
+            <span class="n">roi_counter</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># increment roi_value</span>
+    
+        <span class="c1"># compute regionprops    </span>
+        <span class="c1"># sort by centroid</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">inter_mask</span><span class="p">)</span>
+        <span class="n">dict_value_location</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">({</span><span class="n">roi</span><span class="o">.</span><span class="n">label</span> <span class="p">:</span> <span class="n">roi</span><span class="o">.</span><span class="n">centroid</span> <span class="k">for</span> <span class="n">roi</span> <span class="ow">in</span> <span class="n">props</span><span class="p">})</span>
+        
+        <span class="c1"># sort dict by tuple (rows, cols)</span>
+        <span class="n">dict_value_location_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dict_value_location</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                                            <span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">item</span> <span class="p">:</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+        
+        <span class="c1"># reoder roi values in increasing order</span>
+        <span class="n">roi_counter</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">output_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">inter_mask</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">roi_val</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">dict_value_location_sorted</span><span class="p">:</span>
+            <span class="k">pass</span>
+            <span class="n">output_mask</span><span class="p">[</span><span class="n">inter_mask</span><span class="o">==</span><span class="n">roi_val</span><span class="p">]</span> <span class="o">=</span> <span class="n">roi_counter</span>
+            <span class="n">roi_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">output_mask</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">output_mask</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="kn">from</span> <span class="nn">four_color_theorem.four_colors</span> <span class="kn">import</span> <span class="n">four_color_theorem</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;mask.tiff&quot;</span><span class="p">)</span>
+
+    <span class="c1"># plt.imshow(mask)</span>
+    <span class="n">mask_fc</span> <span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">four_color_theorem</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    <span class="n">mask_unique</span> <span class="o">=</span> <span class="n">four_color_to_unique</span><span class="p">(</span><span class="n">mask_fc</span><span class="p">)</span>
+        
+    <span class="c1"># temp_mask = np.array(binary_closing(temp_mask, disk(1)), dtype=np.uint16)</span>
+    <span class="n">labeled_mask</span> <span class="o">=</span> <span class="n">remove_small_objects</span><span class="p">(</span><span class="n">mask_unique</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unique values </span><span class="se">\n</span><span class="s2"> unique rois: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labeled_mask</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">labeled_mask</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Skala Lab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

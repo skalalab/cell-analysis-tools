@@ -70,14 +70,16 @@
            <div itemprop="articleBody">
              
   <h1>Source code for flim_tools.flim.regionprops_omi</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">regionprops</span>
-<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">label</span>
+<span></span>
+<span class="c1">#%%</span>
 <span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="k">as</span> <span class="nn">ma</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">flim_tools.io</span> <span class="kn">import</span> <span class="n">read_asc</span>
 <span class="kn">import</span> <span class="nn">tifffile</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">from</span> <span class="nn">flim_tools.image_processing</span> <span class="kn">import</span> <span class="n">normalize</span>
+<span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">regionprops</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">label</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
@@ -88,51 +90,52 @@
 <div class="viewcode-block" id="regionprops_omi"><a class="viewcode-back" href="../../../rest_files/flim.html#flim_tools.flim.regionprops_omi">[docs]</a><span class="k">def</span> <span class="nf">regionprops_omi</span><span class="p">(</span>
                     <span class="n">image_id</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="c1"># base_name of image</span>
                     <span class="n">label_image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                    <span class="n">im_nadh_intensity</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                    <span class="n">im_nadh_a1</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
-                    <span class="n">im_nadh_a2</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
-                    <span class="n">im_nadh_t1</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> 
-                    <span class="n">im_nadh_t2</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                    <span class="n">im_fad_intensity</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                    <span class="n">im_fad_a1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                    <span class="n">im_fad_a2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                    <span class="n">im_fad_t1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                    <span class="n">im_fad_t2</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                    <span class="n">im_nadh_intensity</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">im_nadh_a1</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                    <span class="n">im_nadh_a2</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                    <span class="n">im_nadh_t1</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                    <span class="n">im_nadh_t2</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">im_fad_intensity</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">im_fad_a1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">im_fad_a2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">im_fad_t1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">im_fad_t2</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="n">im_nadh_chi</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="n">im_fad_chi</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                     <span class="n">other_props</span> <span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="c1">#%%</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Takes in labels image as well as nadh and fad images from SPCImage to return</span>
 <span class="sd">    mean and stdev of each parameter per roi. </span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    label_image : ndarray</span>
-<span class="sd">        labeled mask image.</span>
-<span class="sd">    im_nadh_intensity : ndarray</span>
-<span class="sd">        nadh intensity image.</span>
-<span class="sd">    im_nadh_a1 : ndarray</span>
-<span class="sd">        nadh alpha1 image.</span>
-<span class="sd">    im_nadh_a2 : ndarray</span>
-<span class="sd">        nadh alpha2 image .</span>
-<span class="sd">    im_nadh_t1 : ndarray</span>
-<span class="sd">        nadh tau 1 lifetime, short .</span>
-<span class="sd">    im_nadh_t2 : ndarray</span>
-<span class="sd">        nadh tau 2 lifetime, long.</span>
-<span class="sd">    im_fad_intensity : ndarray</span>
-<span class="sd">        nadh intensty image. </span>
-<span class="sd">    im_fad_a1 : ndarray</span>
-<span class="sd">        fad alpha 1 image. </span>
-<span class="sd">    im_fad_a2 : ndarray</span>
-<span class="sd">        fad alpha 2 image. </span>
-<span class="sd">    im_fad_t1 : ndarray</span>
-<span class="sd">        fad tau 1 lifetime, long. </span>
-<span class="sd">    im_fad_t2 : ndarray</span>
-<span class="sd">        fad tau 2 lifetime, short.</span>
-<span class="sd">    other_props : list</span>
-<span class="sd">        string list of additional parameters to compute on the binary mask</span>
-<span class="sd">        see skimage regionprops for list of attributes </span>
+<span class="sd">        label_image : ndarray</span>
+<span class="sd">            labeled mask image.</span>
+<span class="sd">        im_nadh_intensity : ndarray</span>
+<span class="sd">            nadh intensity image.</span>
+<span class="sd">        im_nadh_a1 : ndarray</span>
+<span class="sd">            nadh alpha1 image.</span>
+<span class="sd">        im_nadh_a2 : ndarray</span>
+<span class="sd">            nadh alpha2 image .</span>
+<span class="sd">        im_nadh_t1 : ndarray</span>
+<span class="sd">            nadh tau 1 lifetime, short .</span>
+<span class="sd">        im_nadh_t2 : ndarray</span>
+<span class="sd">            nadh tau 2 lifetime, long.</span>
+<span class="sd">        im_fad_intensity : ndarray</span>
+<span class="sd">            nadh intensty image. </span>
+<span class="sd">        im_fad_a1 : ndarray</span>
+<span class="sd">            fad alpha 1 image. </span>
+<span class="sd">        im_fad_a2 : ndarray</span>
+<span class="sd">            fad alpha 2 image. </span>
+<span class="sd">        im_fad_t1 : ndarray</span>
+<span class="sd">            fad tau 1 lifetime, long. </span>
+<span class="sd">        im_fad_t2 : ndarray</span>
+<span class="sd">            fad tau 2 lifetime, short.</span>
+<span class="sd">        other_props : list</span>
+<span class="sd">            string list of additional parameters to compute on the binary mask</span>
+<span class="sd">            see skimage regionprops for list of attributes </span>
 <span class="sd">    </span>
 <span class="sd">    .. note::</span>
 <span class="sd">        See `https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops &lt;https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops&gt;`_</span>
@@ -160,29 +163,50 @@
     <span class="c1"># 12. fad_tau_mean</span>
     <span class="c1"># 13. redox_ratio</span>
 
+<span class="c1">##%%</span>
     <span class="c1"># compute composite images not generated by SPCImage, also convert a1/a2 to percent</span>
-    <span class="n">im_nadh_tau_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">im_nadh_a1</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_nadh_t1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">im_nadh_a2</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_nadh_t2</span><span class="p">)</span>
-    <span class="n">im_fad_tau_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">im_fad_a1</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_fad_t1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">im_fad_a2</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_fad_t2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">im_nadh_a1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+        <span class="n">im_nadh_a2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+        <span class="n">im_nadh_t1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+        <span class="n">im_nadh_t2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">im_nadh_tau_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">im_nadh_a1</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_nadh_t1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">im_nadh_a2</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_nadh_t2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">im_nadh_tau_mean</span> <span class="o">=</span> <span class="kc">None</span>
     
-    <span class="c1"># radox ratio computation, create masked arrays so it doesn&#39;t affect averaging</span>
-    <span class="n">labels_inverted</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">label_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span>
-    <span class="n">masked_im_fad_intensity</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_fad_intensity</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
-    <span class="n">masked_im_nadh_intensity</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_nadh_intensity</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">im_fad_a1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+        <span class="n">im_fad_a2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+        <span class="n">im_fad_t1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+        <span class="n">im_fad_t2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>    
+        <span class="n">im_fad_tau_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">im_fad_a1</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_fad_t1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">im_fad_a2</span><span class="o">/</span><span class="mi">100</span> <span class="o">*</span> <span class="n">im_fad_t2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">im_fad_tau_mean</span> <span class="o">=</span> <span class="kc">None</span>
     
-    <span class="c1"># compute both types of redox ratios</span>
-    <span class="n">im_redox_ratio</span> <span class="o">=</span> <span class="n">masked_im_nadh_intensity</span> <span class="o">/</span> <span class="n">masked_im_fad_intensity</span>
-    <span class="n">im_redox_ratio_norm</span> <span class="o">=</span> <span class="n">masked_im_nadh_intensity</span> <span class="o">/</span> <span class="p">(</span><span class="n">masked_im_fad_intensity</span> <span class="o">+</span> <span class="n">masked_im_nadh_intensity</span><span class="p">)</span>
+    <span class="c1"># COMPUTE REDOX RATIO</span>
+    <span class="c1"># create masked arrays so it doesn&#39;t affect averaging</span>
+    <span class="k">if</span> <span class="n">im_fad_intensity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">im_nadh_intensity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">labels_inverted</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">label_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span>
+        <span class="n">masked_im_fad_intensity</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_fad_intensity</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
+        <span class="n">masked_im_nadh_intensity</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_nadh_intensity</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
+        
+        <span class="c1"># compute both types of redox ratios</span>
+        <span class="n">im_redox_ratio</span> <span class="o">=</span> <span class="n">masked_im_nadh_intensity</span> <span class="o">/</span> <span class="n">masked_im_fad_intensity</span>
+        <span class="n">im_redox_ratio_norm</span> <span class="o">=</span> <span class="n">masked_im_nadh_intensity</span> <span class="o">/</span> <span class="p">(</span><span class="n">masked_im_fad_intensity</span> <span class="o">+</span> <span class="n">masked_im_nadh_intensity</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">im_redox_ratio</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">im_redox_ratio_norm</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="c1"># COMPUTE FLIRR</span>
     <span class="c1"># fluorescence lifetime imaging redox ratio aka FLIRR</span>
     <span class="c1"># labels mask image should not include any im_fad_a1 zeros</span>
     <span class="c1"># apply mask then compute to avoid Infinite values</span>
-    <span class="n">masked_im_fad_a1</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_fad_a1</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
-    <span class="n">masked_im_nadh_a2</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_nadh_a2</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
-    <span class="n">im_flirr</span> <span class="o">=</span> <span class="p">(</span><span class="n">masked_im_nadh_a2</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">masked_im_fad_a1</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># bound portions of NADH/FAD</span>
     
-    <span class="k">if</span> <span class="n">im_flirr</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">INF</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;regionprops_omi: INF values found in FLIRR image, they will be set to zero&quot;</span><span class="p">)</span>
-        <span class="n">im_flirr</span><span class="p">[</span><span class="n">im_flirr</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">Inf</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">im_fad_a1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">im_nadh_a2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">masked_im_fad_a1</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_fad_a1</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
+        <span class="n">masked_im_nadh_a2</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">im_nadh_a2</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">labels_inverted</span><span class="p">)</span>
+        <span class="n">im_flirr</span> <span class="o">=</span> <span class="p">(</span><span class="n">masked_im_nadh_a2</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">masked_im_fad_a1</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># bound portions of NADH/FAD</span>
+    
+        <span class="k">if</span> <span class="n">im_flirr</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;regionprops_omi: INF values found in FLIRR image, they will be set to zero&quot;</span><span class="p">)</span>
+            <span class="n">im_flirr</span><span class="p">[</span><span class="n">im_flirr</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span> <span class="p">:</span> <span class="n">im_flirr</span> <span class="o">=</span> <span class="kc">None</span>
     
     <span class="c1"># define extra functions for properties</span>
     <span class="k">def</span> <span class="nf">stdev</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">intensity</span><span class="p">):</span>
@@ -203,42 +227,70 @@
     <span class="c1"># COMPUTE REGIONPROPS JUST ON BINARY IMAGE</span>
     <span class="n">mask_props</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">)</span>
     
-    <span class="c1"># EQUALLY WEIGHTED PARAMETERS</span>
-    <span class="n">nadh_intensity</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_intensity</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">nadh_a1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_a1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">nadh_a2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_a2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">nadh_t1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_t1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">nadh_t2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_t2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">nadh_tau_mean</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_tau_mean</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">fad_intensity</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_intensity</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">fad_a1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_a1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">fad_a2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_a2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">fad_t1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_t1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">fad_t2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_t2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">fad_tau_mean</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_tau_mean</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">redox_ratio</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_redox_ratio</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">redox_ratio_norm</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_redox_ratio_norm</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-    <span class="n">flirr</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_flirr</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
-
-    <span class="c1"># dictionary holding regionprops</span>
-    <span class="n">dict_regionprops</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;nadh_intensity&quot;</span> <span class="p">:</span> <span class="n">nadh_intensity</span><span class="p">,</span>
-        <span class="s2">&quot;nadh_a1&quot;</span> <span class="p">:</span> <span class="n">nadh_a1</span><span class="p">,</span>
-        <span class="s2">&quot;nadh_a2&quot;</span> <span class="p">:</span> <span class="n">nadh_a2</span><span class="p">,</span>
-        <span class="s2">&quot;nadh_t1&quot;</span> <span class="p">:</span> <span class="n">nadh_t1</span><span class="p">,</span>
-        <span class="s2">&quot;nadh_t2&quot;</span> <span class="p">:</span> <span class="n">nadh_t2</span><span class="p">,</span>
-        <span class="s2">&quot;nadh_tau_mean&quot;</span> <span class="p">:</span> <span class="n">nadh_tau_mean</span><span class="p">,</span>
-        <span class="s2">&quot;fad_intensity&quot;</span> <span class="p">:</span> <span class="n">fad_intensity</span><span class="p">,</span>
-        <span class="s2">&quot;fad_a1&quot;</span> <span class="p">:</span> <span class="n">fad_a1</span><span class="p">,</span>
-        <span class="s2">&quot;fad_a2&quot;</span> <span class="p">:</span> <span class="n">fad_a2</span><span class="p">,</span>
-        <span class="s2">&quot;fad_t1&quot;</span> <span class="p">:</span> <span class="n">fad_t1</span><span class="p">,</span>
-        <span class="s2">&quot;fad_t2&quot;</span> <span class="p">:</span> <span class="n">fad_t2</span><span class="p">,</span>
-        <span class="s2">&quot;fad_tau_mean&quot;</span> <span class="p">:</span> <span class="n">fad_tau_mean</span><span class="p">,</span>
-        <span class="s2">&quot;redox_ratio&quot;</span> <span class="p">:</span> <span class="n">redox_ratio</span><span class="p">,</span>
-        <span class="s2">&quot;redox_ratio_norm&quot;</span> <span class="p">:</span> <span class="n">redox_ratio_norm</span><span class="p">,</span>
-        <span class="s2">&quot;flirr&quot;</span> <span class="p">:</span> <span class="n">flirr</span>
-        <span class="p">}</span>
+    <span class="n">dict_regionprops</span> <span class="o">=</span> <span class="p">{}</span>
     
+    <span class="c1"># COMPUTE EQUALLY WEIGHTED PARAMETERS AND ASSEMBLE DICT OF REGIONPROPS</span>
+    <span class="k">if</span> <span class="n">im_nadh_intensity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> 
+        <span class="n">nadh_intensity</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_intensity</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;nadh_intensity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nadh_intensity</span>
+        
+    <span class="k">if</span> <span class="n">im_nadh_a1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nadh_a1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_a1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;nadh_a1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nadh_a1</span>
+
+    <span class="k">if</span> <span class="n">im_nadh_a2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nadh_a2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_a2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;nadh_a2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nadh_a2</span>
+
+    <span class="k">if</span> <span class="n">im_nadh_t1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>    
+        <span class="n">nadh_t1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_t1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;nadh_t1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nadh_t1</span>
+
+    <span class="k">if</span> <span class="n">im_nadh_t2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nadh_t2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_t2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;nadh_t2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nadh_t2</span>
+
+    <span class="k">if</span> <span class="n">im_nadh_tau_mean</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>      
+        <span class="n">nadh_tau_mean</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_nadh_tau_mean</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;nadh_tau_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nadh_tau_mean</span>
+
+    <span class="k">if</span> <span class="n">im_fad_intensity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fad_intensity</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_intensity</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;fad_intensity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fad_intensity</span>
+
+    <span class="k">if</span> <span class="n">im_fad_a1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fad_a1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_a1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;fad_a1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fad_a1</span>
+
+    <span class="k">if</span> <span class="n">im_fad_a2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fad_a2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_a2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;fad_a2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fad_a2</span>
+
+    <span class="k">if</span> <span class="n">im_fad_t1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fad_t1</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_t1</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;fad_t1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fad_t1</span>
+
+    <span class="k">if</span> <span class="n">im_fad_t2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fad_t2</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_t2</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;fad_t2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fad_t2</span>
+
+    <span class="k">if</span> <span class="n">im_fad_tau_mean</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fad_tau_mean</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_fad_tau_mean</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;fad_tau_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fad_tau_mean</span>
+
+    <span class="k">if</span> <span class="n">im_redox_ratio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">redox_ratio</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_redox_ratio</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;redox_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">redox_ratio</span>
+
+    <span class="k">if</span> <span class="n">im_redox_ratio_norm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">redox_ratio_norm</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_redox_ratio_norm</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;redox_ratio_norm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">redox_ratio_norm</span>
+
+    <span class="k">if</span> <span class="n">im_flirr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">flirr</span> <span class="o">=</span> <span class="n">regionprops</span><span class="p">(</span><span class="n">label_image</span><span class="p">,</span> <span class="n">im_flirr</span><span class="p">,</span> <span class="n">extra_properties</span><span class="o">=</span><span class="n">extra_properties</span><span class="p">)</span>
+        <span class="n">dict_regionprops</span><span class="p">[</span><span class="s2">&quot;flirr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flirr</span>
+
+
     <span class="c1"># add chi squared values if passed in</span>
     <span class="n">bool_has_chi_images</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">im_nadh_chi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">im_fad_chi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -251,8 +303,10 @@
     <span class="c1"># assemble dictionary of omi parameters</span>
     <span class="n">dict_omi</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">rp_key</span> <span class="ow">in</span> <span class="n">dict_regionprops</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span><span class="c1"># iterate through each images regionprops</span>
+        <span class="k">pass</span>
         <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">dict_regionprops</span><span class="p">[</span><span class="n">rp_key</span><span class="p">]:</span> <span class="c1"># iterate through region in regionprops</span>
             <span class="k">pass</span>
+            <span class="c1"># print(region)</span>
             <span class="n">dict_key_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">region</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># generate unique key for region in this image</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">dict_key_name</span> <span class="ow">in</span> <span class="n">dict_omi</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1"># add region dict if needed</span>
                 <span class="k">pass</span>
@@ -285,14 +339,16 @@
                     <span class="p">]</span>
 
             <span class="k">if</span> <span class="n">rp_key</span> <span class="ow">in</span> <span class="n">list_valid_intensity_weights</span><span class="p">:</span> <span class="c1"># iterate through valid lifetime images</span>
-                
+                <span class="k">pass</span>
                 <span class="c1"># select proper intensity image to weigh by, find roi by region.label</span>
-                <span class="k">if</span> <span class="s2">&quot;fad&quot;</span> <span class="ow">in</span> <span class="n">rp_key</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;fad&quot;</span> <span class="ow">in</span> <span class="n">rp_key</span> <span class="ow">and</span> <span class="n">im_fad_intensity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">im_intensity_region</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">fad_intensity</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="n">region</span><span class="o">.</span><span class="n">label</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># should be one region</span>
                     
-                <span class="k">elif</span> <span class="s2">&quot;nadh&quot;</span> <span class="ow">in</span> <span class="n">rp_key</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="s2">&quot;nadh&quot;</span> <span class="ow">in</span> <span class="n">rp_key</span> <span class="ow">and</span> <span class="n">im_nadh_intensity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">im_intensity_region</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">nadh_intensity</span> <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="n">region</span><span class="o">.</span><span class="n">label</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># should be one region</span>
                 
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span> <span class="c1">#skip this set</span>
                 <span class="c1"># gather other things needed for intensity weighted</span>
                 <span class="n">binary</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">image</span>
                 <span class="n">inverted_binary</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">binary</span><span class="p">)</span>
@@ -323,7 +379,7 @@
                 <span class="n">dict_omi</span><span class="p">[</span><span class="n">dict_key_name</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rp_key</span><span class="si">}</span><span class="s2">_intensity_weighted_stdev&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_stdev</span>
             
             <span class="c1">### Done adding intensity weighted params   </span>
-                
+            
     <span class="c1"># ADD OTHER MASK REGIONPROP VALUES</span>
     <span class="k">if</span> <span class="n">other_props</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">other_props</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">mask_props</span><span class="p">:</span> <span class="c1"># iterate through region in regionprops</span>
@@ -333,6 +389,7 @@
             <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">other_props</span><span class="p">:</span>
                 <span class="n">dict_omi</span><span class="p">[</span><span class="n">dict_key_name</span><span class="p">][</span><span class="n">prop</span><span class="p">]</span> <span class="o">=</span> <span class="n">region</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span>
 
+<span class="c1">#%%</span>
     <span class="c1"># dictionary of omi features could be df if we wanted to</span>
     <span class="k">return</span> <span class="n">dict_omi</span></div>
 <span class="c1">#%%</span>
@@ -366,7 +423,23 @@
         <span class="n">im_fad_a2</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">test_dict</span><span class="o">.</span><span class="n">fad_a2</span><span class="p">)),</span>
         <span class="n">im_fad_t1</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">test_dict</span><span class="o">.</span><span class="n">fad_t1</span><span class="p">)),</span>
         <span class="n">im_fad_t2</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">test_dict</span><span class="o">.</span><span class="n">fad_t2</span><span class="p">)),</span>
-        <span class="p">)</span>    
+        <span class="p">)</span>   
+    
+    
+        <span class="c1"># image_id=&quot;test_image&quot;</span>
+        <span class="c1"># label_image = load_image(Path(test_dict.mask_cell))</span>
+        <span class="c1"># im_nadh_intensity = load_image(Path(test_dict.nadh_photons))</span>
+        <span class="c1"># im_nadh_a1 = load_image(Path(test_dict.nadh_a1))</span>
+        <span class="c1"># im_nadh_a2 = None #load_image(Path(test_dict.nadh_a2))</span>
+        <span class="c1"># im_nadh_t1 = None #load_image(Path(test_dict.nadh_t1))</span>
+        <span class="c1"># im_nadh_t2 = None #load_image(Path(test_dict.nadh_t2))</span>
+        <span class="c1"># im_fad_intensity =None #load_image(Path(test_dict.fad_photons))</span>
+        <span class="c1"># im_fad_a1 = load_image(Path(test_dict.fad_a1))</span>
+        <span class="c1"># im_fad_a2 = load_image(Path(test_dict.fad_a2))</span>
+        <span class="c1"># im_fad_t1 = load_image(Path(test_dict.fad_t1))</span>
+        <span class="c1"># im_fad_t2 = load_image(Path(test_dict.fad_t2))</span>
+        <span class="c1"># im_nadh_chi = None</span>
+        <span class="c1"># other_props = None</span>
     
     <span class="n">pprint</span><span class="p">(</span><span class="n">omi_props</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">omi_props</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
