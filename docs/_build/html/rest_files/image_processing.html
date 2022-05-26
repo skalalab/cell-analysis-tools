@@ -92,6 +92,12 @@ and widely applied to many of our datasets.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.fill_and_label_rois" title="flim_tools.image_processing.fill_and_label_rois"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fill_and_label_rois</span></code></a>(curr_nuclei)</p></td>
 <td><p>Fills and labels ROI outlines using unique ints for each region.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.four_color_theorem" title="flim_tools.image_processing.four_color_theorem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">four_color_theorem</span></code></a>(mask)</p></td>
+<td><p>Converts a n-labeled image to an up to 4 color image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#flim_tools.image_processing.four_color_to_unique" title="flim_tools.image_processing.four_color_to_unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">four_color_to_unique</span></code></a>(mask[, debug])</p></td>
+<td><p>Converts an n-label image into a</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#flim_tools.image_processing.kmeans_threshold" title="flim_tools.image_processing.kmeans_threshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kmeans_threshold</span></code></a>(im, k, n_brightest_clusters)</p></td>
 <td><p>Given an image, this function will apply k-means clustering and return the mask that includes the n brightest clusters :param im: intensity image.</p></td>
 </tr>
@@ -173,6 +179,44 @@ kernel = bin_size + 1 + bin_size</p></li>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.image_processing.four_color_theorem">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">four_color_theorem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/flim_tools/image_processing/four_color_theorem/four_colors.html#four_color_theorem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.four_color_theorem" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a n-labeled image to an up to 4 color image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mask</strong> (<em>np.ndarray</em>) – labeled mask with unique rois.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>four_color_mask</strong> (<em>np.ndarray</em>) – returns a labeled image that uses up to 4 colors.</p></li>
+<li><p><strong>solution_nodes</strong> (<em>dict</em>) – dictionary of {value : color} for each unique roi value</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flim_tools.image_processing.four_color_to_unique">
+<span class="sig-prename descclassname"><span class="pre">flim_tools.image_processing.</span></span><span class="sig-name descname"><span class="pre">four_color_to_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../_modules/flim_tools/image_processing/four_color_theorem/four_color_theorem_to_unique_values.html#four_color_to_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flim_tools.image_processing.four_color_to_unique" title="Permalink to this definition"></a></dt>
+<dd><p>Converts an n-label image into a</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask</strong> (<em>np.ndarray</em>) – labeled mask.</p></li>
+<li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>optional</em>) – show output re-labeled mask. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>output_mask</strong> – Mask relabeled to have unique roi values for each connected component</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

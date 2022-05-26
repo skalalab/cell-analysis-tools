@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>flim_tools.image_processing.four_color_theorem.four_colors &mdash; flim_tools  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> flim_tools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/flim.html">Flim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/image_processing.html">Image Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/io.html">I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/morphology.html">Morphology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rest_files/visualization.html">Visualization</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">flim_tools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>flim_tools.image_processing.four_color_theorem.four_colors</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for flim_tools.image_processing.four_color_theorem.four_colors</h1><div class="highlight"><pre>
+<span></span><span class="c1"># https://python.plainenglish.io/solve-graph-coloring-problem-with-greedy-algorithm-and-python-6661ab4154bd</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="kn">import</span> <span class="nn">tifffile</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="kn">import</span> <span class="n">dilation</span><span class="p">,</span> <span class="n">disk</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">label</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<div class="viewcode-block" id="four_color_theorem"><a class="viewcode-back" href="../../../../rest_files/image_processing.html#flim_tools.image_processing.four_color_theorem">[docs]</a><span class="k">def</span> <span class="nf">four_color_theorem</span><span class="p">(</span><span class="n">mask</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a n-labeled image to an up to 4 color image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mask : np.ndarray</span>
+<span class="sd">        labeled mask with unique rois.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    four_color_mask : np.ndarray</span>
+<span class="sd">        returns a labeled image that uses up to 4 colors.</span>
+<span class="sd">    solution_nodes : dict</span>
+<span class="sd">        dictionary of {value : color} for each unique roi value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1">### Generate Agencency Matrix</span>
+    <span class="n">id_nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">mask</span><span class="p">))</span>
+    <span class="n">id_nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># remove bg</span>
+    <span class="n">dict_nodes_key_roi_value</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">dict_nodes_key_idx</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">roi_value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">id_nodes</span><span class="p">):</span>
+        <span class="n">dict_nodes_key_roi_value</span><span class="p">[</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dict_nodes_key_roi_value</span><span class="p">[</span><span class="n">roi_value</span><span class="p">][</span><span class="s1">&#39;adj_mat_idx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="n">dict_nodes_key_roi_value</span><span class="p">[</span><span class="n">roi_value</span><span class="p">][</span><span class="s1">&#39;colors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="s2">&quot;c&quot;</span><span class="p">,</span><span class="s2">&quot;m&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+        <span class="n">dict_nodes_key_idx</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">roi_value</span>
+    
+    <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">id_nodes</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">id_nodes</span><span class="p">)))</span>
+    
+    <span class="k">for</span> <span class="n">roi_value</span> <span class="ow">in</span> <span class="n">dict_nodes_key_roi_value</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="n">roi_idx</span> <span class="o">=</span> <span class="n">dict_nodes_key_roi_value</span><span class="p">[</span><span class="n">roi_value</span><span class="p">][</span><span class="s1">&#39;adj_mat_idx&#39;</span><span class="p">]</span>
+        <span class="n">mask_roi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mask</span><span class="o">==</span><span class="n">roi_value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+        <span class="c1"># plt.imshow(mask_roi)</span>
+        <span class="c1"># plt.show()</span>
+        
+        <span class="c1"># determine neighbors / degree</span>
+        <span class="c1"># dilate and overlap with labeled mask to determine neighbors</span>
+        <span class="n">mask_roi_dialated</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">mask_roi</span><span class="p">,</span> <span class="n">disk</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+        <span class="n">mask_overlap</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">*</span> <span class="n">mask_roi_dialated</span>
+        <span class="n">nodes_neighbors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">mask_overlap</span><span class="p">))</span>
+        <span class="n">nodes_neighbors</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">roi_value</span><span class="p">)</span> <span class="c1"># remove current roi</span>
+        <span class="n">nodes_neighbors</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># remove bg</span>
+        
+        <span class="c1">#  populate adgacency matrix </span>
+        <span class="k">if</span> <span class="n">nodes_neighbors</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">neighbor_value</span> <span class="ow">in</span> <span class="n">nodes_neighbors</span><span class="p">:</span>
+                <span class="n">neighbor_index</span> <span class="o">=</span> <span class="n">dict_nodes_key_roi_value</span><span class="p">[</span><span class="n">neighbor_value</span><span class="p">][</span><span class="s1">&#39;adj_mat_idx&#39;</span><span class="p">]</span>
+                <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">roi_idx</span><span class="p">][</span><span class="n">neighbor_index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">neighbor_index</span><span class="p">][</span><span class="n">roi_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                
+        <span class="c1"># dict increase degree</span>
+        <span class="n">dict_nodes_key_roi_value</span><span class="p">[</span><span class="n">roi_value</span><span class="p">][</span><span class="s1">&#39;degree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes_neighbors</span><span class="p">)</span>
+                
+    <span class="c1">### Sort dictionary by largest to smallest degree</span>
+    <span class="c1"># this will color regions with many neighbors first</span>
+    <span class="n">sorted_nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dict_nodes_key_roi_value</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;degree&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">sorted_nodes</span><span class="p">)</span>
+        
+    <span class="c1"># Main Algorithm</span>
+    <span class="n">solution_nodes</span><span class="o">=</span><span class="p">{}</span> <span class="c1"># roi_value : color</span>
+    <span class="k">for</span> <span class="n">roi_value</span> <span class="ow">in</span> <span class="n">nodes</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1"># iterate through roi_values</span>
+      <span class="k">pass</span>
+      <span class="c1"># get list of colors in current roi, choose current color for roi</span>
+      <span class="n">list_roi_colors</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">roi_value</span><span class="p">][</span><span class="s1">&#39;colors&#39;</span><span class="p">]</span>
+      <span class="n">curr_color</span> <span class="o">=</span> <span class="n">list_roi_colors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">solution_nodes</span><span class="p">[</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">=</span>  <span class="n">curr_color</span> <span class="c1"># set solutions </span>
+      
+      <span class="c1"># get adjacency matrix to compare color against neighbors</span>
+      <span class="n">adjacent_nodes</span> <span class="o">=</span> <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">roi_value</span><span class="p">][</span><span class="s1">&#39;adj_mat_idx&#39;</span><span class="p">]]</span> <span class="c1"># get adj_matrix row at this index</span>
+      
+      <span class="c1"># iterate through each row/neighbor in adj matrix</span>
+      <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">adjacent_nodes</span><span class="p">)):</span> 
+          <span class="k">pass</span>
+          <span class="c1"># if it&#39;s a neighbor and it has the color in it&#39;s list, remove it for that neighbors list</span>
+          <span class="n">adj_node_idx</span> <span class="o">=</span> <span class="n">dict_nodes_key_idx</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+          <span class="k">if</span> <span class="n">adjacent_nodes</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span> <span class="ow">and</span> <span class="p">(</span><span class="n">curr_color</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">[</span><span class="n">adj_node_idx</span><span class="p">][</span><span class="s1">&#39;colors&#39;</span><span class="p">]):</span>
+              <span class="n">nodes</span><span class="p">[</span><span class="n">adj_node_idx</span><span class="p">][</span><span class="s1">&#39;colors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">curr_color</span><span class="p">)</span>
+    
+    <span class="c1"># create array to store solution</span>
+    <span class="n">four_color_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    
+    <span class="c1"># convert from color to an intensity value for each color</span>
+    <span class="k">for</span> <span class="n">roi_value</span> <span class="ow">in</span> <span class="n">solution_nodes</span><span class="p">:</span>
+        <span class="k">pass</span>
+        <span class="c1"># convert color to intensity</span>
+        <span class="k">if</span> <span class="n">solution_nodes</span><span class="p">[</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span> <span class="p">:</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="k">elif</span> <span class="n">solution_nodes</span><span class="p">[</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;c&#39;</span> <span class="p">:</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">100</span> 
+        <span class="k">elif</span> <span class="n">solution_nodes</span><span class="p">[</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span> <span class="p">:</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">150</span> 
+        <span class="k">elif</span> <span class="n">solution_nodes</span><span class="p">[</span><span class="n">roi_value</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span> <span class="p">:</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">255</span> 
+    
+        <span class="c1"># change roi color to value</span>
+        <span class="n">four_color_mask</span><span class="p">[</span><span class="n">mask</span> <span class="o">==</span> <span class="n">roi_value</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="k">return</span> <span class="n">four_color_mask</span><span class="p">,</span> <span class="n">solution_nodes</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">path_mask</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mask.tiff&#39;</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path_mask</span><span class="p">)</span>
+    <span class="n">four_color_mask</span><span class="p">,</span> <span class="n">dict_solution</span> <span class="o">=</span> <span class="n">four_color_theorem</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    
+    <span class="c1">## Display image</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;original mask </span><span class="se">\n</span><span class="s2"> unique rois: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">mask</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;four color mask </span><span class="se">\n</span><span class="s2"> unique rois: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">four_color_mask</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">four_color_mask</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">four_color_mask</span><span class="p">)</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Skala Lab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

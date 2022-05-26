@@ -82,8 +82,6 @@ if __name__ == "__main__":
 
     mask = tifffile.imread("mask.tiff")
 
-
-
     # plt.imshow(mask)
     mask_fc , _ = four_color_theorem(mask)
     mask_unique = four_color_to_unique(mask_fc)
