@@ -52,7 +52,7 @@ def regionprops_omi(
         im_nadh_t2 : ndarray
             nadh tau 2 lifetime, long.
         im_fad_intensity : ndarray
-            nadh intensty image. 
+            nadh intensity image. 
         im_fad_a1 : ndarray
             fad alpha 1 image. 
         im_fad_a2 : ndarray

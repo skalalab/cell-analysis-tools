@@ -91,13 +91,13 @@ if __name__ == "__main__":
     list_dist_params = [
        #(mean, std)
         (20,4),
-        (20,6),
-        (20,10),
-        (20,10),
-        # (20,4),
+        # (20,6),
+        # (20,10),
+        # (20,10),
+        (20,4),
         # (30,6),
-        # (50,20),
-        # (50,10),
+        (50,20),
+        (50,10),
         ]
     
     # list_dist_params = [
@@ -110,7 +110,8 @@ if __name__ == "__main__":
     
     for dist_params in list_dist_params:
         pass
-        dist = norm(loc=dist_params[0], scale=dist_params[1])
+        mean, sigma = dist_params
+        dist = norm(loc=mean, scale=sigma)
         list_distributions.append(dist)
         dist_all = dist_all + dist.pdf(x)
     
@@ -164,7 +165,6 @@ if __name__ == "__main__":
         list_fit_dist = [np.asarray(all_data[labels == label]).flatten() for label in np.unique(labels)]
         
         ## GAUSSIAN MIXTURE MODEL
-        
         # plt.title(f"histogram of fit data | fixed GMM | components: {len(np.unique(labels))}")
         # for list_data in list_fit_dist:
         #     plt.hist(list_data, bins=100, histtype='step', label=f'mean: {np.mean(list_data):.3f} | weight:{(len(list_data)/len(all_data)):.2f}')
