@@ -1,8 +1,6 @@
 import numpy as np
 from pathlib import Path
 from flim_tools.io import load_sdt_file
-from flim_tools.visualization import compare_images
-import scipy.ndimage as ndi
 import matplotlib.pylab as plt
 import matplotlib as mpl
 

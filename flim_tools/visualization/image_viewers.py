@@ -1,9 +1,6 @@
 import matplotlib.pylab as plt
 import matplotlib as mpl
-
 mpl.rcParams["figure.dpi"] == 300
-import matplotlib.pylab as plt
-
 from flim_tools.image_processing import normalize
 from flim_tools.metrics import dice, total_error
 from skimage.color import label2rgb
@@ -30,7 +27,7 @@ def image_show(image):
     return fig, ax
 
 
-def compare_images(im1, title1, im2, title2, figsize=(10, 5))->None:
+def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5))->None:
     """
      
         Parameters
@@ -52,6 +49,7 @@ def compare_images(im1, title1, im2, title2, figsize=(10, 5))->None:
     
     """
     fig, ax = plt.subplots(1, 2, figsize=figsize)
+    if suptitle: fig.suptitle(suptitle)
     ax[0].title.set_text(title1)
     ax[0].imshow(im1)
     ax[0].set_axis_off()
