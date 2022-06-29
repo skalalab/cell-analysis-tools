@@ -1,10 +1,11 @@
-from read_roi import read_roi_zip
+import zipfile
+
+import numpy
+import numpy as np
 import tifffile
 from matplotlib import pyplot as plt
-import numpy as np
-import numpy
+from read_roi import read_roi_zip
 from skimage.draw import polygon2mask
-import zipfile
 
 
 def load_sdt_file(file_path):

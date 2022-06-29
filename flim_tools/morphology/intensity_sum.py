@@ -1,6 +1,7 @@
 import numpy as np
 from numpy.ma import masked_array
 
+
 def intensity_sum(roi, im_itensity):
     """The sum of the pixel intensities within the segmented region.
     """

@@ -1,20 +1,16 @@
-import numpy as np
-import tifffile
-from pathlib import Path
-from matplotlib import pyplot as plt
-
 import re
+from pathlib import Path
+
 import numpy
-
-
+import numpy as np
 import numpy.ma as ma
 import pandas as pd
-
+import tifffile
+from matplotlib import pyplot as plt
 from skimage.measure import label, regionprops
 
-from flim_tools.io import load_sdt
 from flim_tools.image_processing import normalize
-
+from flim_tools.io import load_sdt
 
 #%%
 
@@ -23,7 +19,9 @@ def aggregate_2d_roi(mask, im, debug=False):
 
     pass
 
+
 #%%  CREATE DICTIONARY OF FILE PATHS
+
 
 def _validate_file_found(results):
 

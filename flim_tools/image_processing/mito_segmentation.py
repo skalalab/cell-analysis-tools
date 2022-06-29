@@ -1,19 +1,19 @@
 from pathlib import Path
-import tifffile
-import matplotlib.pylab as plt
-import matplotlib as mpl
-mpl.rcParams["figure.dpi"] = 300
-import numpy as np
 
+import matplotlib as mpl
+import matplotlib.pylab as plt
+import tifffile
+
+mpl.rcParams["figure.dpi"] = 300
+import re
+
+import numpy as np
+from scipy.ndimage import grey_dilation, grey_erosion
+from skimage import morphology
 from sklearn.model_selection import ParameterGrid
 
-from flim_tools.image_processing import kmeans_threshold, normalize, bin_im
+from flim_tools.image_processing import bin_im, kmeans_threshold, normalize
 from flim_tools.metrics import dice
-
-from skimage import morphology
-
-from scipy.ndimage import grey_erosion, grey_dilation
-import re
 
 if __name__ == "__main__":
 

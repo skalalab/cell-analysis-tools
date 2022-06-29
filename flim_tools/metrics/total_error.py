@@ -1,4 +1,5 @@
 import numpy as np
+
 from .helper import _validate_array_and_make_bool
 
 

@@ -1,10 +1,12 @@
-import matplotlib.pylab as plt
 import matplotlib as mpl
+import matplotlib.pylab as plt
+
 mpl.rcParams["figure.dpi"] == 300
+import numpy as np
+from skimage.color import label2rgb
+
 from flim_tools.image_processing import normalize
 from flim_tools.metrics import dice, total_error
-from skimage.color import label2rgb
-import numpy as np
 
 
 def image_show(image):
@@ -27,7 +29,7 @@ def image_show(image):
     return fig, ax
 
 
-def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5))->None:
+def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5)) -> None:
     """
      
         Parameters
@@ -49,7 +51,8 @@ def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5))->No
     
     """
     fig, ax = plt.subplots(1, 2, figsize=figsize)
-    if suptitle: fig.suptitle(suptitle)
+    if suptitle:
+        fig.suptitle(suptitle)
     ax[0].title.set_text(title1)
     ax[0].imshow(im1)
     ax[0].set_axis_off()
@@ -58,11 +61,11 @@ def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5))->No
     ax[1].imshow(im2)
     ax[1].set_axis_off()
     plt.show()
-    
-def compare_orig_mask_gt_pred(im : np.ndarray, 
-                              mask_gt : np.ndarray, 
-                              mask_pred : np.ndarray, 
-                              title : str="") -> None:
+
+
+def compare_orig_mask_gt_pred(
+    im: np.ndarray, mask_gt: np.ndarray, mask_pred: np.ndarray, title: str = ""
+) -> None:
     """
     Simple function for comparing oringal image and ground truth image
 
@@ -86,10 +89,7 @@ def compare_orig_mask_gt_pred(im : np.ndarray,
     """
     alpha = 0.5
     im_overlay = label2rgb(
-        mask_pred, normalize(im), 
-        bg_label=0, 
-        alpha=alpha, 
-        image_alpha=1, kind="overlay"
+        mask_pred, normalize(im), bg_label=0, alpha=alpha, image_alpha=1, kind="overlay"
     )
 
     fig, ax = plt.subplots(2, 3, figsize=(10, 7))
@@ -127,7 +127,6 @@ def compare_orig_mask_gt_pred(im : np.ndarray,
     plt.show()
 
 
-
 if __name__ == "__main__":
 
     import numpy as np
@@ -141,4 +140,3 @@ if __name__ == "__main__":
     # im_gt = np.round(im_orig)
 
     # compare_orig_mask_gt_pred(im_orig, im_gt, im_orig,"comparing originals")
-

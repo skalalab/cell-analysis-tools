@@ -1,13 +1,13 @@
-from read_roi import read_roi_zip
+import codecs
+import re
+from pathlib import Path
+
+import numpy
+import numpy as np
 import tifffile
 from matplotlib import pyplot as plt
-import numpy as np
-import re
-import numpy
+from read_roi import read_roi_zip
 from skimage.draw import polygon2mask
-import codecs
-from pathlib import Path
-import re
 
 
 def read_asc(path):
@@ -33,7 +33,6 @@ def read_asc(path):
 
 
 if __name__ == "__main__":
-
 
     ### test loading ASC files
     test_files = Path("./test_files")

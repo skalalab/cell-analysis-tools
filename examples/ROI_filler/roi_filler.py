@@ -1,10 +1,11 @@
-import tifffile
 from pathlib import Path
-from ipywidgets import Box
-import ipywidgets as widgets
-import scipy.ndimage as ndi
 from tkinter import Tk
 from tkinter.filedialog import askdirectory
+
+import ipywidgets as widgets
+import scipy.ndimage as ndi
+import tifffile
+from ipywidgets import Box
 
 from flim_tools.image_processing import fill_and_label_rois
 

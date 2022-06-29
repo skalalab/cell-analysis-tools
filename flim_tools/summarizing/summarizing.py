@@ -1,9 +1,10 @@
-from read_roi import read_roi_zip
+import numpy
+import numpy as np
 import tifffile
 from matplotlib import pyplot as plt
-import numpy as np
-import numpy
+from read_roi import read_roi_zip
 from skimage.draw import polygon2mask
+
 
 # given a list of ROIs returns a mask
 def create_mask_from_rois(rois_vert):
@@ -80,5 +81,3 @@ def refined_roi_sets(roi_sets, masks):
             image_rois.append(mask * roi)
         new_roi_sets.append(image_rois)
     return new_roi_sets
-
-

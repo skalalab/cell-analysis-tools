@@ -4,12 +4,11 @@
 
 # Imports
 
-import tifffile
-import numpy as np
-import matplotlib.pyplot as plt
-from skimage.color import rgb2gray as _rgb2gray
-
 import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+import tifffile
+from skimage.color import rgb2gray as _rgb2gray
 
 mpl.rcParams["figure.dpi"] = 300
 

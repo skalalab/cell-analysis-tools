@@ -1,7 +1,8 @@
-from sklearn.cluster import KMeans
-import numpy as np
 import matplotlib.pylab as plt
-from flim_tools.image_processing import normalize
+import numpy as np
+from sklearn.cluster import KMeans
+
+from .normalize import normalize
 
 
 def kmeans_threshold(im, k, n_brightest_clusters, show_image=False):

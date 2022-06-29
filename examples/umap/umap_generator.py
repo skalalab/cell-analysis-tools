@@ -1,48 +1,54 @@
 #%% UMAP Coordinate calculations
 
-#Loads in all required dependencies
+# Loads in all required dependencies
+from pathlib import Path
+
+import matplotlib as mpl
+import matplotlib.pylab as plt
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import umap
-from sklearn.preprocessing import StandardScaler
-import matplotlib.pyplot as plt
 import seaborn as sns
+import umap
+
 # import pandas as pd
 from sklearn.model_selection import ParameterGrid
-from pathlib import Path
+from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
 
-import matplotlib.pylab as plt
-import matplotlib as mpl
 mpl.rcParams["figure.dpi"] = 300
-plt.imshow(np.zeros((512,512)))
+plt.imshow(np.zeros((512, 512)))
 plt.show()
 #%% From Tiffany
-# I asked how to select clusters that aren't "forced"  
+# I asked how to select clusters that aren't "forced"
 
-# My assessment of “real” vs. “forced” clustering more comes from biological 
-# understanding of the data and the resolution/sensitivity of the measurements. 
+# My assessment of “real” vs. “forced” clustering more comes from biological
+# understanding of the data and the resolution/sensitivity of the measurements.
 # For our OMI data, a more conservative approach is typically needed to avoid overfitting the data.
 #  That’s why I’m normally more conservative on the selection of the min_dist parameter (esp over the default = 0.1).
 #  Also since the UMAP projection actually preserves some meaning about how similar data points
-#  are in the separation of clusters, I think it is somewhat informative to evaluate 
-#  when testing parameters. If it’s pretty well separated even at more conservative 
+#  are in the separation of clusters, I think it is somewhat informative to evaluate
+#  when testing parameters. If it’s pretty well separated even at more conservative
 #  min_dist values, I’d be more confident in that clustering. I think a more analytical
-#  approach explanation can be found here: https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668 . 
- 
-# In general, I find UMAP is better as a way to qualitatively inform on 
+#  approach explanation can be found here: https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668 .
+
+# In general, I find UMAP is better as a way to qualitatively inform on
 # how the data represents/stratifies your experimental conditions. Then follow that
 #  up with a more quantitative evaluation of your group (discriminant analysis, classification approaches).
-#  But those may just be my own cautious biases :) 
+#  But those may just be my own cautious biases :)
 
 #%% LOAD AND SELECT DATA
 
 analysis_type = "whole_cell"
 # analysis_type = "nuclei"
-path_analysis = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-analysis")
+path_analysis = Path(
+    r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-analysis"
+)
 filename = f"2022_02_28_{analysis_type}_all_props.csv"
 
-base_path_output = Path(r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-figures")
+base_path_output = Path(
+    r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-figures"
+)
 
 path_figures = base_path_output / analysis_type / "umap"
 path_figures.mkdir(exist_ok=True)
@@ -52,20 +58,20 @@ df_redox_ratio = pd.read_csv(path_analysis / filename)
 # df_redox_ratio.iloc[:,35]
 
 list_omi_parameters = [
-    'nadh_intensity_mean',
-    'nadh_a1_mean',  
-    'nadh_a2_mean',
-    'nadh_t1_mean',  
-    'nadh_t2_mean',
-    'nadh_tau_mean_mean', 
-    'fad_intensity_mean',  
-    'fad_a1_mean',
-    'fad_a2_mean',  
-    'fad_t1_mean',
-    'fad_t2_mean',  
-    'fad_tau_mean_mean',
-    'redox_ratio_mean'
-    ]
+    "nadh_intensity_mean",
+    "nadh_a1_mean",
+    "nadh_a2_mean",
+    "nadh_t1_mean",
+    "nadh_t2_mean",
+    "nadh_tau_mean_mean",
+    "fad_intensity_mean",
+    "fad_a1_mean",
+    "fad_a2_mean",
+    "fad_t1_mean",
+    "fad_t2_mean",
+    "fad_tau_mean_mean",
+    "redox_ratio_mean",
+]
 
 # df_data = df_redox_ratio[df_redox_ratio["treatment"] == "0-control"]
 
@@ -89,118 +95,126 @@ path_figures_exp.mkdir(exist_ok=True)
 
 #%%
 
-for cell_line in list_cell_lines[:]: #iterate throug the cell lines
+for cell_line in list_cell_lines[:]:  # iterate throug the cell lines
     pass
 
-    dict_params = list(ParameterGrid(
-        {
-            "metric" : ["euclidean", "cosine", "manhattan"],
-            "n_neighbors" : np.arange(15,100,step=20),
-            "min_dist" : np.arange(0.1,1.0, step=0.3)
-         }
-        )   
+    dict_params = list(
+        ParameterGrid(
+            {
+                "metric": ["euclidean", "cosine", "manhattan"],
+                "n_neighbors": np.arange(15, 100, step=20),
+                "min_dist": np.arange(0.1, 1.0, step=0.3),
+            }
+        )
     )
-    
+
     ## make dirs for this cell line
     path_figures_cell_line = path_figures_exp / f"{cell_line}"
     path_figures_cell_line.mkdir(exist_ok=True)
-    
+
     df_data = df_exp_subset[df_exp_subset["cell_line"] == cell_line]
-    
+
     data = df_data[list_omi_parameters].values
     scaled_data = StandardScaler().fit_transform(data)
-    ##%% FIT UMAP 
-    
-    
+    ##%% FIT UMAP
+
     for params in tqdm(dict_params):
         pass
         # reducer = umap.UMAP()
         reducer = umap.UMAP(
-                # n_neighbors=15,
-                # min_dist=0.1,   
-                # metric='euclidean',
-                n_neighbors=params["n_neighbors"],
-                min_dist=params["min_dist"],   
-                metric=params["metric"],
-                n_components=2,
-                random_state=0
-            )
-        
+            # n_neighbors=15,
+            # min_dist=0.1,
+            # metric='euclidean',
+            n_neighbors=params["n_neighbors"],
+            min_dist=params["min_dist"],
+            metric=params["metric"],
+            n_components=2,
+            random_state=0,
+        )
+
         fit_umap = reducer.fit(scaled_data)
-        ##%% PLOT UMAP 
-        
+        ##%% PLOT UMAP
+
         import holoviews as hv
+
         hv.extension("bokeh")
         from holoviews import opts
+
         # import hvplot.pandas
-        
+
         ## additional params
         hover_vdim = "base_name"
-        legend_entries = "treatment" # "cell_line"
-        
+        legend_entries = "treatment"  # "cell_line"
+
         ########
         df_data = df_data.copy()
-        df_data["umap_x"] = fit_umap.embedding_[:,0]
-        df_data["umap_y"] = fit_umap.embedding_[:,1]
-        
+        df_data["umap_x"] = fit_umap.embedding_[:, 0]
+        df_data["umap_y"] = fit_umap.embedding_[:, 1]
+
         kdims = ["umap_x"]
         vdims = ["umap_y", hover_vdim]
         list_entries = np.unique(df_data[legend_entries])
-        
-        umap_parameters =   f"masks: {analysis_type} | " \
-                            f"metric: {reducer.metric} | " \
-                            f"n_neighbors: {reducer.n_neighbors} | " \
-                            f"distance: {reducer.min_dist:.2f} | " \
-                            f"{filename_id}"
-                            
-        scatter_umaps = [hv.Scatter(df_data[df_data[legend_entries] == entry], kdims=kdims, 
-                                    vdims=vdims, label=entry) for entry in list_entries]
-        
+
+        umap_parameters = (
+            f"masks: {analysis_type} | "
+            f"metric: {reducer.metric} | "
+            f"n_neighbors: {reducer.n_neighbors} | "
+            f"distance: {reducer.min_dist:.2f} | "
+            f"{filename_id}"
+        )
+
+        scatter_umaps = [
+            hv.Scatter(
+                df_data[df_data[legend_entries] == entry],
+                kdims=kdims,
+                vdims=vdims,
+                label=entry,
+            )
+            for entry in list_entries
+        ]
+
         overlay = hv.Overlay(scatter_umaps)
         overlay.opts(
             opts.Scatter(
-                
-                tools=["hover"],
-                muted_alpha=0,
-                aspect="equal",
-                width=1600, 
-                height=800),
+                tools=["hover"], muted_alpha=0, aspect="equal", width=1600, height=800
+            ),
             opts.Overlay(
                 title=f"UMAP | {cell_line} \n {umap_parameters}",
                 legend_opts={"click_policy": "hide"},
-                legend_position='right'
-                )       
-            )
-    
-                                  
-        filename=f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist:.2f}"
-    
-        #holoviews
-        hv.save(overlay, path_figures_cell_line / f"umap_{filename}_{filename_id}_{cell_line}.html" )
+                legend_position="right",
+            ),
+        )
+
+        filename = f"{analysis_type}_metric_{reducer.metric}_nneighbors_{reducer.n_neighbors}_mindist_{reducer.min_dist:.2f}"
+
+        # holoviews
+        hv.save(
+            overlay,
+            path_figures_cell_line / f"umap_{filename}_{filename_id}_{cell_line}.html",
+        )
 
 #%%
-    # hvplot
-    # overlay = df_data.hvplot.scatter(x='umap_x', y='umap_y', 
-    #                                   by=legend_entries, 
-    #                                   s=10,
-    #                                   title=f"{cell_line}  |  {filename}",
-    #                                   aspect="equal",
-    #                                   hover_cols=["base_name",
-    #                                               "treatment",
-    #                                               "cell_line",
-    #                                               "media"]
-    #                                   ).opts(
-    #                                                     width=1600, 
-    #                                                     height=800,
-    #                                                     # aspect="equal",
-    #                                                     legend_opts={"click_policy": "hide"},                                                    
-    #     )
-                        
-    # hvplot.save(overlay, path_figures / f"umap_{filename}_{filename_id}_{cell_line}_hvplot.html")
+# hvplot
+# overlay = df_data.hvplot.scatter(x='umap_x', y='umap_y',
+#                                   by=legend_entries,
+#                                   s=10,
+#                                   title=f"{cell_line}  |  {filename}",
+#                                   aspect="equal",
+#                                   hover_cols=["base_name",
+#                                               "treatment",
+#                                               "cell_line",
+#                                               "media"]
+#                                   ).opts(
+#                                                     width=1600,
+#                                                     height=800,
+#                                                     # aspect="equal",
+#                                                     legend_opts={"click_policy": "hide"},
+#     )
+
+# hvplot.save(overlay, path_figures / f"umap_{filename}_{filename_id}_{cell_line}_hvplot.html")
 
 
-
-    #%% PLOT UMAP EMBEDDINGS DATA 
+#%% PLOT UMAP EMBEDDINGS DATA
 
 # umap_embeddings = reducer.fit_transform(data)
 
@@ -219,32 +233,31 @@ for cell_line in list_cell_lines[:]: #iterate throug the cell lines
 #     sns.scatterplot(umap_points[:,0], umap_points[:,1], hue=list(labels), alpha=0.5)
 # if n_components == 3: #plot in 3d
 #     ax = fig.add_subplot(111, projection='3d')
-#     ax.scatter(umap_points[:,0], umap_points[:,1], 
-#                umap_points[:,2], 
+#     ax.scatter(umap_points[:,0], umap_points[:,1],
+#                umap_points[:,2],
 #                c=[sns.color_palette()[x] for x in labels.map({"SCM":0, "nonSCM":1})], s=100)
 # plt.legend(loc="upper right", prop={'size': 16})
 # plt.title(title, fontsize=18)
 # plt.show()
 
 
-
-#%% OPTIONAL GENERATE MULTIPLE UMAPS 
+#%% OPTIONAL GENERATE MULTIPLE UMAPS
 # n_neighbors: captures local vs global features. Small n local, large n global. Range 1-200
 # min_dist: how closely points are allowed to pack together. Range 0-.99
 # n_components: 1 2 or 3d plot
 # metric: distance metric between data
 
 # param_grid = {
-#     "n_neighbors":  [10], # [2, 5, 10, 20, 50, 100, 200], 
+#     "n_neighbors":  [10], # [2, 5, 10, 20, 50, 100, 200],
 #     "metric": [
-#                 "euclidean", ##### aka l2,  straight line 
+#                 "euclidean", ##### aka l2,  straight line
 #                 "manhattan", ##### aka l1, block by block
 #                 "chebyshev", ##### chessboard distance (8 degrees of movement but only one space at a time (King))
 #                 # # # # # "minkowski", # generalization of both the Euclidean distance and the Manhattan distance
 #                 "canberra", ##### weighted version of L1 (Manhattan) distance
 #                 # # "braycurtis",
 #                 # ### "haversine", # error when running
-#                 # ### "mahalanobis", # error when running 
+#                 # ### "mahalanobis", # error when running
 #                 # # "wminkowski",
 #                 # ### "seuclidean", # error when running - division by zero
 #                 "cosine",
@@ -269,8 +282,8 @@ for cell_line in list_cell_lines[:]: #iterate throug the cell lines
 #     print(f"parameters: {n}")
 #     returned_umap = draw_umap(scaled_data_umap, n_neighbors=n['n_neighbors'], \
 #               metric=n['metric'], n_components=2, min_dist=0.3, \
-#                   title=f'parameters = {n}', labels=labels, random_state=0)  
-        
+#                   title=f'parameters = {n}', labels=labels, random_state=0)
+
 #%% UMAP documentation Penguin
 # https://umap-learn.readthedocs.io/en/latest/basic_usage.html#penguin-data
 # import numpy as np
@@ -323,5 +336,5 @@ if __file__ == "__main__":
     pass
 
     # load data
-    # setup reducer 
+    # setup reducer
     # plot data

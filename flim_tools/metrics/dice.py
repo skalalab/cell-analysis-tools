@@ -1,5 +1,6 @@
-from .helper import _validate_array_and_make_bool
 import numpy as np
+
+from .helper import _validate_array_and_make_bool
 
 
 # https://gist.github.com/brunodoamaral/e130b4e97aa4ebc468225b7ce39b3137

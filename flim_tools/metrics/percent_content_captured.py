@@ -1,7 +1,9 @@
 import numpy as np
 from scipy.spatial.distance import directed_hausdorff
-from .helper import _validate_array_and_make_bool
+
 from flim_tools.metrics import dice
+
+from .helper import _validate_array_and_make_bool
 
 
 def percent_content_captured(mask_a, mask_b):

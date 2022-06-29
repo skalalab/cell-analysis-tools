@@ -1,5 +1,6 @@
-from scipy import ndimage
 import numpy as np
+from scipy import ndimage
+
 
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.distance_transform_edt.html#scipy.ndimage.distance_transform_edt
 def radius_max(roi, return_index=False):
@@ -75,12 +76,12 @@ def radius_median(roi):
 
 if __name__ == "__main__":
 
-    import matplotlib.pylab as plt
     import matplotlib as mpl
+    import matplotlib.pylab as plt
 
     mpl.rcParams["figure.dpi"] = 300
-    from skimage.morphology import disk
     import numpy as np
+    from skimage.morphology import disk
 
     roi = disk(20)
     plt.imshow(roi)

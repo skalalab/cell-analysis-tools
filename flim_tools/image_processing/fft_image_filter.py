@@ -1,13 +1,12 @@
 from time import time
-import numpy as np
-from numpy.fft import fft2, fftshift, ifft2, ifft, ifftshift
-from numpy import ones
-
-from skimage.morphology import disk
-from PIL import Image
-import matplotlib.pylab as plt
 
 import matplotlib as mpl
+import matplotlib.pylab as plt
+import numpy as np
+from numpy import ones
+from numpy.fft import fft2, fftshift, ifft, ifft2, ifftshift
+from PIL import Image
+from skimage.morphology import disk
 
 mpl.rcParams["figure.dpi"] = 300
 
@@ -81,13 +80,11 @@ def remove_horizontal_vertical_edges(im, disk_size=20, debug=False):
 
 if __name__ == "__main__":
 
-    im = Image.open(
-        r"scaffold.png".replace("\\", "/")
-    )
+    im = Image.open(r"scaffold.png".replace("\\", "/"))
     im = np.asarray(im)
 
     # plt.imshow(im)
     im = im.sum(axis=2)
-    im = im[:,:1018]
+    im = im[:, :1018]
     print(im.shape)
     im_filtered = remove_horizontal_vertical_edges(im, debug=True)

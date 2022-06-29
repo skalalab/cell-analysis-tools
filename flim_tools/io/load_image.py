@@ -1,11 +1,14 @@
-from typing import Union
-from .read_asc import read_asc
-import numpy as np
 import pathlib
 from pathlib import Path
+from typing import Union
+
+import numpy as np
 import tifffile
 
-def load_image(path : Union[str, pathlib.PurePath])-> np.ndarray:
+from .read_asc import read_asc
+
+
+def load_image(path: Union[str, pathlib.PurePath]) -> np.ndarray:
     """
     Detects the extension and loads image accordingly
     if its a tif/tiff or an asc

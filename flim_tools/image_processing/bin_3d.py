@@ -1,8 +1,10 @@
-import numpy as np
 from pathlib import Path
-from flim_tools.io import load_sdt_file
-import matplotlib.pylab as plt
+
 import matplotlib as mpl
+import matplotlib.pylab as plt
+import numpy as np
+
+from flim_tools.io import load_sdt_file
 
 mpl.rcParams["figure.dpi"] = 300
 
