@@ -29,7 +29,7 @@ def image_show(image):
     return fig, ax
 
 
-def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5)) -> None:
+def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5), save_path=None) -> None:
     """
      
         Parameters
@@ -60,6 +60,8 @@ def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5)) -> 
     ax[1].title.set_text(title2)
     ax[1].imshow(im2)
     ax[1].set_axis_off()
+    if save_path:
+        plt.savefig(save_path, bbox_inches='tight')
     plt.show()
 
 
