@@ -49,14 +49,3 @@ The algorithm takes in a dictionary of paths pointing to the various tiffs that 
             "chisq" : path_chisq,
             }
 
-Below are some sections that will need to be modified (links are to github code lines):
-
-* [Dictionary format, depending on your input images various images (t1, t2, sdt, etc)](https://github.com/emmanuel-contreras/skala_lab/blob/36a06f69401a2f87e570f8f8c1d2c9c482abeaac/tools%20and%20utilities/flim_tools/main.py#L162[…]L174)
-
-* [Path to dataset and output path ](https://github.com/emmanuel-contreras/skala_lab/blob/36a06f69401a2f87e570f8f8c1d2c9c482abeaac/tools%20and%20utilities/flim_tools/main.py#L48-L49)
-
-* [Select mask to use for summary](https://github.com/emmanuel-contreras/skala_lab/blob/36a06f69401a2f87e570f8f8c1d2c9c482abeaac/tools%20and%20utilities/flim_tools/main.py#L191[…]L192)
-
-* [sdt image dimensions and which channel to use](https://github.com/emmanuel-contreras/skala_lab/blob/36a06f69401a2f87e570f8f8c1d2c9c482abeaac/tools%20and%20utilities/flim_tools/main.py#L215[…]L218)
-
-* [Output filename! (or it will overwrite it every run)](https://github.com/emmanuel-contreras/skala_lab/blob/36a06f69401a2f87e570f8f8c1d2c9c482abeaac/tools%20and%20utilities/flim_tools/main.py#L304[…]L305)
