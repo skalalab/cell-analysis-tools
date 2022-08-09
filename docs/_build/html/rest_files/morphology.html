@@ -72,8 +72,69 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="morphology">
-<h1>Morphology<a class="headerlink" href="#morphology" title="Permalink to this headline"></a></h1>
+  <section id="module-cell_analysis_tools.morphology">
+<span id="morphology"></span><h1>Morphology<a class="headerlink" href="#module-cell_analysis_tools.morphology" title="Permalink to this headline"></a></h1>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cell_analysis_tools.morphology.fractal_dimension_gray" title="cell_analysis_tools.morphology.fractal_dimension_gray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fractal_dimension_gray</span></code></a>(roi, intensity[, ...])</p></td>
+<td><p>Computes the fractal dimenison based on the differential box counting method</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cell_analysis_tools.morphology.regionprops" title="cell_analysis_tools.morphology.regionprops"><code class="xref py py-obj docutils literal notranslate"><span class="pre">regionprops</span></code></a>(label_image[, intensity_image])</p></td>
+<td><p>Extended regionprops function adding our own props</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="cell_analysis_tools.morphology.fractal_dimension_gray">
+<span class="sig-prename descclassname"><span class="pre">cell_analysis_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">fractal_dimension_gray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'standard'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cell_analysis_tools/morphology/fractal_dimension/fractal_dim_gray.html#fractal_dimension_gray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cell_analysis_tools.morphology.fractal_dimension_gray" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the fractal dimenison based on the differential box counting method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>roi</strong> (<em>ndarray</em>) – labels image.</p></li>
+<li><p><strong>intensity</strong> (<em>ndarray</em>) – intensity image .</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Choose the differential box counting method
+“Standard” will keep intensities in place
+“Shifting” will begin box counting method with bottom of
+first box at the min grayscale value. The default is “standard”.</p></li>
+<li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show debugging in formation. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>D</strong> – fractal dimension.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cell_analysis_tools.morphology.regionprops">
+<span class="sig-prename descclassname"><span class="pre">cell_analysis_tools.morphology.</span></span><span class="sig-name descname"><span class="pre">regionprops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/cell_analysis_tools/morphology/regionprops.html#regionprops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cell_analysis_tools.morphology.regionprops" title="Permalink to this definition"></a></dt>
+<dd><p>Extended regionprops function adding our own props</p>
+<p>To see a complete docstring for this function see regionprops skimage.</p>
+<p class="rubric">Notes</p>
+<p>Additional properties that can be accessed as attributes or keys:</p>
+<dl class="simple">
+<dt><strong>radius_max</strong><span class="classifier">float</span></dt><dd><p>The maximum distance of any pixel in the segmented region to the closest background pixel.</p>
+</dd>
+<dt><strong>radius_mean</strong><span class="classifier">float</span></dt><dd><p>Mean value the distances of all pixels in the segmented region to their closest background pixel.</p>
+</dd>
+<dt><strong>radius_median</strong><span class="classifier">float</span></dt><dd><p>Median value the distances of all pixels in the segmented region to their closest background pixel.</p>
+</dd>
+<dt><strong>intensity_sum</strong></dt><dd><p>The sum of the pixel intensities within the segmented region.</p>
+</dd>
+<dt><strong>fractal_dimension</strong><span class="classifier">float</span></dt><dd><p>Fractal dimension, differential box counting method implementation</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

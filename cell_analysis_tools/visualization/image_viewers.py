@@ -5,8 +5,8 @@ mpl.rcParams["figure.dpi"] == 300
 import numpy as np
 from skimage.color import label2rgb
 
-from flim_tools.image_processing import normalize
-from flim_tools.metrics import dice, total_error
+from cell_analysis_tools.image_processing import normalize
+from cell_analysis_tools.metrics import dice, total_error
 
 
 def image_show(image):
