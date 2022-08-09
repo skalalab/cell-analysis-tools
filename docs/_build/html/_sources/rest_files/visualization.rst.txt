@@ -1,7 +1,7 @@
 Visualization
 -------------
 
-.. automodule:: flim_tools.visualization
+.. automodule:: cell_analysis_tools.visualization
     :members:
     :autosummary:
     
