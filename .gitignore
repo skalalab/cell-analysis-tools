@@ -27,3 +27,5 @@ flim_tools/io/__pycache__/*
 .vscode/settings.json
 examples/regionprops_omi/outputs/summary/*
 cell_analysis_tools.egg-info/*
+build/*
+dist/*
