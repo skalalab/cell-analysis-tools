@@ -12,8 +12,8 @@ from scipy.ndimage import grey_dilation, grey_erosion
 from skimage import morphology
 from sklearn.model_selection import ParameterGrid
 
-from flim_tools.image_processing import bin_im, kmeans_threshold, normalize
-from flim_tools.metrics import dice
+from cell_analysis_tools.image_processing import bin_im, kmeans_threshold, normalize
+from cell_analysis_tools.metrics import dice
 
 if __name__ == "__main__":
 

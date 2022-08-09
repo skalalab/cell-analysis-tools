@@ -9,8 +9,8 @@ import tifffile
 from skimage.measure import regionprops
 from skimage.morphology import label
 
-from flim_tools.image_processing import normalize
-from flim_tools.io import read_asc
+from cell_analysis_tools.image_processing import normalize
+from cell_analysis_tools.io import read_asc
 
 mpl.rcParams["figure.dpi"] = 300
 import math

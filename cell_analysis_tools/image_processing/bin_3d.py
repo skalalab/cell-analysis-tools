@@ -4,7 +4,7 @@ import matplotlib as mpl
 import matplotlib.pylab as plt
 import numpy as np
 
-from flim_tools.io import load_sdt_file
+from cell_analysis_tools.io import load_sdt_file
 
 mpl.rcParams["figure.dpi"] = 300
 

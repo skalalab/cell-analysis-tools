@@ -4,7 +4,7 @@ import matplotlib.pylab as plt
 import numpy as np
 import tifffile
 
-from flim_tools.image_processing import (
+from cell_analysis_tools.image_processing import (
     bin_2d,
     bin_3d,
     fill_and_label_rois,
@@ -41,10 +41,7 @@ class TestImageProcessing:
     im_kmeans_threshold = tifffile.imread(path_kmeans_threshold)
 
     # GENERATE TEST IMAGES
-    path_resources = Path(
-        r"C:\Users\econtrerasguzman\Desktop\development\flim_tools\pytest\unit\resources"
-    )
-
+    
     im_gt_kmeans = kmeans_threshold(im_2d, k=6, n_brightest_clusters=1)
     tifffile.imwrite(path_resources / "kmeans_threshold.tiff", im_gt_kmeans)
     plt.imshow(im_gt_kmeans)

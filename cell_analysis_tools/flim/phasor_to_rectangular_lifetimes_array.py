@@ -8,8 +8,8 @@ import pylab
 import tifffile
 from scipy.signal import convolve
 
-from flim_tools.image_processing import normalize
-from flim_tools.io import read_asc
+from cell_analysis_tools.image_processing import normalize
+from cell_analysis_tools.io import read_asc
 
 
 def phasor_to_rectangular_lifetimes_array(angles, magnitudes):

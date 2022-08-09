@@ -3,7 +3,7 @@ import matplotlib.pylab as plt
 import numpy as np
 from scipy.spatial.distance import directed_hausdorff
 
-from flim_tools.metrics import dice, jaccard, total_error
+from cell_analysis_tools.metrics import dice, jaccard, total_error
 
 mpl.rcParams["figure.dpi"] = 300
 

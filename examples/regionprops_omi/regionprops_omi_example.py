@@ -6,9 +6,11 @@ import matplotlib.pylab as plt
 import pandas as pd
 from tqdm import tqdm
 
-from flim_tools.flim import regionprops_omi
-from flim_tools.io import load_image
+import cell_analysis_tools as cat
+from cell_analysis_tools.flim import regionprops_omi
+from cell_analysis_tools.io import load_image
 
+import matplotlib as mpl
 mpl.rcParams["figure.dpi"] = 300
 from datetime import date
 

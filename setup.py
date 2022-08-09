@@ -10,9 +10,9 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="flim-tools-econtreras",
+    name="cell_analysis_tools",
     version="0.0.1",
-    author="Emmanuel Contreras",
+    author="Emmanuel Contreras Guzman",
     author_email="econtreras@wisc.edu",
     long_description=Path("README.md").read_text(),
     long_description_content_type="text/markdown",
