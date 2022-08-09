@@ -1,4 +1,4 @@
-### flim_tools
+### CELL ANALYSIS TOOLS
 
 A library for loading, processing and summarizing flim data.
 
