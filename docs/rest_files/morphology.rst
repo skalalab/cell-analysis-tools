@@ -1,7 +1,7 @@
 Morphology
 ----------
 
-.. automodule:: flim_tools.morphology
+.. automodule:: cell_analysis_tools.morphology
     :members:
     :autosummary:
     

@@ -1,7 +1,7 @@
 I/O
 ===
 
-.. automodule:: flim_tools.io
+.. automodule:: cell_analysis_tools.io
     :members:
     :autosummary:
 

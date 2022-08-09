@@ -1,6 +1,6 @@
 Metrics
 -------------
 
-.. automodule:: flim_tools.metrics
+.. automodule:: cell_analysis_tools.metrics
     :members:
     :autosummary:
