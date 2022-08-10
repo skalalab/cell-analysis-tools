@@ -10,19 +10,19 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
+import os
+import sys
 
-# sys.path.insert(0, os.path.abspath("."))
-# path_cell_analysis_tools = os.path.abspath("../cell_analysis_tools")
-# sys.path.insert(0, path_cell_analysis_tools)
-# print(f"added path:{path_cell_analysis_tools}")
+sys.path.insert(0, os.path.abspath("."))
+path_cell_analysis_tools = os.path.abspath("../cell_analysis_tools")
+sys.path.insert(0, path_cell_analysis_tools)
+print(f"added path:{path_cell_analysis_tools}")
 
 
 # -- Project information -----------------------------------------------------
 
 project = "cell_analysis_tools"
-copyright = "2021, Skala Lab"
+copyright = "2022, Skala Lab"
 author = "Skala Lab"
 
 
