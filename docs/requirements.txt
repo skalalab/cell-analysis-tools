@@ -3,3 +3,6 @@ sphinx-rtd-theme
 cell-analysis-tools
 pandas
 matplotlib
+scikit-learn
+scikit-image
+umap-learn
