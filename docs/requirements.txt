@@ -6,3 +6,5 @@ matplotlib
 scikit-learn
 scikit-image
 umap-learn
+numpy
+scipy
