@@ -16,12 +16,12 @@ if __name__ == "__main__":
     import matplotlib as mpl
     import matplotlib.pylab as plt
 
-    from flim_tools.io import load_sdt_file
+    from cell_analysis_tools.io import load_sdt_file
 
     mpl.rcParams["figure.dpi"] = 600
     import numpy as np
 
-    from flim_tools.image_processing import bin_sdt
+    from cell_analysis_tools.image_processing import bin_sdt
 
     # variables
     laser_angular_frequency = 80e6

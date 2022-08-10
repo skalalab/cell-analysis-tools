@@ -9,8 +9,8 @@ import tifffile
 from matplotlib import pyplot as plt
 from skimage.measure import label, regionprops
 
-from flim_tools.image_processing import normalize
-from flim_tools.io import load_sdt
+from cell_analysis_tools.image_processing import normalize
+from cell_analysis_tools.io import load_sdt
 
 #%%
 

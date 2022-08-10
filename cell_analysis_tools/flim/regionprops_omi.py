@@ -395,7 +395,7 @@ if __name__ == "__main__":
 
     import pandas as pd
 
-    from flim_tools.io import load_image
+    from cell_analysis_tools.io import load_image
 
     path_dictionaries = Path(
         r"Z:\0-Projects and Experiments\RD - redox_ratio_development\Data Combined + QC Complete\0-dictionaries"

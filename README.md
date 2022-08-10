@@ -18,19 +18,19 @@ A library for loading, processing and summarizing flim data.
 ---
 #### Installation
 
-To install this library change directory to the root of the flim_tools folder then execute:
+To install this library change directory to the root of the cell_analysis_tools folder then execute:
 
 `$ pip install -e .`
 
 you should then be able to import it into your script
 
 
-`import flim_tools`
+`import cell_analysis_tools`
 
 --- 
 ### Summarizing your data
 
-The flim_tools library contains a script `main.py` that can be used to summarize your data.
+The cell_analysis_tools library contains a script `main.py` that can be used to summarize your data.
 
 The script was created with 30 images from the T cell dataset used in the paper [Classification of T-cell activation via autofluorescence lifetime imaging](https://www.nature.com/articles/s41551-020-0592-z) if is strongly recommended you run the code as is with this dataset to makes sure you know how to modify it to your needs.
 

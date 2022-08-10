@@ -341,8 +341,8 @@ if __name__ == "__main__":
     #%% Load dictionary and compute the regionprops omi parameters
 
     HERE = Path(__file__).absolute().resolve().parent
-    # path_dataset = Path(r"C:\Users\econtrerasguzman\Desktop\development\flim_tools\examples\example_data\redox_ratio")
-    # path_output = Path(r"C:\Users\econtrerasguzman\Desktop\development\flim_tools\examples\regionprops_omi\outputs")
+    # path_dataset = Path(r"C:\Users\econtrerasguzman\Desktop\development\cell_analysis_tools\examples\example_data\redox_ratio")
+    # path_output = Path(r"C:\Users\econtrerasguzman\Desktop\development\cell_analysis_tools\examples\regionprops_omi\outputs")
 
     path_dataset = HERE.parent / "example_data/redox_ratio"
     path_output = HERE.parent / "regionprops_omi/outputs/"
