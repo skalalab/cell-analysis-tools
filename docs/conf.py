@@ -25,6 +25,9 @@ path_cell_analysis_tools = os.path.abspath("../cell_analysis_tools")
 sys.path.insert(0, path_cell_analysis_tools)
 print(f"added path:{path_cell_analysis_tools}")
 
+sys.path.insert(0, os.path.abspath('../'))
+
+
 
 # -- Project information -----------------------------------------------------
 
