@@ -1,4 +1,5 @@
 autodocsumm
+automodule
 sphinx-rtd-theme
 cell-analysis-tools
 pandas

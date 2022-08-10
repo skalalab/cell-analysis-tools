@@ -1,10 +1,10 @@
-.. flim_tools documentation master file, created by
+.. cell_analysis_tools documentation master file, created by
    sphinx-quickstart on Fri Aug 20 13:26:16 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
 
-flim_tools's documentation
+cell_analysis_tools documentation
 ======================================
 
 This library contains many relevant functions used for  pre-processing, processing 
