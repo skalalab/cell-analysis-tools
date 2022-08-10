@@ -4,10 +4,6 @@ import matplotlib as mpl
 import matplotlib.pylab as plt
 import numpy as np
 
-# from flim_tools.io import load_sdt_file
-# from flim_tools.visualization import compare_images
-# import scipy.ndimage as ndi
-
 
 mpl.rcParams["figure.dpi"] = 300
 

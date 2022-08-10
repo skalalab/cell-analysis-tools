@@ -1,4 +1,4 @@
-### The flim_tools library structure
+### Thecell_analysis_tools library structure
 
 
 

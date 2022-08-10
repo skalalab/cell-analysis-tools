@@ -7,7 +7,7 @@ import scipy.ndimage as ndi
 import tifffile
 from ipywidgets import Box
 
-from flim_tools.image_processing import fill_and_label_rois
+from cell_analysis_tools.image_processing import fill_and_label_rois
 
 base_path = "."
 
