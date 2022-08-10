@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     HERE = Path(__file__).resolve().parent
     ########### neutrohpils
-    # working_dir = Path(r"C:\Users\Nabiki\Desktop\development\flim_tools\flim_tools\example_data\t_cell".replace('\\','/'))
+    # working_dir = Path(r"C:\Users\Nabiki\Desktop\development\cell-analysis-tools\cell_analysis_tools\example_data\t_cell".replace('\\','/'))
     # path_sdt = working_dir / "Tcells-001.sdt"
     # path_sdt = Path(HERE.parent / "example_data/neutrophils/Neutrophils-021_NADH.sdt")
 

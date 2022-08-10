@@ -13,7 +13,7 @@ from skimage.color import rgb2gray as _rgb2gray
 mpl.rcParams["figure.dpi"] = 300
 
 
-from flim_tools.image_processing.labels import rgb2gray
+from cell_analysis_tools.image_processing.labels import rgb2gray
 
 
 def generate_figure(image, cmap=plt.cm.Greys_r):
