@@ -9,9 +9,9 @@ import os
 import sys
 
 # https://blog.rtwilson.com/how-to-make-your-sphinx-documentation-compile-with-readthedocs-when-youre-using-numpy-and-scipy/ 
-# MOCK_MODULES = ['numpy', 'scipy']
-# for mod_name in MOCK_MODULES:
-#     sys.modules[mod_name] = mock.Mock()
+MOCK_MODULES = ['numpy', 'scipy']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
 
 # -- Path setup --------------------------------------------------------------
 
