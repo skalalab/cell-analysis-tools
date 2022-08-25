@@ -42,7 +42,7 @@ def four_color_theorem(mask: np.ndarray) -> np.ndarray:
     for idx, roi_value in enumerate(id_nodes):
         dict_nodes_key_roi_value[roi_value] = {}
         dict_nodes_key_roi_value[roi_value]["adj_mat_idx"] = idx
-        dict_nodes_key_roi_value[roi_value]["colors"] = ["b", "c", "m", "y"]
+        dict_nodes_key_roi_value[roi_value]["colors"] = ["b", "c", "m", "y", 'r', 'g']
         dict_nodes_key_idx[idx] = roi_value
 
     adjacency_matrix = np.zeros((len(id_nodes), len(id_nodes)))
@@ -87,6 +87,8 @@ def four_color_theorem(mask: np.ndarray) -> np.ndarray:
         pass
         # get list of colors in current roi, choose current color for roi
         list_roi_colors = nodes[roi_value]["colors"]
+        # if roi_value == 302:
+        #     print('stop')
         curr_color = list_roi_colors[0]
         solution_nodes[roi_value] = curr_color  # set solutions
 
@@ -118,6 +120,10 @@ def four_color_theorem(mask: np.ndarray) -> np.ndarray:
             value = 100
         elif solution_nodes[roi_value] == "m":
             value = 150
+        elif solution_nodes[roi_value] == "r":
+            value = 200
+        elif solution_nodes[roi_value] == "g":
+            value = 225
         elif solution_nodes[roi_value] == "y":
             value = 255
 
