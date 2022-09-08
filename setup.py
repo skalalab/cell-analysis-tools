@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="cell_analysis_tools",
-    version="0.0.4",
+    version="0.0.5",
     author="Emmanuel Contreras Guzman",
     author_email="econtreras@wisc.edu",
     long_description=Path("README.md").read_text(),
@@ -25,5 +25,12 @@ setup(
         "Operating System :: POSIX",
     ],
     packages=find_packages(exclude=["tests", "dev"]),
-    install_requires=Path("requirements.txt").read_text().splitlines(),
+    # install_requires=parse_requirements("requirements.txt").read_text().splitlines(),
+    install_requires=[
+    'read-roi'
+    'umap-learn'
+    'scikit-image'
+    'scikit-learn'
+    'matplotlib'
+    ]
 )
