@@ -3,3 +3,4 @@ umap-learn
 scikit-image
 scikit-learn
 matplotlib
+pandas
