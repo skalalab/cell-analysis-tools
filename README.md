@@ -1,6 +1,6 @@
 ### CELL ANALYSIS TOOLS
 
-A library for loading, processing and summarizing flim data.
+A library for loading, processing and summarizing single cell imaging data.
 
 ---
 #### Dependencies
