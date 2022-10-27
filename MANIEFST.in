@@ -1,1 +1,2 @@
-requiremets.txt
+include requiremets.txt
+include cell_analysis_tools/*
