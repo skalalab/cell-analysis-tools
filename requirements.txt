@@ -5,3 +5,4 @@ scikit-learn
 matplotlib
 pandas
 ipywidgets
+seaborn
