@@ -9,6 +9,7 @@ from .normalize import normalize
 from .rgb2gray import rgb2gray
 from .rgb2labels import rgb2labels
 from .sum_pool_3d import sum_pool_3d
+from .remove_small_areas_fill_regions import remove_small_areas_fill_regions
 
 __all__ = [
     "bin_2d",
@@ -22,4 +23,5 @@ __all__ = [
     "fill_and_label_rois",
     "four_color_theorem",
     "four_color_to_unique",
+    "remove_small_areas_fill_regions"
 ]
