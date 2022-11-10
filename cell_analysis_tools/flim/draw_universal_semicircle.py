@@ -11,10 +11,11 @@ from cell_analysis_tools.io import read_asc
 
 
 def draw_universal_semicircle(
-    figure, laser_angular_frequency, title="Phasor Plot", debug=False
-):
+    laser_angular_frequency, title="Phasor Plot", suptitle="", debug=False
+    ):
     """
-    Draws the universal semicircle over the give figure.
+    Draws the universal semicircle with the given frequency and returns the plt
+    figure to draw over.
 
     Parameters
     ----------
@@ -25,9 +26,20 @@ def draw_universal_semicircle(
 
     Returns
     -------
-        None
+        plt.figure object to plot your points over this figure
+        
+    .. image:: ./resources/flim_phasor_plot_80.png
+        :width: 400
+        :alt: Image of universal semicircle at 80Mhz''
+        
+    .. image:: ./resources/flim_phasor_plot_100.png
+        :width: 400
+        :alt: Image of universal semicircle at 100Mhz''
+    
+    
     """
-
+    
+    figure = plt.figure()
     plt.title(title)
     """ get universal semicircle values for this rep rate """
     x_circle, y_circle, g, s, lifetime_labels = universal_semicircle_series(
@@ -36,7 +48,7 @@ def draw_universal_semicircle(
 
     # Labels and axis of phasor plot
     # figure = plt.figure()
-    figure.suptitle(title)
+    figure.suptitle(suptitle)
     plt.xlabel("g", fontsize=20)
     plt.ylabel("s", fontsize=20)
 
@@ -51,13 +63,15 @@ def draw_universal_semicircle(
     for i, txt in enumerate(lifetime_labels):
         # self.ax.annotate(txt, (g[i], s[i]))
         plt.annotate(txt, (g[i], s[i]))
+
+    plt.axis('equal')
+    # plt.savefig(f"flim_phasor_plot_{int(frequency/1e6)}.png",bbox_inches='tight')
     plt.show()
 
 
 def universal_semicircle_series(frequency):
     """
-
-    Given the frequency this function will return x and y points for plotting the
+    With the given frequency, this function will return x and y points for plotting the
     universal semicircle, as well as the corresponding g and s values for
     common lifetimes between 0.5ns to 10ns
 
@@ -102,4 +116,14 @@ def universal_semicircle_series(frequency):
         "9ns",
         "10ns",
     ]
+    
+    # lifetime_labels2 = [f"{t*1e9:.1f}ns" for t in tau]
     return x_circle, y_circle, g, s, lifetime_labels
+
+
+if __name__ == "__main__":
+    
+    frequency = 100e6
+    draw_universal_semicircle( 
+                              laser_angular_frequency=frequency,
+                              title=f"Phasor Plot at {frequency/1e6:.0f} Mhz")

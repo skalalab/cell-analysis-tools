@@ -15,14 +15,14 @@ def bin_image(image, bin_factor):
     """
     This function takes in an lifetime image and bins 
     the decays of its histogram given a bin factor. A bin of 2 will reduce
-    the size of the image by 4. It will do so by forming a kernel of 
+    the size of the image by 2. It will do so by forming a kernel of 
     bin_factor x bin_factor and sum of those decays into a resulting pixel
     
     Parameters
     ----------
 
     image : ndarray
-        image to bin, must be a 3d array of shape(x,y,t)
+        image to bin, must be a 3d array of shape (x,y,t)
     bin_factor : int
         pixel radius(including diagonals) of bins to create. Must be EVEN.
     
@@ -32,9 +32,9 @@ def bin_image(image, bin_factor):
             new image with binned pixels
             
             
-  .. image:: resources/fig_bin_image.png
-      :width: 400
-      :alt: Alternative text
+    .. image:: ./resources/flim_bin_image.png
+        :width: 400
+        :alt: Image of a binned image before and after
             
     """
 
@@ -55,20 +55,20 @@ def bin_image(image, bin_factor):
     # + bin_factor padds it to make it bigger, then divide
     remainder_x = x % bin_factor
     remainder_y = y % bin_factor
-    subsampled_x = np.int(
+    subsampled_x = int(
         x / bin_factor
         if x % bin_factor == 0
         else (x + bin_factor - remainder_x) / bin_factor
     )
-    subsampled_y = np.int(
+    subsampled_y = int(
         y / bin_factor
         if y % bin_factor == 0
         else (y + bin_factor - remainder_y) / bin_factor
     )
 
     """ need to pad with zeros if not divisible by bin_factor"""
-    padded_x = np.int(subsampled_x * bin_factor)
-    padded_y = np.int(subsampled_y * bin_factor)
+    padded_x = int(subsampled_x * bin_factor)
+    padded_y = int(subsampled_y * bin_factor)
 
     # Original image padded with zeros
     image_padded = image.copy()

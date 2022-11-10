@@ -91,3 +91,21 @@ def estimate_and_shift_irf(decay, irf_decay, debug=False):
         plt.show()
 
     return irf_decay_shifted, shift
+
+
+if __name__ == "__main__":
+    pass
+
+    
+    irf = np.loadtxt("irf.csv")
+    
+    plt.plot(irf[:,0],irf[:,1])
+    
+    
+    
+    
+    
+    
+    
+    
+    

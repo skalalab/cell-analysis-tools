@@ -54,6 +54,7 @@ if __name__ == "__main__":
         "fad_t2_mean",
         "fad_tau_mean_mean",
     ]
+    
     df_data = pd.DataFrame(x, columns=list_features)
 
     #%% Scale data

@@ -339,13 +339,23 @@ def load_data_create_dict(path_dataset, path_output):
 if __name__ == "__main__":
     pass
     #%% Load dictionary and compute the regionprops omi parameters
-
+    
+    # Comment in if running example
     HERE = Path(__file__).absolute().resolve().parent
-    # path_dataset = Path(r"C:\Users\econtrerasguzman\Desktop\development\cell_analysis_tools\examples\example_data\redox_ratio")
-    # path_output = Path(r"C:\Users\econtrerasguzman\Desktop\development\cell_analysis_tools\examples\regionprops_omi\outputs")
-
     path_dataset = HERE.parent / "example_data/redox_ratio"
     path_output = HERE.parent / "regionprops_omi/outputs/"
+    
+    # comment in if running own code
+    # path_dataset = Path(r"/home/nabiki/Desktop/")
+    # path_output = path_dataset / "outputs"
+    # path_output.mkdir(exist_ok=True)
+    # path_dictionaries = path_output / "dictionaries"
+    # path_dictionaries.mkdir(exist_ok=True)
+    # path_features = path_output / "features" 
+    # path_features.mkdir(exist_ok=True)
+    # path_summary = path_output / "summary" 
+    # path_summary.mkdir(exist_ok=True)
+
 
     df, incomplete = load_data_create_dict(
         path_dataset=path_dataset, path_output=(path_output / "dictionaries")
