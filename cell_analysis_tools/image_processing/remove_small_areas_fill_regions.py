@@ -14,7 +14,6 @@ import matplotlib as mpl
 mpl.rcParams['figure.dpi'] = 300
  #%%
 
-
 def remove_small_areas_fill_regions(mask : np.array,
                                     region_min_size : int = 100,
                                     footprint_area_closing : int = 2,
@@ -88,6 +87,5 @@ if __name__== "__main__":
                                                    debug=True)
     plt.imshow(mask_revised)
     plt.show()
-
 
 
