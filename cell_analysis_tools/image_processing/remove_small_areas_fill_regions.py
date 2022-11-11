@@ -19,6 +19,26 @@ def remove_small_areas_fill_regions(mask : np.array,
                                     region_min_size : int = 100,
                                     footprint_area_closing : int = 2,
                                     debug=False):
+    """
+    Function was created to clean up masks that may have stray pixels or regions. 
+
+    Parameters
+    ----------
+    mask : np.array
+        original mask.
+    region_min_size : int, optional
+        minimum size of connected component to be removed. The default is 100.
+    footprint_area_closing : int, optional
+        When merging images radius of disk to use. The default is 2.
+    debug : TYPE, optional
+        Enable/Disable display of intermediate images for debugging function. The default is False.
+
+    Returns
+    -------
+    np.array of revised mask
+
+    """    
+
     if debug:
         plt.title("input mask")
         plt.imshow(mask)
@@ -69,4 +89,5 @@ if __name__== "__main__":
     plt.imshow(mask_revised)
     plt.show()
 
-    
+
+
