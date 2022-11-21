@@ -115,3 +115,61 @@ if __name__ == "__main__":
     )  # s=size, c= colormap_data, cmap=colormap to use
     # plt.colorbar()
     draw_universal_semicircle(figure, laser_angular_frequency)
+    
+    #%%
+    
+    from cell_analysis_tools.io import load_sdt_file
+    from cell_analysis_tools.flim import (draw_universal_semicircle,
+                                          phasor_to_rectangular,
+                                          rectangular_to_phasor,
+                                          lifetime_to_phasor
+                                          )
+    
+    # # load irf
+    irf_decay = np.loadtxt("irf.csv")   
+    timebins = irf_decay[:,0]
+    irf = irf_decay[:,1]
+    # plt.plot(timebins,irf)
+        
+    # load and plot original irf
+    f=0.08 #Ghz
+    phasor = lifetime_to_phasor(f=f, timebins=timebins, counts=irf)
+    draw_universal_semicircle(laser_angular_frequency=80e6)
+    g,s = phasor_to_rectangular(phasor.angle, phasor.magnitude)
+    plt.scatter(g,s)
+    
+    # calibate and plot original irf
+    calibration = phasor_calibration(f=80e6,
+                                    lifetime=0,
+                                    timebins=timebins,
+                                    counts=irf)    
+    
+    phasor_calibrated = phasor.angle + calibration.angle, phasor.magnitude * calibration.scaling_factor
+    new_g, new_s = phasor_to_rectangular(phasor_calibrated[0], phasor_calibrated[1])
+    plt.scatter(new_g, new_s)
+    
+    # plot bead data
+    # load image 
+    sdt = load_sdt_file("./bigger_beads_2.1ns.sdt")
+    im_nadh = sdt.squeeze()
+    decay = im_nadh.sum(axis=(0,1))
+    
+    phasor = lifetime_to_phasor(f=80e6, timebins=timebins, counts=decay)
+    g,s = phasor_to_rectangular(phasor.angle, phasor.magnitude)
+    plt.scatter(g, s)
+    
+    # calibrate 
+    calibration = phasor_calibration(f=80e6,
+                                            lifetime=2.2e-9,
+                                            timebins=timebins,
+                                            counts=decay)    
+    
+    phasor_calibrated = phasor.angle + calibration.angle, phasor.magnitude * calibration.scaling_factor
+    new_g, new_s = phasor_to_rectangular(phasor_calibrated[0], phasor_calibrated[1])
+    plt.scatter(new_g, new_s)
+    
+    phasor2 = rectangular_to_phasor(g, s)
+
+    #### plot image
+    plt.show()
+    

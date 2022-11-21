@@ -28,6 +28,16 @@ def ideal_sample_phasor(f, lifetime):
             angle of ideal sample
         magnitude : float
             magnitude of ideal sample
+            
+    .. code-block:: python
+        
+        >>print("Input is 80Mhz phasor at @ 2ns lifetime")
+        >>angle, magnitude = ideal_sample_phasor(f=80e6, lifetime=2e-9)
+        >>print(f"{angle=:.3f} rad | {magnitude=:.3f}")
+        angle=0.788 rad | magnitude=0.705
+        
+    
+    
     """
 
     Phasor = coll.namedtuple("Phasor", "angle magnitude")
@@ -44,3 +54,20 @@ def ideal_sample_phasor(f, lifetime):
 
     print("Input lifetime: ", (1 / w * ideal_s / ideal_g))
     return Phasor(angle=angle, magnitude=magnitude)
+
+if __name__ == "__main__":
+    
+    from cell_analysis_tools.flim import ideal_sample_phasor
+    
+    angle, magnitude = ideal_sample_phasor(80e6, 2e-9)
+    
+    print(f"{angle=:.3f} rad | {magnitude=:.3f}")
+    
+    from cell_analysis_tools.flim import draw_universal_semicircle
+    
+    fig = draw_universal_semicircle(laser_angular_frequency=80e6)
+    
+    plt.scatter(0.4, 0.2, c='k')
+    plt.show()
+    
+    

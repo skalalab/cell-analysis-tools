@@ -66,7 +66,7 @@ def draw_universal_semicircle(
 
     plt.axis('equal')
     # plt.savefig(f"flim_phasor_plot_{int(frequency/1e6)}.png",bbox_inches='tight')
-    plt.show()
+    # plt.show()
 
 
 def universal_semicircle_series(frequency):
