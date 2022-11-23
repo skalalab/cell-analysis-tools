@@ -23,6 +23,47 @@ from cell_analysis_tools.flim import draw_universal_semicircle
 
 
 def phasor_calculator(f, time, decays, IRF):
+    """
+    Given an array of decay(s) the rectangular g, s and phasors angle and magnitude 
+    will be computed and returned.
+
+    Parameters
+    ----------
+    f : float
+        Laser repetition rate.
+    time : np.ndarray
+        array of timebins.
+    decays : np.ndarray
+        Single decay or array of decays to compute phasor points for.
+        Single decay should have the shape (x,),(x,t) and shape (x,y,t) for an array
+    IRF : np.ndarray
+        1D array capturing irf decay.
+
+    Returns
+    -------
+    m : float
+        magnidue of phasor.
+    phi : float
+        angle of phasor.
+    g : float
+        g coordinate (x-axis).
+    s : float
+        s coordinate (y-axis).
+
+
+    Note
+    ----
+        * You cannot compare two images directly due to them having different decay shift values between images, affeting g,s,m and phi locations 
+        * background subtraction (~last 1 or 1/2 ns timebins of decay)
+    
+        
+    .. image:: ./resources/flim_phasor_calculation.png
+        :width: 600
+        :alt: Image of a lifetime image as a phasor plot
+        
+        
+    """
+    
     w = 2*np.pi*f
     
     # row=pixels, cols=photons
@@ -59,6 +100,9 @@ if __name__ == "__main__":
     sdt = load_sdt_file("./bigger_beads_2.1ns.sdt")
     im_nadh = sdt.squeeze()
     decay = im_nadh.sum(axis=(0,1))
+    plt.title("Beads Decay")
+    plt.plot(decay)
+    plt.show()
     
     frequency = 0.08
     draw_universal_semicircle(laser_angular_frequency=frequency*10**9,
@@ -82,8 +126,4 @@ if __name__ == "__main__":
                               title="bead image")
     plt.scatter(g,s, s=1)
     plt.show()
-    
-
-# fix shift between images 
-# background subtraction (~last 1 or 1/2 ns timebins of decay)
     

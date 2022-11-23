@@ -29,7 +29,7 @@ def image_show(image):
     return fig, ax
 
 
-def compare_images(im1, title1, im2, title2, suptitle=None, figsize=(10, 5), save_path=None) -> None:
+def compare_images(title1, im1, title2, im2, suptitle=None, figsize=(10, 5), save_path=None) -> None:
     """
      
         Parameters

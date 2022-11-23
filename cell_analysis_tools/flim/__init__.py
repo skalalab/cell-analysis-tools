@@ -7,6 +7,7 @@ from .phasor_to_rectangular import phasor_to_rectangular
 from .regionprops_omi import regionprops_omi
 from .lifetime_to_phasor import lifetime_to_phasor
 from .rectangular_to_phasor import rectangular_to_phasor
+from .phasor_calculator import phasor_calculator
 
 __all__ = [
     "bin_image",
@@ -17,6 +18,7 @@ __all__ = [
     "regionprops_omi",
     "lifetime_to_phasor",
     "phasor_to_rectangular",
-    "rectangular_to_phasor"
+    "rectangular_to_phasor",
+    'phasor_calculator'
     
 ]

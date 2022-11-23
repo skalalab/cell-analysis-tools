@@ -28,6 +28,11 @@ def remove_horizontal_vertical_edges(im, disk_size=20, debug=False):
     -------
     np.ndarray
         filtered image with grid pattern removed
+        
+    
+    .. image:: ./resources/image_processing-remove_horizontal_vertical_edges.png
+        :width: 400
+        :alt: Image of grid removed through fft filter
     """
 
     tic = time()

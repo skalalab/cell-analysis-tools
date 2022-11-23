@@ -31,7 +31,7 @@ def phasor_calibration(f, lifetime, timebins, counts):
     Note
     ----
         If no timebins or histograms passed then returns angle and phase of
-        lifetime passed in
+        decay passed in.
     """
     
     
