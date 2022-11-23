@@ -7,8 +7,9 @@
 cell_analysis_tools
 ======================================
 
-This library aims to simplify single cell analysis of images. It contains many relevant functions used for  pre-processing, processing 
-analyzing, loading and summarizing images. 
+This library was developed for the Skala Lab at the Morgridge Institute for Reserach / University of Wisconsin-Madison to 
+simplify single cell analysis of images. It contains many relevant functions used for  pre-processing, processing 
+analyzing, loading and summarizing images.  
 
 
 Dependencies 
