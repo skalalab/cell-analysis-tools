@@ -5,7 +5,13 @@ the Morgridge Institute for Research/Univeristy of Wisconsin-Madison to process 
 Many functions and implementations can be reused for different image types. It also has examples of how to use some of these functions along with 
 example data. 
 
+
+More documentation 
+
+[Documentation on ReadTheDocs](https://cell-analysis-tools.readthedocs.io/en/latest/)
+
 ---
+
 #### Dependencies
 
 * numpy
