@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cell-analysis-tools"
-version = "0.0.12"
+version = "0.0.13"
 description = "cell analysis tools"
 readme = "README.md"
 authors = [{ name = "Emmanuel Contreras", email = "econtreras@wisc.edu" }]
@@ -33,7 +33,7 @@ Homepage = "https://github.com/skalalab/cell-analysis-tools"
 cell_analysis_tools = "cell_analysis_tools.__main__:main"
 
 [tool.bumpver]
-current_version = "0.0.12"
+current_version = "0.0.13"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message  = "Bump version {old_version} -> {new_version}"
 commit          = true

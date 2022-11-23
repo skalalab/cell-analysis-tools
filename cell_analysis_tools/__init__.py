@@ -1,4 +1,4 @@
-__version__ = "0.0.12"
+__version__ = "0.0.13"
 
 from . import flim
 from . import image_processing
