@@ -54,7 +54,7 @@ def phasor_calculator(f, time, decays, IRF):
     Note
     ----
         * You cannot compare two images directly due to them having different decay shift values between images, affeting g,s,m and phi locations 
-        * background subtraction (~last 1 or 1/2 ns timebins of decay)
+        * For proper lifetime values, background subtraction is needed by taking ~ the last 1 or 1/2 ns timebins of decay)
     
         
     .. image:: ./resources/flim_phasor_calculation.png

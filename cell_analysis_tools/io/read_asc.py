@@ -12,7 +12,7 @@ from skimage.draw import polygon2mask
 
 def read_asc(path):
     """
-    Reads in an asc file into an array
+    Reads in an asc file into a numpy ndarray
 
     Parameters
     ----------
@@ -21,8 +21,8 @@ def read_asc(path):
 
     Returns
     -------
-    array : ndarray
-        DESCRIPTION.
+    array : np.ndarray
+        Numpy array holding the image data.
 
     """
     with codecs.open(path, encoding="utf-8-sig") as file:

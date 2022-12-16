@@ -32,6 +32,11 @@ def bin_image(image, bin_factor):
             new image with binned pixels
             
             
+    .. image:: ./resources/flim_bin_image.png 
+        :width: 400
+        :alt: before and after binning function
+            
+            
     """
 
     #    image = image_thresholded
