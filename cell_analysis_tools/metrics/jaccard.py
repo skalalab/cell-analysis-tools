@@ -38,3 +38,30 @@ def jaccard(mask_gt, mask_pred):
         np.logical_and(mask_gt, mask_pred).sum()
         / np.logical_or(mask_gt, mask_pred).sum()
     )
+
+
+if __name__ == "__main__":
+    
+  from pathlib import Path
+  from cell_analysis_tools.io import load_image
+  from cell_analysis_tools.visualization import compare_images, compare_orig_mask_gt_pred
+  
+  import tifffile
+  
+  path_im = Path(r"../../examples/example_data/redox_ratio/HPDE_2DG_10n_photons.asc")
+  
+  im = load_image(path_im)
+  
+  tifffile.imwrite("image.tiff", im)
+
+  path_mask = Path(r"../../examples/example_data/redox_ratio/HPDE_2DG_10n_mask_cells.tiff")
+  
+  path_mask_cellpose = Path(r"../../examples/example_data/redox_ratio/HPDE_2DG_10n_photons_seg.npy")
+
+  mask_gt = load_image(path_mask)
+  
+  mask_pred = np.load(path_mask_cellpose, allow_pickle=True).item()
+  
+  compare_orig_mask_gt_pred(im, mask_gt, mask_pred['masks'])
+  
+  
