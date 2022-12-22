@@ -87,9 +87,14 @@ if __name__ == "__main__":
 
     # load SDT
     im = np.random.rand(512, 512)
-    plt.title("original")
-    plt.imshow(im)
-    plt.show()
+    # plt.title("original")
+    # plt.imshow(im)
+    # plt.show()
 
     # run with debug on
-    bin_2d(im, bin_size=2, debug=True)
+    bin_size = 2
+    im_binned = bin_2d(im, bin_size=bin_size, debug=False)
+    
+    from cell_analysis_tools.visualization import compare_images
+    
+    compare_images("original", im, f"binned {bin_size*2_1}x{bin_size*2_1}", im_binned)

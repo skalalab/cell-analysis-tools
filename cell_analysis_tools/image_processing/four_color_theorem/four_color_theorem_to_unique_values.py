@@ -80,7 +80,7 @@ def four_color_to_unique(mask: np.ndarray, debug: bool = False) -> np.ndarray:
 
 if __name__ == "__main__":
 
-    from four_color_theorem.four_colors import four_color_theorem
+    from four_colors import four_color_theorem
 
     mask = tifffile.imread("mask.tiff")
 
@@ -91,5 +91,6 @@ if __name__ == "__main__":
     # temp_mask = np.array(binary_closing(temp_mask, disk(1)), dtype=np.uint16)
     labeled_mask = remove_small_objects(mask_unique, min_size=30)
     plt.title(f"unique values \n unique rois: {len(np.unique(labeled_mask))-1}")
+    plt.axis("off")
     plt.imshow(labeled_mask)
     plt.show()

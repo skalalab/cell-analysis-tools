@@ -9,12 +9,21 @@ from skimage.draw import polygon2mask
 
 
 def load_sdt_file(file_path):
-    """ load a new sdt file
-    Parameters: 
-        file_path (string): path to the sdt file
+    """ 
+    Loads an sdt file and attemps to reshape the data into a cube corresponding to common file shapes.
     
-    Returns:
-        image = 3d-array representation of image
+    
+    Parameters
+    -----------
+        
+    file_path : pathlib path
+         Path path to the sdt file
+    
+    Returns
+    -------
+    
+    image : np.ndarray
+        A 3d-array representation of image.
     """
 
     with zipfile.ZipFile(file_path) as myzip:
@@ -60,15 +69,16 @@ def load_sdt_file(file_path):
 def load_sdt_data(filepath):
     """
     Loads the data of an SDT file, reshaping the output is necessary as this
-    outputs a 1d array
+    outputs a 1d array.
 
-    e.g.
-    An image of length 16777216 should be reshaped to (1, 256,256,256)
-    >>> image = np.reshape(data, (1, 256, 256, 256))
-
-    ### 2ch
-    An image of length 33554432 should be reshaped to (2 ch, 256,256,256)
-    >>> image = np.reshape(data, (2, 256, 256, 256))
+    .. code-block::python
+    
+        An image of length 16777216 should be reshaped to (1, 256,256,256)
+        >>> image = np.reshape(data, (1, 256, 256, 256))
+    
+        ### 2 Channel
+        An image of length 33554432 should be reshaped to (2 ch, 256,256,256)
+        >>> image = np.reshape(data, (2, 256, 256, 256))
 
     Parameters
     ----------
@@ -77,7 +87,7 @@ def load_sdt_data(filepath):
 
     Returns
     -------
-    data : TYPE
+    data : np.ndarray
         1D array containing all channel and pixel data
 
     """

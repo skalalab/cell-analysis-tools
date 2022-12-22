@@ -78,3 +78,17 @@ def kmeans_threshold(im, k, n_brightest_clusters, show_image=False):
         plt.show()
 
     return mask
+
+if __name__ == "__main__":
+    
+    from pathlib import Path
+    from cell_analysis_tools.io import load_image
+    from cell_analysis_tools.visualization import compare_images
+    
+    path_im = Path(r"../../examples/example_data/redox_ratio/HPDE_2DG_10n_photons.asc")
+    
+    im = load_image(path_im)
+    im_kmeans = kmeans_threshold(im, k=3, n_brightest_clusters=1)
+
+    compare_images("original", im, "kmeans \nk=3  | keeping brightest cluster", im_kmeans)
+    

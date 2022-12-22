@@ -34,8 +34,13 @@ def estimate_and_shift_irf(decay, irf_decay, debug=False):
 
     Note
     ----
-        IRF and decay should not have low SNR or gradient function will produce incorrect alignment   
+        IRF and decay should NOT have low SNR or gradient function will produce incorrect alignment   
     
+    
+    .. image:: ./resources/flim_estimate_and_shift_irf.png
+        :width: 800
+        :alt: Image of the estimated placement of IRF for a decay
+        
     """
 
     # TODO: smooth signals
@@ -48,6 +53,7 @@ def estimate_and_shift_irf(decay, irf_decay, debug=False):
     decay_rising = decay_grad.copy()
     decay_rising[decay_grad < 0] = 0  # take all positive gradient
     if debug:
+        plt.title("Decay Gradient")
         plt.plot(decay)
         plt.plot(decay_grad)
         plt.plot(decay_rising)
@@ -60,6 +66,7 @@ def estimate_and_shift_irf(decay, irf_decay, debug=False):
     irf_rising = irf_decay_grad.copy()
     irf_rising[irf_rising < 0] = 0
     if debug:
+        plt.title("IRF Gradient")
         plt.plot(irf_decay)
         plt.plot(irf_decay_grad)
         plt.plot(irf_rising)
@@ -84,6 +91,9 @@ def estimate_and_shift_irf(decay, irf_decay, debug=False):
     #     plt.show()
 
     if debug:  # visualize
+        plt.title(f"Shift estimation \n{shift} ps")
+        plt.xlabel("Time(ps)")
+        plt.ylabel("Counts")
         plt.plot(normalize(decay))
         plt.plot(normalize(irf_decay))
         plt.plot(normalize(irf_decay_shifted))
@@ -91,3 +101,33 @@ def estimate_and_shift_irf(decay, irf_decay, debug=False):
         plt.show()
 
     return irf_decay_shifted, shift
+
+
+if __name__ == "__main__":
+    pass
+
+    from cell_analysis_tools.io import load_sdt_file
+    
+    # load irf
+    irf_decay = np.loadtxt("irf.csv")    
+    plt.plot(irf_decay[:,0],irf_decay[:,1])
+    
+    # load image 
+    sdt = load_sdt_file("./resources/test_image.sdt")
+    im_nadh = sdt[1,...]
+    # plt.imshow(im_nadh.sum(axis=2))
+    # plt.show()
+    
+    decay = im_nadh.sum(axis=(0,1))
+    decay = np.roll(decay,10)
+    # plt.plot(decay)
+    # plt.show()
+    
+    # visualize and plot IRF
+    irf_decay_shifted, shift = estimate_and_shift_irf(decay, irf_decay[:,1], debug=True)
+    
+    
+    
+    
+    
+    

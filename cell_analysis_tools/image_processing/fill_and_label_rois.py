@@ -18,3 +18,16 @@ def fill_and_label_rois(curr_nuclei):
     """
 
     return ndi.label(ndi.binary_fill_holes(curr_nuclei))[0]
+
+    
+if __name__ == "__main__":
+    
+    from pathlib import Path
+    
+    
+    HERE = Path(__file__).absolute().resolve()
+    print(HERE)
+    path_mask = Path(r"../../examples/example_data/redox_ratio/HPDE_2DG_10n_mask_cells.tiff")
+    
+    
+    
