@@ -104,6 +104,11 @@ if __name__ == "__main__":
     plt.plot(decay)
     plt.show()
     
+    plt.title("beads |  2.2ns lifetime")
+    plt.imshow(im_nadh.sum(axis=2))
+    plt.axis("off")
+    plt.show()
+    
     frequency = 0.08
     draw_universal_semicircle(laser_angular_frequency=frequency*10**9,
                               title=f"bead image as 1 decay",

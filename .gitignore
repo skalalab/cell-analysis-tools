@@ -31,3 +31,4 @@ build/*
 dist/*
 docs/_build/*
 dask-worker-space/*
+docs/.vscode/*

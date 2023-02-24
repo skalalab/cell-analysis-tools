@@ -29,7 +29,11 @@ def four_color_to_unique(mask: np.ndarray, debug: bool = False) -> np.ndarray:
     -------
     output_mask : np.ndarray
         Mask relabeled to have unique roi values for each connected component
-
+        
+        
+    .. image:: ./resources/image_processing-four_color_to_unique.png
+        :width: 400
+        :alt: Image showing mask with 5 labels converted to 284 unique labels 
     """
     # determine unique labels and exclude bg(0)
     list_unique_values = list(np.unique(mask))
@@ -44,7 +48,6 @@ def four_color_to_unique(mask: np.ndarray, debug: bool = False) -> np.ndarray:
         pass
         temp_mask = np.array(mask == value, dtype=np.uint16)
 
-        # TODO exclude these next lines, specific to Gina's masks!
         labels, _ = label(temp_mask)
 
         unique_labels = list(np.unique(labels))

@@ -30,7 +30,11 @@ def four_color_theorem(mask: np.ndarray) -> np.ndarray:
         returns a labeled image that uses up to 4 colors.
     solution_nodes : dict
         dictionary of {value : color} for each unique roi value
-
+        
+        
+    .. image:: ./resources/image_processing-four_color_theorem.png
+        :width: 400
+        :alt: Image showing mask with 256 unique labels converted to 5 labels 
     """
 
     ### Generate Agencency Matrix
