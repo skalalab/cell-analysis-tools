@@ -92,9 +92,7 @@ def load_sdt_data(filepath):
 
     """
     with zipfile.ZipFile(filepath) as myzip:
-        z1 = myzip.infolist()[
-            0
-        ]  # "data_block" or sdt bruker uses "data_block001" for multi-sdt"
+        z1 = myzip.infolist()[0]  # "data_block" or sdt bruker uses "data_block001" for multi-sdt"
         with myzip.open(z1.filename) as myfile:
             data = myfile.read()
             data = np.frombuffer(data, np.uint16)

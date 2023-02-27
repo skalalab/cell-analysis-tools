@@ -43,7 +43,7 @@ def remove_small_areas_fill_regions(mask : np.array,
         plt.imshow(mask)
         plt.show()
     
-    mask_no_small_objects = remove_small_objects(mask, region_min_size)
+    mask_no_small_objects = remove_small_objects(mask, min_size=region_min_size)
 
     if debug:
         plt.title("after removed small objects ")
