@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/373249129.svg)](https://zenodo.org/badge/latestdoi/373249129)
+
+
 ### CELL ANALYSIS TOOLS
 
 A library for loading, processing and summarizing single cell imaging data. This library was originally created for the Skala lab at 
