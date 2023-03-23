@@ -1,0 +1,14 @@
+@inproceedings{10.1117/12.2647280,
+author = {Emmanuel Contreras Guzman and Peter R. Rehani and Melissa C. Skala},
+title = {{Cell analysis tools: an open-source library for single-cell analysis of multi-dimensional microscopy images}},
+volume = {12383},
+booktitle = {Imaging, Manipulation, and Analysis of Biomolecules, Cells, and Tissues XXI},
+editor = {Attila Tarnok and Jessica P. Houston},
+organization = {International Society for Optics and Photonics},
+publisher = {SPIE},
+pages = {123830G},
+keywords = {Single-cell, image analysis, data analysis, open-source software, python},
+year = {2023},
+doi = {10.1117/12.2647280},
+URL = {https://doi.org/10.1117/12.2647280}
+}
