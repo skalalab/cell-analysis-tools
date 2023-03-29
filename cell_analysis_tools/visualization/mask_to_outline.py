@@ -36,6 +36,11 @@ def mask_to_outlines(mask, im = None, binary_mask=False, debug=False):
     -------
     mask_outline : np.ndarray
         Array containing outlines of input labeled mask.
+        
+    
+    .. image:: ./resources/visualization-mask_to_outlines.png
+        :width: 600
+        :alt: Image showing original mask and outlines after being run through this function
 
     """
     if debug:

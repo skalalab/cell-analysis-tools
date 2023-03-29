@@ -87,7 +87,12 @@ def compare_orig_mask_gt_pred(
     -------
     None
         function only just plots data.
-
+    
+    
+    .. image:: ./resources/visualization-compare_orig_mask_gt_pred.png
+         :width: 400
+         :alt: Grid of images showing ground truth and predicted mask, their exclusive OR results
+    
     """
     alpha = 0.5
     im_overlay = label2rgb(

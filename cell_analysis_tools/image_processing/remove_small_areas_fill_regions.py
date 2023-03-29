@@ -35,6 +35,11 @@ def remove_small_areas_fill_regions(mask : np.array,
     Returns
     -------
     np.array of revised mask
+    
+
+    .. image:: ./resources/image_processing-remove_small_areas_fill_regions.png
+        :width: 800
+        :alt: Image showing original mask, noise added and removed by function
 
     """    
 

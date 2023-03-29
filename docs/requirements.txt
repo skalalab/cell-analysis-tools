@@ -8,3 +8,4 @@ scikit-image
 umap-learn
 numpy
 scipy
+six
