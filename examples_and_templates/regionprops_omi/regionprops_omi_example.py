@@ -135,7 +135,12 @@ def visualize_dictionary(
             image = tifffile.imread(path_image)
         else:
             image = load_image(path_image)
-
+            
+        ## error check missing image
+        if image is None:
+            print(f"Could not load image for: {key}")
+            continue
+        
         # load proper channel
         if len(image.shape) > 2:
             if image.shape[2] == 3:  # rgb image of cyto mask
