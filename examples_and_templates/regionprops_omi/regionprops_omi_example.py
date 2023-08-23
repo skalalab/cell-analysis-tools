@@ -6,6 +6,8 @@ import matplotlib.pylab as plt
 import pandas as pd
 from tqdm import tqdm
 
+from natsort import natsorted
+
 import cell_analysis_tools as cat
 from cell_analysis_tools.flim import regionprops_omi
 from cell_analysis_tools.io import load_image
@@ -167,6 +169,7 @@ def load_data_create_dict(path_dataset, path_output):
     # GET LIST OF ALL FILES FOR REGEX
     list_all_files = list(path_dataset.rglob("*"))
     list_str_all_files = [str(b) for b in list_all_files]
+    list_str_all_files = natsorted(list_str_all_files)
 
     # GET LIST OF ALL PHOTONS IMAGES
     list_all_nadh_photons_images = list(
