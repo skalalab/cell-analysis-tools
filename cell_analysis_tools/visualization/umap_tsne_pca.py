@@ -33,7 +33,7 @@ def compute_umap(data_values: np.ndarray, **kwargs) -> pd.DataFrame:
 
     reducer = umap.UMAP(random_state=0, **kwargs)
     fit_umap = reducer.fit_transform(data_values)
-    df_umap = pd.DataFrame(fit_umap, columns=["umap_x", "umap_y"])
+    df_umap = pd.DataFrame(fit_umap, columns=["UMAP Dimension 1", "UMAP Dimension 2"])
     return df_umap, reducer
 
 
@@ -68,7 +68,7 @@ def compute_pca(
     principal_components = pca.fit_transform(data_values)
     df_pca = pd.DataFrame(
         data=principal_components,
-        columns=["principal component 1", "principal component 2"],
+        columns=["Principal Component 1", "Principal Component 2"],
     )
     return df_pca, pca
 
