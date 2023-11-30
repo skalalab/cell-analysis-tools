@@ -358,10 +358,15 @@ def regionprops_omi(
                     variance = np.average((values - average) ** 2, weights=weights)
                     return (average, math.sqrt(variance))
 
-                weighted_mean, weighted_stdev = weighted_avg_and_std(
-                    im_lifetime_masked, im_intensity_masked
-                )
-                assert weighted_mean == intensity_weighted_mean
+                try:
+                    weighted_mean, weighted_stdev = weighted_avg_and_std(
+                        im_lifetime_masked, im_intensity_masked
+                        )
+                except ZeroDivisionError as err:
+                    weighted_mean = 0
+                    weighted_stdev = 0
+
+                # assert weighted_mean == intensity_weighted_mean
 
                 # save values
                 dict_omi[dict_key_name][

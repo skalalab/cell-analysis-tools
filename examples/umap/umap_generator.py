@@ -20,7 +20,8 @@ mpl.rcParams["figure.dpi"] = 300
 def plot_data(data, labels, s=3, title=""):
 
     data["labels"] = labels
-    dict_classes = {0: "class 1", 1: "class 2"}
+    # dict_classes = {0: "class 1", 1: "class 2"}
+    dict_classes = {0: "Quiescent NSC", 1: "Activated NSC"}
 
 
     for label in np.unique(data["labels"]):
@@ -34,11 +35,13 @@ def plot_data(data, labels, s=3, title=""):
             # c=list_colors,
             label=dict_classes[label],
             s=s,
+            # alpha=0.8
         )
     plt.title(title)
     plt.xlabel(x.name)
     plt.ylabel(y.name)
-    plt.legend()
+    # plt.legend()
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=2)
     plt.show()
 
 
@@ -48,27 +51,36 @@ if __name__ == "__main__":
     from sklearn.datasets import make_classification
     from sklearn.preprocessing import StandardScaler
 
-    x, y = make_classification(
-        n_classes=2,
-        n_features=10,  # e.g. omi parameters
-        n_samples=1000,
-        random_state=0,
-    )
+    # x, y = make_classification(
+    #     n_classes=2,
+    #     n_features=10,  # e.g. omi parameters
+    #     n_samples=1000,
+    #     random_state=0,
+    # )
+    
+    
 
     list_features = [
-        # 'nadh_intensity_mean',
-        "nadh_a1_mean",
-        "nadh_a2_mean",
-        "nadh_t1_mean",
-        "nadh_t2_mean",
-        "nadh_tau_mean_mean",
-        # 'fad_intensity_mean',
-        "fad_a1_mean",
-        "fad_a2_mean",
-        "fad_t1_mean",
-        "fad_t2_mean",
-        "fad_tau_mean_mean",
-        # 'redox_ratio_mean'
+        # # 'nadh_intensity_mean',
+        # "nadh_a1_mean",
+        # "nadh_a2_mean",
+        # "nadh_t1_mean",
+        # "nadh_t2_mean",
+        # "nadh_tau_mean_mean",
+        # # 'fad_intensity_mean',
+        # "fad_a1_mean",
+        # "fad_a2_mean",
+        # "fad_t1_mean",
+        # "fad_t2_mean",
+        # "fad_tau_mean_mean",
+        # # 'redox_ratio_mean'
+        # "nadh_G",
+        # "nadh_S",
+        "nadh_Green_int",
+        "nadh_tau_mean",
+        "nadh_t1",
+        "nadh_t2",
+        "nadh_a1"
     ]
 
     df_data = pd.DataFrame(x, columns=list_features)
@@ -77,6 +89,7 @@ if __name__ == "__main__":
 
     # umap
     df_umap, reducer_umap = compute_umap(scaled_data, metric="manhattan")
+    # plt.switch_backend('Qt5Agg')
     plot_data(df_umap, labels=y, title="UMAP")
 
     # tsne

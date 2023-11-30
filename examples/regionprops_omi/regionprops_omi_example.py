@@ -3,14 +3,27 @@ from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pylab as plt
+
+SMALL_SIZE = 10
+MEDIUM_SIZE = 15
+BIGGER_SIZE = 20
+
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=MEDIUM_SIZE)    # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
 import pandas as pd
 from tqdm import tqdm
 
 import cell_analysis_tools as cat
 from cell_analysis_tools.flim import regionprops_omi
 from cell_analysis_tools.io import load_image
+from natsort import natsorted
 
-import matplotlib as mpl
 mpl.rcParams["figure.dpi"] = 300
 from datetime import date
 
@@ -65,7 +78,12 @@ standard_dictionary = {
 
 file_suffixes = {
     "im_photons": "_photons.asc",
+    # "mask_cell": "_cp_masks.tiff",
     "mask_cell": "_mask_cells.tiff",
+    # "mask_cell": "_photons_cellpose.tiff",
+    # "mask_cell": "_cellpose.tiff",
+    # "mask_cell": "_photons_cellmask.tiff",
+    # "mask_cell": "_mask.tiff",
     "mask_cytoplasm": "_mask_cyto.tiff",
     "mask_nuclei": "_mask_nuclei.tiff",
     "a1[%]": "_a1\[%\].asc",
@@ -114,13 +132,14 @@ def visualize_dictionary(
     cols = 5
     fig, ax = plt.subplots(rows, cols, figsize=(20, 12))
     filename_image = Path(dict_entry["nadh_photons"]).stem
-    if platform == "linux":
-        dataset_dir = str(Path(dict_entry["nadh_photons"]).parent).split('/', 5)[5]
-    else:
-        dataset_dir = str(Path(dict_entry["nadh_photons"]).parent).split("\\", 5)[5]
+    # if platform == "linux":
+    #     dataset_dir = str(Path(dict_entry["nadh_photons"]).parent).split('/', 5)[5]
+    # else:
+    #     dataset_dir = str(Path(dict_entry["nadh_photons"]).parent).split("\\", 5)[5]
         
         
-    fig.suptitle(f"{filename_image} \n {dataset_dir}")
+    # fig.suptitle(f"{filename_image} \n {dataset_dir}")
+    fig.suptitle(f"{filename_image}")
 
     for pos, key in enumerate(entries):
         pass
@@ -136,17 +155,21 @@ def visualize_dictionary(
         else:
             image = load_image(path_image)
 
-        # load proper channel
-        if len(image.shape) > 2:
-            if image.shape[2] == 3:  # rgb image of cyto mask
-                image = np.sum(image, axis=2)
-            if image.shape[0] == 2:  # multi channel image, pick channel number
-                image = image[channel, ...]
-        ax[row, col].imshow(image)
-        ax[row, col].set_title(
-            f"{path_image.stem} \n min: {np.min(image):.3f}  max: {np.max(image):.3f}"
-        )
-        ax[row, col].set_axis_off()
+        # load proper channel 
+        if image is not None:
+            if len(image.shape) > 2:
+                if image.shape[2] == 3:  # rgb image of cyto mask
+                    image = np.sum(image, axis=2)
+                if image.shape[0] == 2:  # multi channel image, pick channel number
+                    image = image[channel, ...]        
+            ax[row, col].imshow(image)
+            ax[row, col].set_title(
+                f"{path_image.stem} \n min: {np.min(image):.3f}  max: {np.max(image):.3f}"
+                )
+            ax[row, col].set_axis_off()
+            # for item in ([ax[row, col].title, ax[row, col].xaxis.label, ax[row, col].yaxis.label] +
+            #              ax[row, col].get_xticklabels() + ax[row, col].get_yticklabels()):
+            #     item.set_fontsize(20)
 
     if str(path_output) != "None":
         plt.savefig(path_output / filename_image)
@@ -162,9 +185,12 @@ def load_data_create_dict(path_dataset, path_output):
     # GET LIST OF ALL FILES FOR REGEX
     list_all_files = list(path_dataset.rglob("*"))
     list_str_all_files = [str(b) for b in list_all_files]
+    list_str_all_files = natsorted(list_str_all_files)
 
     # GET LIST OF ALL PHOTONS IMAGES
     list_all_nadh_photons_images = list(
+        # filter(re.compile(r".*Ch2-_photons.asc").search, list_str_all_files)
+        # filter(re.compile(r".*_photons.asc").search, list_str_all_files)
         filter(re.compile(r".*n_photons.asc").search, list_str_all_files)
     )
 
@@ -178,7 +204,8 @@ def load_data_create_dict(path_dataset, path_output):
 
         # generate dict name
         path_im_photons_nadh = Path(path_str_im_photons)
-        handle_im = path_im_photons_nadh.stem.rsplit("_", 1)[0][:-1]
+        # handle_im = path_im_photons_nadh.stem.rsplit("_", 1)[0][:-1]
+        handle_im = path_im_photons_nadh.stem.rsplit("_", 1)[0]
         dict_dir[handle_im] = standard_dictionary.copy()
 
         # NADH
@@ -251,23 +278,24 @@ def load_data_create_dict(path_dataset, path_output):
             )[0]
         except IndexError:
             print(f"{handle_im} | one or more masks missing skipping, set")
-            list_incomplete_sets.append(f"{handle_im} | missing: mask files")
-            del dict_dir[handle_im]
-            continue
+            # list_incomplete_sets.append(f"{handle_im} | missing: mask files")
+            # del dict_dir[handle_im]
+            # continue
 
         # FAD
         # locate corresponding photons image
         try:
             path_str_im_photons_fad = list(
                 filter(
-                    re.compile(handle_im + "f" + file_suffixes["im_photons"]).search,
+                    re.compile(handle_im[:-1] + "f" + file_suffixes["im_photons"]).search,
+                    # re.compile(handle_im[:-4] + "Ch1-" + file_suffixes["im_photons"]).search,
                     list_str_all_files,
                 )
             )[0]
         except IndexError:
             print(f"{handle_im} | one or more fad files missing, skipping set")
-            list_incomplete_sets.append(f"{handle_im} | missing: fad files")
-            del dict_dir[handle_im]
+            # list_incomplete_sets.append(f"{handle_im} | missing: fad files")
+            # del dict_dir[handle_im]
             continue
 
         path_im_photons_fad = Path(path_str_im_photons_fad)
@@ -353,9 +381,16 @@ if __name__ == "__main__":
     path_output = HERE.parent / "regionprops_omi/outputs/"
     
     # comment in if running own code
-    # path_dataset = Path(r"/home/nabiki/Desktop/")
-    # path_output = path_dataset / "outputs"
-    # path_output.mkdir(exist_ok=True)
+    # path_dataset = Path(r"\\skala-dv1.discovery.wisc.edu\ws\skala\0-Projects and Experiments\ECG - Mohit_CASPI\211027_Panc1_10s-60s\Paired_1\256_60s_n\ROI_summed")
+    # path_dataset = Path(r"\\skala-dv1.discovery.wisc.edu\ws\skala\0-Projects and Experiments\KS - regionprops test\ROI_summed_orig_names")
+    # path_dataset = Path(r"\\skala-dv1.discovery.wisc.edu\ws\skala\0-Projects and Experiments\KS - regionprops test\ROI_summed")
+    # path_dataset = Path(r"E:\Analysis\Darcie Moore\2P fits 2ch")
+    # path_dataset = Path(r"E:\Analysis\Dissociated_OV_ibidi_M\Combined2\ROI_summed")
+    # path_dataset = Path(r"E:\Analysis\231115_PBMC_1018")
+
+    
+    path_output = path_dataset / "outputs"
+    path_output.mkdir(exist_ok=True)
     path_dictionaries = path_output / "dictionaries"
     path_dictionaries.mkdir(exist_ok=True)
     path_features = path_output / "features" 
@@ -404,15 +439,30 @@ if __name__ == "__main__":
 
             # load images
             im_nadh_intensity = load_image(Path(row_data.nadh_photons))
-            im_nadh_a1 = load_image(Path(row_data.nadh_a1))
-            im_nadh_a2 = load_image(Path(row_data.nadh_a2))
-            im_nadh_t1 = load_image(Path(row_data.nadh_t1))
-            im_nadh_t2 = load_image(Path(row_data.nadh_t2))
+            # im_nadh_a1 = load_image(Path(row_data.nadh_a1))
+            # im_nadh_a2 = load_image(Path(row_data.nadh_a2))
+            # im_nadh_t1 = load_image(Path(row_data.nadh_t1))
+            # im_nadh_t2 = load_image(Path(row_data.nadh_t2))
+            # im_nadh_intensity = load_image(Path(row_data.nadh_photons)); im_nadh_intensity = np.ma.masked_array(im_nadh_intensity, mask=im_nadh_intensity<5)
+            ## im_nadh_a1 = load_image(Path(row_data.nadh_a1));  # temporarily load for masking purposes!
+            ## im_nadh_intensity = load_image(Path(row_data.nadh_photons)); im_nadh_intensity = np.ma.masked_array(im_nadh_intensity, mask=im_nadh_a1==0)
+            im_nadh_a1 = load_image(Path(row_data.nadh_a1)); im_nadh_a1 = np.ma.masked_array(im_nadh_a1, mask=im_nadh_a1==0)
+            im_nadh_a2 = load_image(Path(row_data.nadh_a2)); im_nadh_a2 = np.ma.masked_array(im_nadh_a2, mask=im_nadh_a2==0)
+            im_nadh_t1 = load_image(Path(row_data.nadh_t1)); im_nadh_t1 = np.ma.masked_array(im_nadh_t1, mask=im_nadh_t1==0)
+            im_nadh_t2 = load_image(Path(row_data.nadh_t2)); im_nadh_t2 = np.ma.masked_array(im_nadh_t2, mask=im_nadh_t2==0)
+            
+            # Comment the following FAD features for NADH-only data
             im_fad_intensity = load_image(Path(row_data.fad_photons))
-            im_fad_a1 = load_image(Path(row_data.fad_a1))
-            im_fad_a2 = load_image(Path(row_data.fad_a2))
-            im_fad_t1 = load_image(Path(row_data.fad_t1))
-            im_fad_t2 = load_image(Path(row_data.fad_t2))
+            # im_fad_a1 = load_image(Path(row_data.fad_a1))
+            # im_fad_a2 = load_image(Path(row_data.fad_a2))
+            # im_fad_t1 = load_image(Path(row_data.fad_t1))
+            # im_fad_t2 = load_image(Path(row_data.fad_t2))
+            ## im_fad_a1 = load_image(Path(row_data.fad_a1));  # temporarily load for masking purposes!
+            ## im_fad_intensity = load_image(Path(row_data.fad_photons)); im_fad_intensity = np.ma.masked_array(im_fad_intensity, mask=im_fad_a1==0)
+            im_fad_a1 = load_image(Path(row_data.fad_a1)); im_fad_a1 = np.ma.masked_array(im_fad_a1, mask=im_fad_a1==0)
+            im_fad_a2 = load_image(Path(row_data.fad_a2)); im_fad_a2 = np.ma.masked_array(im_fad_a2, mask=im_fad_a2==0)
+            im_fad_t1 = load_image(Path(row_data.fad_t1)); im_fad_t1 = np.ma.masked_array(im_fad_t1, mask=im_fad_t1==0)
+            im_fad_t2 = load_image(Path(row_data.fad_t2)); im_fad_t2 = np.ma.masked_array(im_fad_t2, mask=im_fad_t2==0)
 
             # compute ROI props
             omi_props = regionprops_omi(
@@ -423,11 +473,14 @@ if __name__ == "__main__":
                 im_nadh_a2=im_nadh_a2,
                 im_nadh_t1=im_nadh_t1,
                 im_nadh_t2=im_nadh_t2,
+                # Comment the following FAD features for NADH-only data
                 im_fad_intensity=im_fad_intensity,
                 im_fad_a1=im_fad_a1,
                 im_fad_a2=im_fad_a2,
                 im_fad_t1=im_fad_t1,
                 im_fad_t2=im_fad_t2,
+                # other morphological features calculated from the binary mask image
+                other_props=['area', 'perimeter', 'solidity', 'eccentricity', 'axis_major_length', 'axis_minor_length']
             )
 
             ## create dataframe
