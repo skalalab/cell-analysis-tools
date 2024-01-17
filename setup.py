@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="cell_analysis_tools",
-    version="1.0.0",
+    version="1.0.1",
     author="Emmanuel Contreras Guzman",
     author_email="econtreras@wisc.edu",
     long_description=Path("README.md").read_text(),
