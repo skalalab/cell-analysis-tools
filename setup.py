@@ -32,5 +32,6 @@ setup(
     'scikit-image'
     'scikit-learn'
     'matplotlib'
+    'pandas'
     ]
 )
