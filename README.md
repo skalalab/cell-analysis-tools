@@ -42,6 +42,8 @@ you should then be able to import it into your script
 
 `import cell_analysis_tools`
 
+Caveat: It currently only supports python < 3.12.x and >= 3.9.x. 
+
 --- 
 
 ### Cite cell-analysis-tools

@@ -378,7 +378,7 @@ if __name__ == "__main__":
     # Comment in if running example
     HERE = Path(__file__).absolute().resolve().parent
     path_dataset = HERE.parent / "example_data/redox_ratio"
-    path_output = HERE.parent / "regionprops_omi/outputs/"
+    # path_output = HERE.parent / "regionprops_omi/outputs/"
     
     # comment in if running own code
     # path_dataset = Path(r"\\skala-dv1.discovery.wisc.edu\ws\skala\0-Projects and Experiments\ECG - Mohit_CASPI\211027_Panc1_10s-60s\Paired_1\256_60s_n\ROI_summed")
@@ -515,6 +515,5 @@ if __name__ == "__main__":
 
     # label index of complete dictionary
     df_all_props = df_all_props.set_index("base_name", drop=True)
-
     d = date.today().strftime("%Y_%m_%d")
     df_all_props.to_csv(path_output_props / f"{d}_all_props.csv")
