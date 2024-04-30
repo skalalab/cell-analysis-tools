@@ -246,7 +246,7 @@ def regionprops_omi_run(
         if im_stain_intensity is not None:
             stain_intensity = regionprops(
                 label_image, im_stain_intensity, extra_properties=extra_properties)
-        dict_regionprops["stain_intensity"] = stain_intensity
+            dict_regionprops["stain_intensity"] = stain_intensity
         
     if Stain_lifetime == True: 
         if im_stain_a1 is not None:
