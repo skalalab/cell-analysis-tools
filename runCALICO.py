@@ -14,11 +14,14 @@ path_dataset = Path(r'C:\Users\jriendeau\Desktop\test')
 mask_suffix = 'n_photons_cellmask.tif'
 
 #What data in addition to NADH would you like to analyze?
-FAD = False
-Stain_intensity = False
-Stain_lifetime = False
+FAD = True
+Stain_intensity = True
+Stain_lifetime = True
 Intensity_weighted_means = False
-other_props = ['area', 'eccentricity'] #can also be empty
+
+other_props = ['area', 'eccentricity'] 
+#can also be empty or select more from here:
+#https://scikit-image.org/docs/dev/api/skimage.measure.html#skimage.measure.regionprops
 
 #%% This finds your file paths for EACH image so you don't have to input everything
 
@@ -63,7 +66,7 @@ standard_dictionary = {
 list_all_files = list(path_dataset.rglob("*"))
 list_str_all_files = [str(b) for b in list_all_files]
     
-list_all_nadh_photons_images = list(filter(re.compile("n" + file_suffixes["photons"]).search, list_str_all_files ))##############################################################
+list_all_nadh_photons_images = list(filter(re.compile("n" + file_suffixes["photons"]).search, list_str_all_files ))
     
 dict_dir = {}
 for path_str_im_photons in tqdm(list_all_nadh_photons_images, desc='Assembling file dictionary'):
@@ -93,7 +96,7 @@ for path_str_im_photons in tqdm(list_all_nadh_photons_images, desc='Assembling f
     # locate corresponding FAD photons image
     if FAD==True:
         try:
-            path_str_im_photons_fad = list(filter(re.compile(handle_im + "f" + file_suffixes["photons"]).search, list_str_all_files))[0] ###################################
+            path_str_im_photons_fad = list(filter(re.compile(handle_im + "f" + file_suffixes["photons"]).search, list_str_all_files))[0]
         except IndexError:
             print(f"{handle_im} | FAD files missing")
             del dict_dir[handle_im]
@@ -116,13 +119,13 @@ for path_str_im_photons in tqdm(list_all_nadh_photons_images, desc='Assembling f
             del dict_dir[handle_im]
             continue
         path_im_photons_fad = Path(path_str_im_photons_stain)
-        handle_fad = handle_im + "r"
-        dict_dir[handle_im]["stain_photons"] = list(filter(re.compile(handle_im +  file_suffixes['stain']).search, list_str_all_files))[0]
+        handle_stain = handle_im + "r"
+        dict_dir[handle_im]["stain_photons"] = list(filter(re.compile(handle_stain).search, list_str_all_files))[0]
         if Stain_lifetime==True:
-            dict_dir[handle_im]["stain_a1"] = list(filter(re.compile(handle_fad +  file_suffixes['a1[%]']).search, list_str_all_files))[0]
-            dict_dir[handle_im]["stain_a2"] = list(filter(re.compile(handle_fad +  file_suffixes['a2[%]']).search, list_str_all_files))[0]
-            dict_dir[handle_im]["stain_t1"] = list(filter(re.compile(handle_fad +  file_suffixes['t1']).search, list_str_all_files))[0]
-            dict_dir[handle_im]["stain_t2"] = list(filter(re.compile(handle_fad +  file_suffixes['t2']).search, list_str_all_files))[0]   
+            dict_dir[handle_im]["stain_a1"] = list(filter(re.compile(handle_stain +  file_suffixes['a1[%]']).search, list_str_all_files))[0]
+            dict_dir[handle_im]["stain_a2"] = list(filter(re.compile(handle_stain +  file_suffixes['a2[%]']).search, list_str_all_files))[0]
+            dict_dir[handle_im]["stain_t1"] = list(filter(re.compile(handle_stain +  file_suffixes['t1']).search, list_str_all_files))[0]
+            dict_dir[handle_im]["stain_t2"] = list(filter(re.compile(handle_stain +  file_suffixes['t2']).search, list_str_all_files))[0]   
 
         
 df_paths = pd.DataFrame(dict_dir).transpose()
